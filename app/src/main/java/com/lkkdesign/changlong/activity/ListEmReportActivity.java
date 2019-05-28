@@ -225,7 +225,7 @@ public class ListEmReportActivity extends AppCompatActivity implements QbSdk.Pre
         // 得到该路径文件夹下所有的文件
         File fileAll = new File(filePath);
         File[] files = fileAll.listFiles();
-        if (files.length > 0) {
+        if (files.length >0) {
             // 将所有的文件存入ArrayList中,并过滤所有Doc文件
             for (int i = 0; i < files.length; i++) {
                 File file = files[i];
