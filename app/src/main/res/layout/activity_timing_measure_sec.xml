@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.TimingMeasureSecActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/statusBarColor"
+        app:subtitleTextColor="#ffffff"
+        app:titleTextColor="#ffffff">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+            <ImageView
+                android:id="@+id/iv_return"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_36"
+                android:layout_weight="2"
+                android:layout_gravity="start|center"
+                android:src="@mipmap/iv_return"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:visibility="invisible"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="5"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/tv_time"
+                android:textSize="@dimen/textsize_30"
+                android:textColor="#ffffff" />
+            <TextView
+                android:id="@+id/tv_user"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="用户名"
+                android:textSize="@dimen/textsize_20"
+                android:textColor="#ffffff"/>
+        </LinearLayout>
+
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar"
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginTop="@dimen/card_marginTop_8"
+        app:cardCornerRadius="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:text="C=1.000mg/L"
+            android:gravity="center_horizontal"
+            android:textColor="@color/statusBarColor"
+            android:textSize="@dimen/textsize_38"
+            android:textStyle="bold"
+            android:paddingTop="@dimen/dp_60"/>
+        <TextView
+            android:id="@+id/tv_cod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="end"
+            android:text="COD（0-100 mg/L）"
+            android:textSize="18dp"
+            android:layout_marginTop="30dp"/>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/cardview1"
+        app:layout_constraintStart_toStartOf="@+id/cardview1"
+        app:layout_constraintTop_toBottomOf="@+id/cardview1"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginTop="@dimen/card_marginTop_8"
+        app:cardCornerRadius="@dimen/dp_10">
+        <TextView
+            android:id="@+id/tv_show"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_100"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="start|center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_16" />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/cardview2"
+        app:layout_constraintStart_toStartOf="@+id/cardview2"
+        app:layout_constraintTop_toBottomOf="@+id/cardview2"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginTop="@dimen/card_marginTop_8"
+        app:cardCornerRadius="@dimen/dp_10">
+        <LinearLayout
+            android:id="@+id/start_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center|start">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.allen.library.SuperTextView
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="3"
+                    android:layout_marginStart="15dp"
+                    app:sCenterTextString="开始时间："
+                    >
+                </com.allen.library.SuperTextView>
+                <com.allen.library.SuperTextView
+                    android:id="@+id/tv_startTime"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="7"
+                    android:layout_marginEnd="15dp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.allen.library.SuperTextView
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="3"
+                    android:layout_marginStart="15dp"
+                    app:sCenterTextString="间隔时间：">
+                </com.allen.library.SuperTextView>
+                <com.allen.library.SuperTextView
+                    android:id="@+id/tv_jgTime"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="7"
+                    android:layout_marginEnd="15dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.allen.library.SuperTextView
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="3"
+                    android:layout_marginStart="15dp"
+                    app:sCenterTextString="结束时间："/>
+                <com.allen.library.SuperTextView
+                    android:id="@+id/tv_endTime"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="7"
+                    android:layout_marginEnd="15dp" />
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <TextView
+        android:id="@+id/tv_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textColor="@color/statusBarColor"
+        android:textSize="@dimen/textsize_24"
+        app:layout_constraintEnd_toEndOf="@+id/cardview3"
+        app:layout_constraintStart_toStartOf="@+id/cardview3"
+        app:layout_constraintTop_toBottomOf="@+id/cardview3" />
+
+
+    <Button
+        android:id="@+id/btn_calculate"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="@drawable/btn_bg_blue"
+        android:gravity="center"
+        android:text="@string/stop"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize_24"
+        app:layout_constraintEnd_toEndOf="@+id/tv_timer"
+        app:layout_constraintStart_toStartOf="@+id/tv_timer"
+        app:layout_constraintTop_toBottomOf="@+id/tv_timer" />
+
+</android.support.constraint.ConstraintLayout>

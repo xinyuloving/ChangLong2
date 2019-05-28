@@ -1,0 +1,54 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="height_100">100dp</dimen>
+    <dimen name="height_70">70dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="padding">16dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
+    <dimen name="padding_half">8dp</dimen>
+    <dimen name="dp_70">70dp</dimen>
+    <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_12">12dp</dimen>
+    <dimen name="dp_24">24dp</dimen>
+    <dimen name="dp_36">36dp</dimen>
+    <dimen name="dp_48">48dp</dimen>
+    <dimen name="dp_60">60dp</dimen>
+    <dimen name="dp_65">60dp</dimen>
+    <dimen name="dp_32">32dp</dimen>
+    <dimen name="dp_16">16dp</dimen>
+    <dimen name="dp_8">8dp</dimen>
+    <dimen name="dp_2">2dp</dimen>
+    <dimen name="card_margin">0dp</dimen>
+    <dimen name="card_marginLeft_60">60dp</dimen>
+    <dimen name="card_marginLeft_200">200dp</dimen>
+    <dimen name="card_marginLeft_210">210dp</dimen>
+    <dimen name="card_marginLeft_240">240dp</dimen>
+    <dimen name="card_marginTop_8">8dp</dimen>
+    <dimen name="card_marginTop_20">20dp</dimen>
+    <dimen name="card_marginTop_25">25dp</dimen>
+    <dimen name="card_marginTop_38">38dp</dimen>
+    <dimen name="card_marginTop_40">40dp</dimen>
+    <dimen name="card_marginTop_90">90dp</dimen>
+    <dimen name="card_marginTop_105">105dp</dimen>
+    <dimen name="card_marginLeft_15">15dp</dimen>
+    <dimen name="card_marginRight_15">15dp</dimen>
+
+
+
+
+    <dimen name="textsize_28">28sp</dimen>
+    <dimen name="textsize_24">24sp</dimen>
+    <dimen name="textsize_22">22sp</dimen>
+    <dimen name="textsize_20">20sp</dimen>
+    <dimen name="textsize_30">30sp</dimen>
+    <dimen name="textsize_34">34sp</dimen>
+    <dimen name="textsize_38">38sp</dimen>
+    <dimen name="textsize_large">18sp</dimen>
+    <dimen name="textsize_normal">16sp</dimen>
+    <dimen name="textsize_small">14sp</dimen>
+    <dimen name="textsize_12">12sp</dimen>
+</resources>

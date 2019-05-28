@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp" >
+
+    <ProgressBar
+        android:id="@+id/progressBarSearchStatus"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.011" />
+
+    <Button
+        android:id="@+id/btn_Search"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@+id/progressBarSearchStatus"
+        android:layout_alignParentLeft="true"
+        android:background="@color/statusBarColor"
+        android:text="搜索蓝牙"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize_20"
+        app:layout_constraintEnd_toEndOf="@+id/progressBarSearchStatus"
+        app:layout_constraintStart_toStartOf="@+id/progressBarSearchStatus"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarSearchStatus" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_above="@+id/llDisconnect"
+        android:layout_below="@+id/btn_Search"
+        android:layout_alignParentLeft="true"
+        app:layout_constraintEnd_toEndOf="@+id/btn_Search"
+        app:layout_constraintStart_toStartOf="@+id/btn_Search"
+        app:layout_constraintTop_toBottomOf="@+id/btn_Search">
+
+        <LinearLayout
+            android:id="@+id/linearlayoutdevices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/llDisconnect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/scrollView2"
+        app:layout_constraintStart_toStartOf="@+id/scrollView2"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2">
+
+        <Button
+            android:id="@+id/btn_Disconnect"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_48"
+            android:layout_marginRight="@dimen/dp_16"
+            android:layout_weight="1"
+            android:background="@color/red"
+            android:text="断开连接"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_24"
+            android:visibility="invisible"/>
+
+        <Button
+            android:id="@+id/btn_Print"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_48"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_weight="1"
+            android:background="@color/blue"
+            android:text="打 印"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_24"
+            android:visibility="invisible"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_2"
+        android:background="@color/colorSecondText"
+        android:layout_margin="@dimen/dp_16"
+        app:layout_constraintEnd_toEndOf="@+id/scrollView1"
+        app:layout_constraintStart_toStartOf="@+id/scrollView1"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView1"/>
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_above="@+id/llDisconnect"
+        android:layout_below="@+id/btn_Search"
+        android:layout_alignParentStart="true"
+        app:layout_constraintEnd_toEndOf="@+id/view1"
+        app:layout_constraintStart_toStartOf="@+id/view1"
+        app:layout_constraintTop_toBottomOf="@+id/view1">
+
+        <TextView
+            android:id="@+id/tv_show"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textsize_normal"
+            android:layout_margin="@dimen/dp_16"/>
+
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>

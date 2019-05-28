@@ -1,0 +1,232 @@
+<resources>
+    <string name="app_name">水质监测</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">长隆水质分析仪</string>
+    <string name="nav_header_subtitle">家园守望者，保碧水蓝天</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">设置</string>
+    <string name="theme">主题</string>
+    <string name="cancel">取消</string>
+    <string name="select">选择</string>
+    <string name="print">打印</string>
+    <string name="gotoRegedit">去注册新账号</string>
+    <string name="gotoInput">重新输入</string>
+    <string name="login_content_err">名称或者密码不正确，请检查……</string>
+    <string name="clean">清空</string>
+    <string name="done">完成</string>
+    <string name="save">保&#32;&#32;存</string>
+    <string name="confirm">确定</string>
+    <string name="confirm2">确&#32;&#32;定</string>
+    <string name="stop">停止</string>
+    <string name="celiang">测&#32;&#32;量</string>
+    <string name="blank">空&#32;&#32;白</string>
+    <string name="add">确定注册</string>
+    <string name="canAndRe">取消并返回</string>
+    <string name="edit">编辑</string>
+    <string name="delete">删除</string>
+    <string name="select_photometer">选择波长</string>
+    <string name="select_curve">选择曲线</string>
+    <string name="time_setup">设定时间</string>
+    <string name="tv_return">返回</string>
+    <string name="tv_radduser">添加用户</string>
+    <string name="tv_userinfo">用户信息</string>
+    <string name="tv_auto">自动测量</string>
+    <string name="tv_manual">手动测量</string>
+    <string name="tv_time">定时测量</string>
+    <string name="tv_cure_adjust">曲线校准</string>
+    <string name="tv_cure_adjust_shuju">数据输入</string>
+    <string name="tv_cure_adjust_gongsi">公式输入</string>
+    <string name="tv_cure_adjust_ssjz">实时校准</string>
+    <string name="tv_photometer">光度计</string>
+    <string name="tv_list">曲线列表</string>
+    <string name="tv_list_sel">在列表中选择曲线</string>
+    <string name="tv_list_select">请从以下曲线列表中选择曲线</string>
+    <string name="tv_list_wavelength">波长列表</string>
+    <string name="tv_sec_wavelength">请选择曲波长</string>
+    <string name="wavelength">波长（λ）</string>
+    <string name="tv_select">点击这里选择曲线</string>
+    <string name="tv_show">请放入空样品管后\n点击空白按键</string>
+    <string name="tv_show_addUser">请输入用户的详细信息</string>
+    <string name="tv_show_editUser">请仔细核对用户的详细信息</string>
+    <string name="tv_celiang">请取出空样品管并放入样品后\n点击测量按键</string>
+    <string name="tv_info_select">--------请选择功能-------</string>
+    <string name="tv_chonglong_desc">-------家园守望者，保碧水蓝天-------</string>
+    <string name="tv_set_time">--------请设置测量时间-------</string>
+    <string name="tv_about">关于</string>
+    <string name="tv_help">帮助</string>
+    <string name="tv_exit">退出</string>
+    <string name="addUser">用户注册</string>
+    <string name="editUser">编辑用户信息</string>
+    <string name="user_name">姓名&#32;</string>
+    <string name="user_gh">工号&#32;</string>
+    <string name="user_pwd">密码&#32;</string>
+    <string name="user_dw">单位&#32;</string>
+    <string name="user_con">联系方式&#32;</string>
+    <string name="user_address">地址&#32;</string>
+    <string name="user_time">登记时间&#32;</string>
+    <string name="et_inputName">输入名称</string>
+    <string name="et_inputPWD">输入密码</string>
+    <string name="et_inputJN">输入工号</string>
+    <string name="et_inputCompany">输入单位</string>
+    <string name="et_inputAddress">输入地址</string>
+    <string name="et_inputContact">输入联系方式</string>
+    <string name="et_inputTime">2019-01-01</string>
+    <string name="input_hint">设置时间间隔</string>
+    <string name="input_prefill">请输入时间间隔（单位：分钟）</string>
+    <string name="read_xlsx">读取XLSX文档</string>
+    <string name="write_xlsx">生成XLSX文档</string>
+    <string name="write_docx">生成DOCX文档</string>
+    <string name="send_to">发送至...</string>
+    <string name="tv_email">发送邮件</string>
+    <string name="btn_shengcheng">生成应急报告</string>
+    <string name="tv_yjbg">应急报告</string>
+    <string name="input_prefill2"></string>
+    <string name="input_name">输入用户名称</string>
+    <string name="tv_email_addr">收件人</string>
+    <string name="tv_email_theme">主题</string>
+    <string name="tv_email_attachment">附件</string>
+    <string name="tv_email_cont">正文</string>
+    <string name="tv_email_copy">抄送</string>
+    <string name="tv_email_bcc">密送</string>
+    <string name="input_email_addr">收件人邮箱</string>
+    <string name="input_email_theme">邮件主题</string>
+    <string name="input_email_fujian">输入附件</string>
+    <string name="input_email_cont">邮件正文内容</string>
+    <string name="input_email_copy">抄送</string>
+    <string name="input_email_bcc">密送</string>
+    <string name="btn_send_email">发送邮件</string>
+    <string name="dialog_title">温馨提示</string>
+    <string name="dialog_content">查询不到工号，请检查……</string>
+    <string name="dialog_content_exit">确定退出当前应用？</string>
+
+    <string name="input_pwd">输入用户密码</string>
+    <string name="iv_contentDescription">图片</string>
+    <string name="tv_login">登&#32;&#32;录</string>
+    <string name="er_title"> 事件环境应急监测报告</string>
+    <string name="er_p1">  ，接     应急监测指令，我站组织监测人员，于      起持续开展          事件应急监测。根据     ，按照      要求，现将监测结果进行认真分析，报告如下：</string>
+    <string name="er_p2">，我站应急监测人员到达    后，根据现场情况，在     进行布点监测，现场使用       检测仪分析水样中的     浓度，并使用   仪器进行   检测。</string>
+    <string name="er_p3">同时，为查明     的来源，掌握      受影响情况，监测人员在        共布设了  个污水监测点。选取          进行采样分析。</string>
+    <string name="er_p4"> ，我站应急监测人员继续使用       检测仪在             个点位监测水中      浓度,并按照     的要求,使用     仪器进行     。</string>
+    <string name="er_p5">（一）本次          ，初步判断污染来源于       废液，主要环境有害成分为          污染物，其中      浓度较高。 </string>
+    <string name="er_p6">（二）          废水对      的出水水质造成一定影响。</string>
+    <string name="er_p7">（三）本次事件对       水体造成了一定程度的影响。</string>
+    <string name="er_li1">一、 现场监测情况</string>
+    <string name="er_li2">二、 监测结果</string>
+    <string name="er_li3">三、 结论</string>
+    <string name="er_org">长隆水质监测机构</string>
+    <string name="er_date">时间</string>
+
+    <!-- 打印机 -->
+    <string name="testprinterbt2">测试蓝牙2.0打印</string>
+    <string name="testprinterbt4">测试蓝牙4.0打印</string>
+    <string name="testprinterusb">测试USB打印</string>
+    <string name="testprinternet">测试网络打印</string>
+    <string name="tickettype">单据类型</string>
+    <string name="tickettype58mm">58MM单据</string>
+    <string name="tickettype80mm">80MM单据</string>
+    <string name="hardwarefunction">硬件功能</string>
+    <string name="cutter">切刀</string>
+    <string name="drawer">钱箱</string>
+    <string name="beeper">蜂鸣器</string>
+    <string name="printcount">打印次数</string>
+    <string name="bitmapcompress">图形压缩</string>
+    <string name="autoprint">自动打印</string>
+    <string name="checkreturn">检查返回</string>
+    <string name="printcontent">打印内容</string>
+    <string name="small">少量</string>
+    <string name="middle">中等</string>
+    <string name="large">大量</string>
+    <string name="printsuccess">打印成功</string>
+    <string name="printfailed">打印失败</string>
+    <string name="count1">1</string>
+    <string name="count10">10</string>
+    <string name="count100">100</string>
+    <string name="count1000">1000</string>
+
+    <string name="textview_title_unlock">Lock Setting</string>
+    <string name="textview_click_before">用户</string>
+    <string name="textview_click_after">Go to : https://github.com/Bilibili/MagicaSakura</string>
+
+    <string name="magicasrkura_prompt_0">隐藏着黑暗力量的钥匙啊，在我面前显示你真正的力量，小樱命令你，封印解除！</string>
+    <string name="magicasrkura_prompt_1">隐藏着星星力量的钥匙啊，在我面前显示你真正的力量，小樱命令你，封印解除！</string>
+    <string name="magicasrkura_prompt_2">库洛里多创造的库洛牌啊，请你舍弃旧形象，以小樱之名命令你，封印解除！</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+
+    <string name="title_activity_emergency_report">应急报告</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+</resources>

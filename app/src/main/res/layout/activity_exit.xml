@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
+
+    <Button
+        android:id="@+id/btn_preview"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/border_line_orange"
+        android:text="返回主页面"
+        android:textSize="@dimen/textsize_24"
+        android:textColor="@color/white"/>
+</LinearLayout>

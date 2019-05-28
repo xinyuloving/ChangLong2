@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.TimingMeasureActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:background="@color/statusBarColor"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/tv_user"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="4"
+            android:layout_marginLeft="@dimen/padding_10"
+            android:gravity="start"
+            android:text="@string/textview_click_before"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_large"
+            android:maxLines="1"
+            android:maxEms="4"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/tv_title_show"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:text="@string/tv_time"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textsize_22"
+            android:singleLine="true"
+            android:maxEms="4"
+            android:ellipsize="marquee"/>
+
+        <TextView
+            android:id="@+id/tv_cod"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="6"
+            android:gravity="end"
+            android:text="COD（0-100 mg/L）"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_large"
+            android:maxLines="1"
+            android:maxEms="4"
+            android:ellipsize="end"/>
+
+    </LinearLayout>
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dp_12"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_title"
+        app:cardCornerRadius="10dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="C=0.000 mg/L"
+            android:textColor="@color/red"
+            android:textSize="@dimen/textsize_38"
+            android:textStyle="bold"/>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearlayout"
+        app:cardCornerRadius="10dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/tv_show"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="start|center"
+            android:text="请放入空白比色管\n\n请按空白键"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textsize_22" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/cardview1"
+        app:layout_constraintStart_toStartOf="@+id/cardview1"
+        app:layout_constraintTop_toBottomOf="@+id/cardview1"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        app:cardCornerRadius="10dp"
+        android:layout_marginTop="8dp">
+        <TextView
+            android:id="@+id/tv_result"
+            android:layout_width="320dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="8dp"
+            android:gravity="start|center"
+            android:text="请取出空白比色管\n请放入样品\n请按确认键"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textsize_28" />
+
+    </android.support.v7.widget.CardView>
+
+
+
+
+
+
+    <TextView
+        android:id="@+id/tv_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textColor="@color/statusBarColor"
+        android:textSize="@dimen/textsize_24"
+        app:layout_constraintEnd_toEndOf="@+id/cardview2"
+        app:layout_constraintStart_toStartOf="@+id/cardview2"
+        app:layout_constraintTop_toBottomOf="@+id/cardview2" />
+
+
+    <Button
+        android:id="@+id/btn_calculate"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:background="@drawable/btn_bg_blue"
+        android:text="@string/confirm"
+        android:textSize="@dimen/textsize_24"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/tv_timer"
+        app:layout_constraintStart_toStartOf="@+id/tv_timer"
+        app:layout_constraintTop_toBottomOf="@+id/tv_timer"/>
+
+
+
+</android.support.constraint.ConstraintLayout>

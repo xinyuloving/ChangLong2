@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="Measurement">
+        <menu>
+        <item
+            android:id="@+id/nav_auto"
+            android:icon="@mipmap/icon_auto"
+            android:title="自动测量" />
+        <item
+            android:id="@+id/nav_manual"
+            android:icon="@mipmap/icon_handraulic"
+            android:title="手动测量" />
+        <item
+            android:id="@+id/nav_time"
+            android:icon="@mipmap/icon_timing"
+            android:title="定时测量" />
+        <item
+            android:id="@+id/nav_photometer"
+            android:icon="@mipmap/icon_photometer"
+            android:title="光度计" />
+        <item
+            android:id="@+id/nav_curve"
+            android:icon="@mipmap/icon_curve"
+            android:title="曲线校准" />
+        </menu>
+    </item>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_DataView"
+                android:icon="@mipmap/icon_lookover"
+                android:title="查看数据" />
+            <item
+                android:id="@+id/nav_EmergencyReport"
+                android:icon="@mipmap/icon_eergency"
+                android:title="应急报告" />
+        </menu>
+    </item>
+
+    <item android:title="About">
+
+        <menu>
+            <item
+                android:id="@+id/setting"
+                android:icon="@mipmap/icon_setting"
+                android:title="检测设置" />
+            <item
+                android:id="@+id/help"
+                android:icon="@drawable/ic_menu_share"
+                android:title="帮助" />
+            <item
+                android:id="@+id/about"
+                android:icon="@mipmap/icon_theme"
+                android:title="关于" />
+            <item
+                android:id="@+id/exit"
+                android:icon="@mipmap/icon_exit"
+                android:title="退出" />
+
+        </menu>
+
+    </item>
+
+</menu>

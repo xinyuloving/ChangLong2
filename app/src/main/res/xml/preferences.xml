@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+    android:key           这个属性相当于android:id的作用。用此key来唯一表示此Preference
+    android:title         Preference的标题，
+    android:summary       表示Preference提示语，相对于android:title来说显示要小点，而且显示位置在android:title下面
+    android:defaultValue   这个表示的是默认值，比如CheclPreference这种preference就可以指定默认是"true"还是“false”
+    android:enabled        表示该Preference是否可用状态
+     -->
+    <PreferenceCategory android:title="基本设置">
+        <EditTextPreference
+            android:key="machineId"
+            android:numeric="integer"
+            android:title="水质检测仪编号" />
+        <CheckBoxPreference
+            android:key="checkbox_boot"
+            android:summaryOff="不启动"
+            android:summaryOn="启动"
+            android:title="开机启动水质检测APP"></CheckBoxPreference>
+        <SwitchPreference
+            android:key="sp_playAuto"
+            android:defaultValue="false"
+            android:switchTextOff="关闭"
+            android:switchTextOn="打开"
+            android:summaryOff="关闭"
+            android:summaryOn="打开"
+            android:title="语音播报" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="采集设置">
+        <EditTextPreference
+            android:key="ep_CT"
+            android:numeric="integer"
+            android:title="采集时长(1-10s)" />
+        <EditTextPreference
+            android:key="ep_CF"
+            android:numeric="integer"
+            android:title="单位时间内采集次数(1-100)" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="测量设置">
+        <ListPreference
+            android:dialogTitle="选择曝光次数"
+            android:entries="@array/countdown_time_key"
+            android:entryValues="@array/countdown_time_value"
+            android:key="list_CountDown"
+            android:title="曝光次数"></ListPreference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="还原">
+        <Preference
+            android:icon="@mipmap/icon_app"
+            android:key="exhibitgoods"
+            android:title="还原测量设置"></Preference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="标签打印机设置">
+        <Preference
+            android:key="bqdyj"
+            android:title="标签打印机"></Preference>
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="提示">
+        <CheckBoxPreference
+            android:key="checkbox_0"
+            android:summaryOff="关"
+            android:summaryOn="开"
+            android:title="提示音与震动"></CheckBoxPreference>
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="关于">
+        <Preference
+            android:key="checkupdate"
+            android:title="检查更新"></Preference>
+        <Preference
+            android:key="copyright"
+            android:title="版权声明"></Preference>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="">
+        <Preference
+            android:key="exitapp"
+            android:layout="@layout/activity_exit"
+            android:title="返回主页面" />
+    </PreferenceCategory>
+</PreferenceScreen>

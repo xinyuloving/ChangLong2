@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:useLevel="false"
+    >
+    <solid android:color="@color/colorOrangePrimary"/>
+    <corners android:topLeftRadius="30dip"
+        android:topRightRadius="30dip"
+        android:bottomRightRadius="30dip"
+        android:bottomLeftRadius="30dip" />
+
+    <padding android:left="1dip"
+        android:right="1dip"
+        android:bottom="1dip"/>
+
+    <stroke android:width="1dip"
+        android:color="@color/colorOrangePrimary"
+        />
+    <!--边框宽度-->
+    <!--边框-->
+</shape>

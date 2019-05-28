@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:stv="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.ViewDataActivity">
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/tv_show"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        stv:sCenterTextColor="@color/white"
+        stv:sCenterTextSize="26dp"
+        stv:sCenterTextString="查看数据"
+        stv:sShapeCornersRadius="1dp"
+        stv:sShapeSelectorNormalColor="@color/colorBluePrimary"
+        stv:sShapeSelectorPressedColor="@color/gray"
+        stv:sUseShape="true" />
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/autoMeasurement"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.146"
+        stv:sLeftIconRes="@mipmap/icon_auto"
+        stv:sLeftTextString="自动测量"
+        stv:sRightIconRes="@mipmap/arrow_right_red" />
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/manualMeasurement"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.383"
+        stv:sLeftIconRes="@mipmap/icon_handraulic_24"
+        stv:sLeftTextString="手动测量"
+        stv:sRightIconRes="@mipmap/arrow_right_red" />
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/timeMeasurement"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.264"
+        stv:sLeftIconRes="@mipmap/icon_timing_24"
+        stv:sLeftTextString="定时测量"
+        stv:sRightIconRes="@mipmap/arrow_right_red" />
+
+</android.support.constraint.ConstraintLayout>

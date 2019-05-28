@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.PhotometerSecActivity"
+    android:background="#30C5C6C7">
+
+    <LinearLayout
+        android:id="@+id/ll_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:background="@color/statusBarColor"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_return"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="@dimen/dp_36"
+            android:layout_gravity="center"
+            android:src="@mipmap/iv_return"/>
+        <TextView
+            android:id="@+id/tv_ll_title"
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="@dimen/dp_48"
+            android:text="光度计"
+            android:textSize="@dimen/textsize_30"
+            android:textColor="#ffffff"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tv_user"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="@dimen/dp_48"
+            android:text="用户名"
+            android:textSize="@dimen/textsize_20"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            android:singleLine="true"/>
+    </LinearLayout>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dp_12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_title"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        app:cardCornerRadius="10dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="C=0.000 mg/L"
+            android:textColor="@color/red"
+            android:textSize="@dimen/textsize_38"
+            android:textStyle="bold"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/tv_cod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="波长"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/textsize_20"
+            android:textStyle="bold" />
+
+    </android.support.v7.widget.CardView>
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview2"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        app:layout_constraintEnd_toEndOf="@id/cardview1"
+        app:layout_constraintStart_toStartOf="@id/cardview1"
+        app:layout_constraintTop_toBottomOf="@id/cardview1"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        app:cardCornerRadius="10dp"
+        android:layout_marginTop="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_show1"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="start|center"
+                android:text="请放入空白比色管\n请按空白键\n请取出空白比色管\n请放入样品\n请按确认键"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_28"
+                />
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview3"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_marginLeft="@dimen/card_marginLeft_15"
+        android:layout_marginTop="@dimen/card_marginTop_8"
+        android:layout_marginRight="@dimen/card_marginRight_15"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/cardview2"
+        app:layout_constraintStart_toStartOf="@+id/cardview2"
+        app:layout_constraintTop_toBottomOf="@+id/cardview2">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#5E909090" />
+
+        <View
+            android:layout_width="1dip"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="#5E909090" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/card_marginLeft_60"
+            android:layout_marginTop="@dimen/card_marginTop_25"
+            android:text="透光率（T）" />
+
+        <TextView
+            android:id="@+id/tv_TransmissionRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/card_marginLeft_60"
+            android:layout_marginTop="@dimen/card_marginTop_40"
+            android:text="10%"
+            android:textColor="@color/statusBarColor"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/card_marginLeft_200"
+            android:layout_marginTop="@dimen/card_marginTop_25"
+            android:text="电流（μA）" />
+
+        <TextView
+            android:id="@+id/tv_Current"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/card_marginLeft_200"
+            android:layout_marginTop="@dimen/card_marginTop_40"
+            android:text="1.000"
+            android:textColor="@color/statusBarColor"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/card_marginLeft_60"
+            android:layout_marginTop="@dimen/card_marginTop_90"
+            android:text="电压（λ）" />
+
+        <TextView
+            android:id="@+id/tv_Voltage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/card_marginLeft_60"
+            android:layout_marginTop="@dimen/card_marginTop_105"
+            android:text="10mV"
+            android:textColor="@color/statusBarColor"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/card_marginLeft_200"
+            android:layout_marginTop="@dimen/card_marginTop_90"
+            android:text="温度" />
+
+        <TextView
+            android:id="@+id/tv_Temper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/card_marginLeft_200"
+            android:layout_marginTop="@dimen/card_marginTop_105"
+            android:text="25℃"
+            android:textColor="@color/statusBarColor"
+            android:textSize="20dp" />
+
+
+    </android.support.v7.widget.CardView>
+
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview33"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/cardview2"
+        app:layout_constraintStart_toStartOf="@+id/cardview2"
+        app:layout_constraintTop_toBottomOf="@+id/cardview2"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        app:cardCornerRadius="10dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/tv_result"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginTop="8dp"
+            android:gravity="start|center"
+            android:paddingLeft="15dp"
+            android:text="请取出空白比色管\n请放入样品\n请按确认键"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textsize_28"
+            />
+    </android.support.v7.widget.CardView>
+
+
+
+    <TextView
+        android:id="@+id/tv_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textColor="@color/statusBarColor"
+        android:textSize="@dimen/textsize_24"
+        app:layout_constraintEnd_toEndOf="@+id/cardview3"
+        app:layout_constraintStart_toStartOf="@+id/cardview3"
+        app:layout_constraintTop_toBottomOf="@+id/cardview3" />
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/tv_timer"
+        app:layout_constraintStart_toStartOf="@+id/tv_timer"
+        app:layout_constraintTop_toBottomOf="@+id/tv_timer">
+
+        <Button
+            android:id="@+id/btn_measure"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearlayout"
+            app:layout_constraintVertical_bias="0.961"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btn_blank"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:layout_margin="@dimen/padding_half"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/btn_bg_blue"
+            android:text="@string/blank"
+            android:textSize="@dimen/textsize_24"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/cardview1"
+            app:layout_constraintStart_toStartOf="@+id/cardview1"
+            app:layout_constraintTop_toBottomOf="@+id/cardview1"/>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_margin="@dimen/padding_half"
+            android:layout_weight="1"
+            android:text="@string/confirm2"
+            android:textSize="@dimen/textsize_24"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/btn_bg_yellow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearlayout"
+            app:layout_constraintVertical_bias="0.961"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

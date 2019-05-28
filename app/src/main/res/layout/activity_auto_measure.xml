@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.AutoMeasureActivity"
+    android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/statusBarColor"
+        app:subtitleTextColor="#ffffff"
+        app:titleTextColor="#ffffff">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+            <ImageView
+                android:id="@+id/iv_return"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_24"
+                android:layout_weight="2"
+                android:layout_gravity="start|center"
+                android:src="@mipmap/iv_return"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/tv_return"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_48"
+                android:layout_weight="3"
+                android:text="＜返回"
+                android:textSize="@dimen/textsize_20"
+                android:textColor="@color/white"
+                android:gravity="start|center"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="5"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/tv_auto"
+                android:textSize="@dimen/textsize_30"
+                android:textColor="#ffffff" />
+            <TextView
+                android:id="@+id/tv_user"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="用户名"
+                android:textSize="@dimen/textsize_20"
+                android:textColor="#ffffff"/>
+        </LinearLayout>
+
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:id="@+id/cardview1"
+        android:layout_marginTop="@dimen/card_marginTop_20"
+        android:layout_marginLeft="@dimen/card_marginLeft_15"
+        android:layout_marginRight="@dimen/card_marginRight_15"
+        app:cardCornerRadius="8dp"
+        android:layout_below="@id/toolbar">
+        <TextView
+            android:id="@+id/text_userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测量结果"
+            android:textColor="#ffffff"
+            android:textSize="14dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/tar"
+            android:paddingTop="3dp"/>
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C=15.000mg/L"
+            android:layout_gravity="center"
+            android:textSize="38dp"
+            android:textStyle="bold"
+            android:textColor="@color/statusBarColor"/>
+        <TextView
+            android:id="@+id/tv_cod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="COD(0~100mg/L)"
+            android:layout_gravity="center"
+            android:layout_marginTop="70dp"
+            android:textSize="14dp"/>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview2"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginRight="@dimen/card_marginRight_15"
+        android:layout_marginLeft="@dimen/card_marginLeft_15"
+        android:layout_marginTop="@dimen/card_marginTop_8"
+        android:layout_below="@+id/cardview1"
+        app:cardCornerRadius="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="综合排放标准COD:"
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="1dp"
+            android:textColor="@color/statusBarColor"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A排放限值："
+            android:layout_marginTop="@dimen/card_marginTop_25"
+            android:layout_marginLeft="@dimen/card_marginLeft_60"/>
+        <TextView
+            android:id="@+id/text_limitA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20mg/L"
+            android:layout_marginTop="@dimen/card_marginTop_38"
+            android:layout_marginLeft="@dimen/card_marginLeft_60"
+            android:textSize="18dp"
+            android:textColor="@color/statusBarColor"/>
+
+        <View
+            android:layout_width="1dip"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center_horizontal"
+            android:background="#5E909090"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="B排放限值："
+            android:layout_marginTop="@dimen/card_marginTop_25"
+            android:layout_marginLeft="@dimen/card_marginLeft_240"/>
+        <TextView
+            android:id="@+id/text_limitB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30mg/L"
+            android:layout_marginTop="@dimen/card_marginTop_38"
+            android:layout_marginLeft="@dimen/card_marginLeft_240"
+            android:textSize="18dp"
+            android:textColor="@color/statusBarColor" />
+
+    </android.support.v7.widget.CardView>
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview3"
+        android:layout_width="match_parent"
+        android:layout_height="155dp"
+        android:layout_below="@+id/cardview2"
+        android:layout_marginLeft="@dimen/card_marginLeft_15"
+        android:layout_marginTop="@dimen/card_marginTop_8"
+        android:layout_marginRight="@dimen/card_marginRight_15"
+        app:cardCornerRadius="8dp">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#5E909090" />
+
+        <View
+            android:layout_width="1dip"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="#5E909090" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/card_marginLeft_60"
+            android:layout_marginTop="@dimen/card_marginTop_25"
+            android:text="透光率（T）" />
+
+        <TextView
+            android:id="@+id/text_lumin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/card_marginLeft_60"
+            android:layout_marginTop="@dimen/card_marginTop_40"
+            android:textColor="@color/statusBarColor"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/card_marginLeft_240"
+            android:layout_marginTop="@dimen/card_marginTop_25"
+            android:text="吸光度（A）" />
+
+        <TextView
+            android:id="@+id/text_absor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/card_marginLeft_240"
+            android:layout_marginTop="@dimen/card_marginTop_40"
+            android:textColor="@color/statusBarColor"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/card_marginLeft_60"
+            android:layout_marginTop="@dimen/card_marginTop_90"
+            android:text="波长（λ）" />
+
+        <TextView
+            android:id="@+id/text_wavelengh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/card_marginLeft_60"
+            android:layout_marginTop="@dimen/card_marginTop_105"
+            android:textColor="@color/statusBarColor"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/card_marginLeft_240"
+            android:layout_marginTop="@dimen/card_marginTop_90"
+            android:text="温度" />
+
+        <TextView
+            android:id="@+id/text_temper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/card_marginLeft_240"
+            android:layout_marginTop="@dimen/card_marginTop_105"
+            android:textColor="@color/statusBarColor"
+            android:textSize="20dp" />
+
+
+    </android.support.v7.widget.CardView>
+
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2019年5月21日"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/cardview3"
+        android:layout_marginTop="5dp"
+        android:textSize="18dp"
+        android:textColor="#6E6F6F"/>
+
+    <LinearLayout
+        android:layout_below="@+id/tv_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/card_marginTop_8"
+        android:layout_marginLeft="@dimen/card_marginLeft_15"
+        android:layout_marginRight="@dimen/card_marginRight_15">
+        <Button
+            android:id="@+id/btn_measure"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_48"
+            android:text="测  量"
+            android:background="@drawable/btn_bg_blue"
+            android:layout_weight="1"
+            android:textSize="@dimen/textsize_24"
+            android:textColor="#ffffff"/>
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_48"
+            android:text="保  存"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/btn_bg_yellow"
+            android:layout_weight="1"
+            android:textSize="@dimen/textsize_24"
+            android:textColor="#ffffff"/>
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

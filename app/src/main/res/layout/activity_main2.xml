@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.Main2Activity">
+
+    <include layout="@layout/activity_normal_toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"></include>
+
+    <TextView
+        android:id="@+id/show_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/nav_header_title"
+        android:textColor="@color/statusBarColor"
+        android:textSize="@dimen/textsize_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.081"
+        android:visibility="gone"/>
+
+    <com.bigkoo.convenientbanner.ConvenientBanner
+        android:id="@+id/convenientBanner"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        app:autoTurningTime="3000"
+        app:canLoop="true"
+        app:layout_constraintEnd_toEndOf="@+id/show_main"
+        app:layout_constraintStart_toStartOf="@+id/show_main"
+        app:layout_constraintTop_toBottomOf="@+id/show_main" />
+
+    <TextView
+        android:id="@+id/showText"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/tv_chonglong_desc"
+        android:textSize="@dimen/textsize_20"
+        android:textColor="@color/statusBarColor"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="@+id/convenientBanner"
+        app:layout_constraintStart_toStartOf="@+id/convenientBanner"
+        app:layout_constraintTop_toBottomOf="@+id/convenientBanner"/>
+
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3"
+        android:verticalSpacing="2dp"
+        android:horizontalSpacing="2dp"
+        android:columnWidth="10dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="@+id/showText"
+        app:layout_constraintStart_toStartOf="@+id/showText"
+        app:layout_constraintTop_toBottomOf="@+id/showText"
+        />
+</android.support.constraint.ConstraintLayout>
