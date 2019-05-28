@@ -24,14 +24,17 @@ import com.lkkdesign.changlong.utils.CustomToast;
 
 public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
+    /**
+     * 添加注释
+     */
     private static final int REQUEST_CODE_PERMISSION_SD = 101;
     private static final int REQUEST_CODE_SETTING = 300;
     Context mContext = null;
     private ListPreference preference_countdown;
     private Intent intent = new Intent();
 
-    SharedPreferences settings = getSharedPreferences("setTime", 0);
-    SharedPreferences.Editor editor = settings.edit();
+//    SharedPreferences settings = getSharedPreferences("setTime", 0);
+//    SharedPreferences.Editor editor = settings.edit();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +54,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
 
         final EditTextPreference serverip = (EditTextPreference) findPreference("machineId");
         final EditTextPreference epCT = (EditTextPreference) findPreference("ep_CT");
-        final EditTextPreference epCF = (EditTextPreference) findPreference("ep_CF");
+        final EditTextPreference epCF = (EditTextPreference) findPreference("ep_CT");
         SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(this);
 
         serverip.setSummary(shp.getString("machineId", ""));
@@ -80,6 +83,8 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
                 Log.i("SettingActivity", "222=" + newValue.toString());
                 Log.i("SettingActivity", "222=" + newValue);
                 //AppSharePreferenceMgr.put(getApplication(), "epCT", "" + newValue);
+                SharedPreferences settings = getSharedPreferences("setTime", 0);
+                SharedPreferences.Editor editor = settings.edit();
 
                 editor.putString("epCT","" + newValue);
                 editor.commit();
@@ -97,6 +102,8 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
                 //AppSharePreferenceMgr.put(getApplication(), "epCF", "" + newValue);
 //                SharedPreferences settings = getSharedPreferences("setTime", 0);
 //                SharedPreferences.Editor editor = settings.edit();
+                SharedPreferences settings = getSharedPreferences("setTime", 0);
+                SharedPreferences.Editor editor = settings.edit();
                 editor.putString("epCF","" + newValue);
                 editor.commit();
                 return true;
