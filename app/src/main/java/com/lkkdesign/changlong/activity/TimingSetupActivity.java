@@ -100,6 +100,11 @@ public class TimingSetupActivity extends AppCompatActivity {
                 Log.i(TAG, "strJianGe=" + strJianGe);
                 Log.i(TAG, "calculate=" + calculate(strStartTime, strEndTime));
 
+                if(calculate(strStartTime, strEndTime) > 0){
+                    CustomToast.showToast(this, "开始时间不得小于当前时间");
+                    return;
+                }
+
                 Long longDiff = DateUtil.getDateTime(strStartTime, strEndTime);
                 /*strStartTime.length() > 0 && strEndTime.length() > 0 && strJianGe.length() > 0*/
                 if (strStartTime.length() > 0 && strEndTime.length() >= 0 && strJianGe.length() > 0) {
@@ -113,10 +118,7 @@ public class TimingSetupActivity extends AppCompatActivity {
                     } else {
                         //CustomToast.showToast(this, "请选择正确的日期和时间");
                         //CustomToast.showToast(this, "时间间隔：" + longDiff);
-                        if(calculate(strStartTime, strEndTime) > 0){
-                            CustomToast.showToast(this, "开始时间不得小于当前时间");
-                            return;
-                        }
+
                         intent.setClass(this, CurveSelectActivity.class);
                         intent.putExtra("type", "time");
                         intent.putExtra("startTime", strStartTime);
