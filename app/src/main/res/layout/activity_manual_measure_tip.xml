@@ -170,7 +170,6 @@
             android:textColor="@color/white"
             android:textSize="@dimen/textsize_24" />
 
-
         <Button
             android:id="@+id/btn_measure"
             android:layout_width="0dp"
@@ -182,10 +181,5 @@
             android:textColor="@color/white"
             android:textSize="@dimen/textsize_24" />
     </LinearLayout>
-
-
-
-
-
 
 </android.support.constraint.ConstraintLayout>

@@ -23,14 +23,19 @@
                 android:id="@+id/iv_return"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dp_36"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 android:layout_gravity="start|center"
-                android:src="@mipmap/iv_return"/>
-            <View
+                android:src="@mipmap/iv_return_18"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/tv_return"
                 android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:visibility="invisible"/>
+                android:layout_height="@dimen/dp_48"
+                android:layout_weight="2"
+                android:text="＜返回"
+                android:textSize="@dimen/textsize_20"
+                android:textColor="@color/white"
+                android:gravity="start|center"/>
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="48dp"
@@ -62,9 +67,7 @@
         app:layout_constraintEnd_toEndOf="@+id/toolbar"
         app:layout_constraintStart_toStartOf="@+id/toolbar"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:layout_marginTop="@dimen/card_marginTop_8"
+        android:layout_margin="@dimen/dp_16"
         app:cardCornerRadius="@dimen/dp_10">
 
         <TextView
@@ -95,32 +98,26 @@
         app:layout_constraintEnd_toEndOf="@+id/cardview1"
         app:layout_constraintStart_toStartOf="@+id/cardview1"
         app:layout_constraintTop_toBottomOf="@+id/cardview1"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:layout_marginTop="@dimen/card_marginTop_8"
+        android:layout_margin="@dimen/dp_16"
         app:cardCornerRadius="@dimen/dp_10">
         <TextView
             android:id="@+id/tv_show"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_100"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_16"
             android:gravity="start|center"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_16" />
+            android:textColor="@color/gray"
+            android:textSize="@dimen/textsize_small" />
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardview3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="120dp"
         app:layout_constraintEnd_toEndOf="@+id/cardview2"
         app:layout_constraintStart_toStartOf="@+id/cardview2"
         app:layout_constraintTop_toBottomOf="@+id/cardview2"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:layout_marginTop="@dimen/card_marginTop_8"
+        android:layout_margin="@dimen/dp_16"
         app:cardCornerRadius="@dimen/dp_10">
         <LinearLayout
             android:id="@+id/start_line"
@@ -133,7 +130,7 @@
                 android:layout_height="wrap_content">
                 <com.allen.library.SuperTextView
                     android:layout_width="0dp"
-                    android:layout_height="30dp"
+                    android:layout_height="40dp"
                     android:layout_weight="3"
                     android:layout_marginStart="15dp"
                     app:sCenterTextString="开始时间："
@@ -142,7 +139,7 @@
                 <com.allen.library.SuperTextView
                     android:id="@+id/tv_startTime"
                     android:layout_width="0dp"
-                    android:layout_height="30dp"
+                    android:layout_height="40dp"
                     android:layout_weight="7"
                     android:layout_marginEnd="15dp"
                     />
@@ -152,7 +149,7 @@
                 android:layout_height="wrap_content">
                 <com.allen.library.SuperTextView
                     android:layout_width="0dp"
-                    android:layout_height="30dp"
+                    android:layout_height="40dp"
                     android:layout_weight="3"
                     android:layout_marginStart="15dp"
                     app:sCenterTextString="间隔时间：">
@@ -160,7 +157,7 @@
                 <com.allen.library.SuperTextView
                     android:id="@+id/tv_jgTime"
                     android:layout_width="0dp"
-                    android:layout_height="30dp"
+                    android:layout_height="40dp"
                     android:layout_weight="7"
                     android:layout_marginEnd="15dp" />
             </LinearLayout>
@@ -169,14 +166,14 @@
                 android:layout_height="wrap_content">
                 <com.allen.library.SuperTextView
                     android:layout_width="0dp"
-                    android:layout_height="30dp"
+                    android:layout_height="40dp"
                     android:layout_weight="3"
                     android:layout_marginStart="15dp"
                     app:sCenterTextString="结束时间："/>
                 <com.allen.library.SuperTextView
                     android:id="@+id/tv_endTime"
                     android:layout_width="0dp"
-                    android:layout_height="30dp"
+                    android:layout_height="40dp"
                     android:layout_weight="7"
                     android:layout_marginEnd="15dp" />
             </LinearLayout>

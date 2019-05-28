@@ -46,8 +46,7 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
     protected BaseAdapter mAdapter;
     protected List<String> mDataList;//自动测量
     private ImageView iv_return;
-    private TextView tvTime;
-    private TextView tvUser;
+    private TextView tvTime,tvReturn,tvUser;
     private Button btnCalculate;
     private Intent intent = new Intent();
 
@@ -79,6 +78,7 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
 
         mRecyclerView = findViewById(R.id.rv_curve);
         iv_return = findViewById(R.id.iv_return);
+        tvReturn = findViewById(R.id.tv_return);
         tvTime = findViewById(R.id.tv_timer);
         btnCalculate=findViewById(R.id.btn_calculate);
 
@@ -108,7 +108,7 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
 
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged(mDataList);
-        iv_return.setOnClickListener(new View.OnClickListener() {
+        tvReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                intent.setClass(CurveSelectActivity.this, ManualMeasureFristActivity.class);
@@ -257,7 +257,6 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
         if(strInfo.equals("")){
             CustomToast.showToast(this, "请选择对应的曲线！");
         }else {
-
             intent.setClass(this, TimingMeasureTipActivity.class);
             intent.putExtra("strStartTime", strStratTime);
             intent.putExtra("strEndTime", strEndTime);

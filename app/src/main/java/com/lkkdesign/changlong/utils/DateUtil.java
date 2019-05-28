@@ -28,6 +28,7 @@ public class DateUtil {
     public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public static final SimpleDateFormat DATE_TIME_FORMAT2 = new SimpleDateFormat("yyyy年MM月dd日");
     public static final SimpleDateFormat DATE_TIME_FORMAT3 = new SimpleDateFormat("yyyyMMddHHmmss");
+    public static final SimpleDateFormat DATE_TIME_FORMAT4 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     public static String getDate(){
         java.util.Date tdate = new java.util.Date();
@@ -41,6 +42,10 @@ public class DateUtil {
     public static String getNowDateTime2() {
         java.util.Date tdate = new java.util.Date();
         return DateUtil.DATE_TIME_FORMAT3.format(tdate);
+    }
+    public static String getNowDateTime4() {
+        java.util.Date tdate = new java.util.Date();
+        return DateUtil.DATE_TIME_FORMAT4.format(tdate);
     }
 
     public static String formatDateToMD(String str) {

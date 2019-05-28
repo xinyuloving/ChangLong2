@@ -62,6 +62,8 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
     CardView cardview3;
     @BindView(R.id.tv_timer)
     TextView tvTimer;
+    @BindView(R.id.tv_return)
+    TextView tvReturn;
     @BindView(R.id.btn_calculate)
     Button btnCalculate;
     private String strTitle = "";
@@ -104,7 +106,8 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.tv_user, R.id.btn_calculate, R.id.iv_return, R.id.cardview1, R.id.tv_startTime, R.id.tv_jgTime, R.id.tv_endTime})
+    @OnClick({R.id.tv_user, R.id.btn_calculate, R.id.iv_return, R.id.tv_return,R.id.cardview1, R.id.tv_startTime, R.id.tv_jgTime,
+            R.id.tv_endTime})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_user:
@@ -113,12 +116,12 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
                 tvTitle.setText(RandomUntil.getNum(25, 35) + ".000 mg/L");
                 break;
             case R.id.iv_return:
+            case R.id.tv_return:
                 intent.setClass(this, TimingSetupActivity.class);
                 startActivity(intent);
                 this.finish();
                 break;
             case R.id.cardview1:
-
                 Dialog dialog = new Dialog(TimingMeasureSecActivity.this);
                 dialog.setContentView(R.layout.history_dialog_layout);
                 dialog.setTitle("历史记录");
