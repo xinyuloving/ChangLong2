@@ -25,11 +25,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ManualMeasureSecActivity extends AppCompatActivity {
+import static com.lkkdesign.changlong.utils.MyFunc.calculateTransmittance;
+import static com.lkkdesign.changlong.utils.MyFunc.getAbsorbance;
 
+public class ManualMeasureSecActivity extends AppCompatActivity {
 
     @BindView(R.id.tv_user)
     TextView tvUser;
+    @BindView(R.id.tv_return)
+    TextView tvReturn;
     @BindView(R.id.text_userName)
     TextView textUserName;
     @BindView(R.id.tv_title)
@@ -63,6 +67,7 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
     private String strInfo = "";
     private MixSpeakUtil mixSpeakUtil;
     private String strWavelength = "";
+    private boolean booIsMeasure = false;
     private Intent intent = new Intent();
 
     private int intWavelength;//曲线波长
@@ -94,7 +99,7 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.tv_user, R.id.tv_cod, R.id.tv_title, R.id.tv_timer,
-            R.id.btn_measure, R.id.btn_save,R.id.iv_return})
+            R.id.btn_measure, R.id.btn_save,R.id.iv_return,R.id.tv_return})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_user:
@@ -106,50 +111,56 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
             case R.id.tv_timer:
                 break;
             case R.id.iv_return:
+            case R.id.tv_return:
                 intent.setClass(this, ManualMeasureFristActivity.class);
                 startActivity(intent);
                 this.finish();
                 break;
             case R.id.btn_measure:
-                // cardview2.setVisibility(View.GONE);
-//                view2.setVisibility(View.VISIBLE);
-//                tvTitle.setText(RandomUntil.getNum(25, 35) + ".000 mg/L");
-//                strInfo = "综合排放标准 COD：\n" +
-//                        "A排放限值 ：20mg/L\n" +
-//                        "B排放限值 ：30mg/L\n";
-//                tvShow.setText(strInfo);
-//                strInfo = "透过率（T）："+RandomUntil.getNum(20) +".00%\n"+
-//                        "吸光度（A）：1.0\n" +
-//                        "波长（λ）：610 nm\n" +
-//                        "温度："+RandomUntil.getNum(25,37)+" ℃\n";
-//                tvResult.setText(strInfo);
-////                play("计算完成");
-//                mixSpeakUtil.speak("计算完成");
-//                view2.setVisibility(View.VISIBLE);
+
+//                intResult = RandomUntil.getNum(25, 35);
+//                intWavelength = 610;
+//                floDensity = 10.0f;
+//                floTranrate = RandomUntil.getRandomFloat(80.0f, 100.0f);
+//                floAbsorbance = RandomUntil.getRandomFloat(1.0f, 2.0f);
+//                inttemp = RandomUntil.getNum(27, 35);
+//                tvTitle.setText(intResult + ".000 mg/L");
+//                strInfo = Constants.strWavelength;
+//                //tvShow.setText(strInfo);
+//                strInfo = "透过率（T）：" + floTranrate + "%\n" +
+//                        "吸光度（A）：" + floAbsorbance + "\n" +
+//                        "波长（λ）：" + intWavelength + "nm\n" +
+//                        "温度：" + inttemp + " ℃\n";
+//
+//                textLumin.setText(Constants.df.format(floTranrate * 100) + "%");
+//                textAbsor.setText(floAbsorbance + "");
+//                textWavelengh.setText(intWavelength + "nm");
+//                textTemper.setText(inttemp + "℃");
+                // tvResult.setText(strInfo);
+//                play("计算完成");
+
+                booIsMeasure = true;
                 intResult = RandomUntil.getNum(25, 35);
                 intWavelength = 610;
-                floDensity = 10.0f;
-                floTranrate = RandomUntil.getRandomFloat(80.0f, 100.0f);
-                floAbsorbance = RandomUntil.getRandomFloat(1.0f, 2.0f);
+                floDensity = 10.0f;//密度
+                float floClosed = RandomUntil.getRandomFloat(0.10f, 0.50f);//光源在关闭的情况下，检测器产生的电流数值
+                float floEmpty = RandomUntil.getRandomFloat(100.0f, 105.50f);//光源点亮，样品仓放置空样品管的情况下，检测器产生的电流数值
+                float floSample = RandomUntil.getRandomFloat(10.10f, 20.50f);//空样品管拿出来，将装有样品的样品管放置进样品仓，此时，检测器产生的电流数值
+                floTranrate = calculateTransmittance(floClosed, floEmpty, floSample);//透过率
+                floAbsorbance = getAbsorbance(floTranrate);//吸光度
                 inttemp = RandomUntil.getNum(27, 35);
-                tvTitle.setText(intResult + ".000 mg/L");
-                strInfo = Constants.strWavelength;
-                //tvShow.setText(strInfo);
-                strInfo = "透过率（T）：" + floTranrate + "%\n" +
-                        "吸光度（A）：" + floAbsorbance + "\n" +
-                        "波长（λ）：" + intWavelength + "nm\n" +
-                        "温度：" + inttemp + " ℃\n";
-
+                tvTitle.setText("C=" + intResult + ".000mg/L");
+                Log.i("MyFunc", "floTranrate * 100 =" + floTranrate * 100);
+                //tvShow.setText(strShow);
                 textLumin.setText(Constants.df.format(floTranrate * 100) + "%");
                 textAbsor.setText(floAbsorbance + "");
                 textWavelengh.setText(intWavelength + "nm");
                 textTemper.setText(inttemp + "℃");
-                // tvResult.setText(strInfo);
-//                play("计算完成");
+
                 mixSpeakUtil.speak("计算完成");
                 break;
             case R.id.btn_save:
-                if (tvTitle.getText().toString().length() > 0) {
+                if (true == booIsMeasure) {
                     saveData();
                 } else {
                     CustomToast.showToast(ManualMeasureSecActivity.this, "没有可保存的数据，请先测量");
@@ -181,7 +192,7 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
         measureDao.add(tb_measure);
         // 信息提示
         CustomToast.showToast(getApplicationContext(), "数据保存成功");
-
+        booIsMeasure = false;
     }
 
     @Override

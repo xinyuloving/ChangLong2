@@ -10,7 +10,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="@dimen/dp_48"
         android:background="@color/statusBarColor"
         app:subtitleTextColor="#ffffff"
         app:titleTextColor="#ffffff">
@@ -25,7 +25,17 @@
                 android:layout_height="@dimen/dp_36"
                 android:layout_weight="3"
                 android:layout_gravity="start|center"
-                android:src="@mipmap/iv_return"/>
+                android:src="@mipmap/iv_return_18"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/tv_return"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_48"
+                android:layout_weight="2"
+                android:text="＜返回"
+                android:textSize="@dimen/textsize_20"
+                android:textColor="@color/white"
+                android:gravity="start|center"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -46,8 +56,6 @@
                 android:textSize="@dimen/textsize_20"
                 android:textColor="#ffffff"/>
         </LinearLayout>
-
-
     </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.CardView
@@ -90,43 +98,75 @@
             android:layout_gravity="center"
             android:layout_marginTop="70dp"
             android:textSize="14dp"/>
-
     </android.support.v7.widget.CardView>
 
-    <!--<android.support.v7.widget.CardView-->
-        <!--android:id="@+id/cardview2"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginStart="15dp"-->
-        <!--android:layout_marginTop="@dimen/dp_8"-->
-        <!--android:layout_marginEnd="15dp"-->
-        <!--app:cardCornerRadius="@dimen/dp_10"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/cardview1">-->
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview2"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="@dimen/dp_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardview1"
+        app:cardCornerRadius="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="综合排放标准COD:"
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="1dp"
+            android:textColor="@color/statusBarColor"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A排放限值："
+            android:layout_marginTop="@dimen/card_marginTop_25"
+            android:layout_marginLeft="@dimen/card_marginLeft_60"/>
+        <TextView
+            android:id="@+id/text_limitA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20mg/L"
+            android:layout_marginTop="@dimen/card_marginTop_38"
+            android:layout_marginLeft="@dimen/card_marginLeft_60"
+            android:textSize="18dp"
+            android:textColor="@color/statusBarColor"/>
 
-        <!--<TextView-->
-            <!--android:id="@+id/tv_show"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="80dp"-->
-            <!--android:layout_marginStart="18dp"-->
-            <!--android:layout_marginTop="8dp"-->
-            <!--android:layout_marginEnd="18dp"-->
-            <!--android:gravity="start|center"-->
-            <!--android:text="请放入空白比色管\n请按空白键"-->
-            <!--android:textColor="@color/black"-->
-            <!--android:textSize="@dimen/textsize_22" />-->
+        <View
+            android:layout_width="1dip"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center_horizontal"
+            android:background="#5E909090"
+            />
 
-    <!--</android.support.v7.widget.CardView>-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="B排放限值："
+            android:layout_marginTop="@dimen/card_marginTop_25"
+            android:layout_marginLeft="@dimen/card_marginLeft_240"/>
+        <TextView
+            android:id="@+id/text_limitB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30mg/L"
+            android:layout_marginTop="@dimen/card_marginTop_38"
+            android:layout_marginLeft="@dimen/card_marginLeft_240"
+            android:textSize="18dp"
+            android:textColor="@color/statusBarColor" />
+
+    </android.support.v7.widget.CardView>
 
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardview3"
         android:layout_width="match_parent"
         android:layout_height="155dp"
-        app:layout_constraintEnd_toEndOf="@+id/cardview1"
-        app:layout_constraintStart_toStartOf="@+id/cardview1"
-        app:layout_constraintTop_toBottomOf="@+id/cardview1"
+        app:layout_constraintEnd_toEndOf="@+id/cardview2"
+        app:layout_constraintStart_toStartOf="@+id/cardview2"
+        app:layout_constraintTop_toBottomOf="@+id/cardview2"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginTop="@dimen/dp_8"

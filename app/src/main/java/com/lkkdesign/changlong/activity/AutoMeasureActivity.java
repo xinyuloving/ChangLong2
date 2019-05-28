@@ -152,7 +152,6 @@ public class AutoMeasureActivity extends AppCompatActivity {
 
 
     private void saveData() {
-
         MeasureDao measureDao = new MeasureDao(this);
         Tb_measure tb_measure = new Tb_measure(measureDao.getMaxId() + 1,
                 "自动测量",//测量类别
