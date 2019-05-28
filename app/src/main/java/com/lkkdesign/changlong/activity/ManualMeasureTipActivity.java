@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -45,20 +46,26 @@ public class ManualMeasureTipActivity extends AppCompatActivity {
     @BindView(R.id.btn_measure)
     Button btnMeasure;
     private String strInfo = "";
-    private  Intent intent = new Intent();
+    private Intent intent = new Intent();
+    private String TAG = "ManualMeasureTipActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manual_measure_tip);
         ButterKnife.bind(this);
-        Intent intent1 = getIntent();
-        strInfo = intent1.getStringExtra("wavelength");
-        tvUser.setText(Constants.strLoginName);
-        tvCod.setText( strInfo);
+        initView();
     }
 
-    @OnClick({R.id.btn_empty, R.id.btn_measure,R.id.iv_return})
+    private void initView() {
+        Intent intent1 = getIntent();
+        strInfo = intent1.getStringExtra("wavelength");
+        Log.i(TAG, "strInfo=" + strInfo);
+        tvUser.setText(Constants.strLoginName);
+        tvCod.setText(strInfo);
+    }
+
+    @OnClick({R.id.btn_empty, R.id.btn_measure, R.id.iv_return})
     public void onViewClicked(View view) {
         Intent intent = getIntent();
         switch (view.getId()) {

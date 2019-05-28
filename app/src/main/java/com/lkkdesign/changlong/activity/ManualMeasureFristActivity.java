@@ -80,10 +80,10 @@ public class ManualMeasureFristActivity extends AppCompatActivity implements Swi
 
     private void initView() {
         tvUser.setText(Constants.strLoginName);
-        strInfo = "透过率（T）：" + RandomUntil.getNum(20) + ".00%\n" +
-                "吸光度（A）：1.0\n" +
-                "波长（λ）：610 nm\n" +
-                "温度：" + RandomUntil.getNum(25, 37) + " ℃\n";
+//        strInfo = "透过率（T）：" + RandomUntil.getNum(20) + ".00%\n" +
+//                "吸光度（A）：1.0\n" +
+//                "波长（λ）：610 nm\n" +
+//                "温度：" + RandomUntil.getNum(25, 37) + " ℃\n";
 //        tvResult.setText(strInfo);
         tvTimer.setText(DateUtil.getDate());
 
