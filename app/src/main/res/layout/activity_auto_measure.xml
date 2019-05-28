@@ -9,7 +9,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="@dimen/dp_48"
         android:background="@color/statusBarColor"
         app:subtitleTextColor="#ffffff"
         app:titleTextColor="#ffffff">
@@ -36,6 +36,7 @@
                 android:textColor="@color/white"
                 android:gravity="start|center"/>
             <TextView
+                android:id="@+id/tv_title_toolbar"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="5"

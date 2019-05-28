@@ -28,6 +28,9 @@ import butterknife.OnClick;
 import static com.lkkdesign.changlong.utils.MyFunc.calculateTransmittance;
 import static com.lkkdesign.changlong.utils.MyFunc.getAbsorbance;
 
+/**
+ * 自动测量界面
+ */
 public class AutoMeasureActivity extends AppCompatActivity {
 
 
@@ -70,7 +73,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
     @BindView(R.id.btn_save)
     Button btnSave;
     private String strInfo = "";
-    private String strShow = "";
+    private String strShow = "COD（0-100 mg/L）";
     private MixSpeakUtil mixSpeakUtil;
     private Intent intent = new Intent();
     private final String TAG = "AutoMeasureActivity";
@@ -81,6 +84,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
     private float floAbsorbance;//吸光度
     private int intResult;//测量结果
     private int inttemp;//测量结果
+    private boolean booIsMeasure = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +104,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.iv_return,R.id.tv_return, R.id.btn_measure, R.id.btn_save})
+    @OnClick({R.id.iv_return, R.id.tv_return, R.id.btn_measure, R.id.btn_save})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_return:
@@ -110,6 +114,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
                 this.finish();
                 break;
             case R.id.btn_measure:
+                booIsMeasure = true;
                 intResult = RandomUntil.getNum(25, 35);
                 intWavelength = 610;
                 floDensity = 10.0f;//密度
@@ -122,10 +127,10 @@ public class AutoMeasureActivity extends AppCompatActivity {
                 tvTitle.setText("C=" + intResult + ".000mg/L");
                 Log.i("MyFunc", "floTranrate * 100 =" + floTranrate * 100);
                 //tvShow.setText(strShow);
-                textLumin.setText(Constants.df.format(floTranrate * 100)+"%");
-                textAbsor.setText(floAbsorbance+"");
-                textWavelengh.setText(intWavelength+"nm");
-                textTemper.setText(inttemp+"℃");
+                textLumin.setText(Constants.df.format(floTranrate * 100) + "%");
+                textAbsor.setText(floAbsorbance + "");
+                textWavelengh.setText(intWavelength + "nm");
+                textTemper.setText(inttemp + "℃");
 
                 /*strInfo = "透过率（T）：" + Constants.df.format(floTranrate * 100) + "%\n" +
                         "吸光度（A）：" + floAbsorbance + "\n" +
@@ -136,7 +141,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
                 mixSpeakUtil.speak("计算完成");
                 break;
             case R.id.btn_save:
-                if (tvTitle.getText().toString().length() > 0) {
+                if (true == booIsMeasure) {//判断是否已有测量的数据
                     saveData();
                 } else {
                     CustomToast.showToast(AutoMeasureActivity.this, "没有可保存的数据，请先测量");
@@ -146,9 +151,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
     }
 
 
-
     private void saveData() {
-
         MeasureDao measureDao = new MeasureDao(this);
         Tb_measure tb_measure = new Tb_measure(measureDao.getMaxId() + 1,
                 "自动测量",//测量类别
@@ -169,7 +172,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
         measureDao.add(tb_measure);
         // 信息提示
         CustomToast.showToast(getApplicationContext(), "数据保存成功");
-
+        booIsMeasure = false;//保存数据之后改变状态，防止多次提交保存同一条数据
     }
 
     @Override

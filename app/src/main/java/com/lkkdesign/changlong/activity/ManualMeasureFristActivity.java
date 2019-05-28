@@ -40,7 +40,6 @@ import butterknife.OnClick;
 
 public class ManualMeasureFristActivity extends AppCompatActivity implements SwipeItemClickListener {
 
-
     //    protected SwipeMenuRecyclerView mRecyclerView;
     protected RecyclerView.LayoutManager mLayoutManager;
     protected RecyclerView.ItemDecoration mItemDecoration;
@@ -80,10 +79,10 @@ public class ManualMeasureFristActivity extends AppCompatActivity implements Swi
 
     private void initView() {
         tvUser.setText(Constants.strLoginName);
-        strInfo = "透过率（T）：" + RandomUntil.getNum(20) + ".00%\n" +
-                "吸光度（A）：1.0\n" +
-                "波长（λ）：610 nm\n" +
-                "温度：" + RandomUntil.getNum(25, 37) + " ℃\n";
+//        strInfo = "透过率（T）：" + RandomUntil.getNum(20) + ".00%\n" +
+//                "吸光度（A）：1.0\n" +
+//                "波长（λ）：610 nm\n" +
+//                "温度：" + RandomUntil.getNum(25, 37) + " ℃\n";
 //        tvResult.setText(strInfo);
         tvTimer.setText(DateUtil.getDate());
 
@@ -258,7 +257,7 @@ public class ManualMeasureFristActivity extends AppCompatActivity implements Swi
                 break;
             case R.id.btn_calculate:
                 if (strInfo.equals("")) {
-                    CustomToast.showToast(this, "请选择对应的曲线！");
+                    CustomToast.showToast(this, "请先选择曲线……");
                 } else {
                     intent.setClass(this, ManualMeasureTipActivity.class);
                     intent.putExtra("wavelength", strInfo);
