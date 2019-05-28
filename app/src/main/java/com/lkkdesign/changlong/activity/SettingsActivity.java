@@ -24,9 +24,6 @@ import com.lkkdesign.changlong.utils.CustomToast;
 
 public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
-    /**
-     * 添加注释
-     */
     private static final int REQUEST_CODE_PERMISSION_SD = 101;
     private static final int REQUEST_CODE_SETTING = 300;
     Context mContext = null;
@@ -54,7 +51,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
 
         final EditTextPreference serverip = (EditTextPreference) findPreference("machineId");
         final EditTextPreference epCT = (EditTextPreference) findPreference("ep_CT");
-        final EditTextPreference epCF = (EditTextPreference) findPreference("ep_CT");
+        final EditTextPreference epCF = (EditTextPreference) findPreference("ep_CF");
         SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(this);
 
         serverip.setSummary(shp.getString("machineId", ""));
