@@ -31,8 +31,8 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
     private Intent intent = new Intent();
 
     //此处在其他手机上运行出现Bug，需要调试。
-    SharedPreferences settings = getSharedPreferences("setTime", 0);
-    SharedPreferences.Editor editor = settings.edit();
+//    SharedPreferences settings = getSharedPreferences("setTime", 0);
+//    SharedPreferences.Editor editor = settings.edit();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +81,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
                 Log.i("SettingActivity", "222=" + newValue.toString());
                 Log.i("SettingActivity", "222=" + newValue);
                 //AppSharePreferenceMgr.put(getApplication(), "epCT", "" + newValue);
-
+                SharedPreferences.Editor editor = settings.edit();
                 editor.putString("epCT","" + newValue);
                 editor.commit();
                 return true;
@@ -97,7 +97,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
                 Log.i("SettingActivity", "333=" + newValue);
                 //AppSharePreferenceMgr.put(getApplication(), "epCF", "" + newValue);
 //                SharedPreferences settings = getSharedPreferences("setTime", 0);
-//                SharedPreferences.Editor editor = settings.edit();
+                SharedPreferences.Editor editor = settings.edit();
                 editor.putString("epCF","" + newValue);
                 editor.commit();
                 return true;
