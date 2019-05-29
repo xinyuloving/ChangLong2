@@ -108,6 +108,12 @@ public class TimingSetupActivity extends AppCompatActivity {
                     return;
                 }
 
+                if(calculate(strStartTime, strEndTime) > 0){
+                    CustomToast.showToast(this, "开始时间不得小于当前时间");
+                    return;
+                }
+
+//                Long longDiff = DateUtil.getDateTime(strStartTime, strEndTime);
                 /*strStartTime.length() > 0 && strEndTime.length() > 0 && strJianGe.length() > 0*/
                 if (strStartTime.length() > 0 && strEndTime.length() >= 0 && strJianGe.length() > 0) {
                     Long longDiff = DateUtil.getDateTime(strStartTime, strEndTime);

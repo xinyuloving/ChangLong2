@@ -30,7 +30,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
     private ListPreference preference_countdown;
     private Intent intent = new Intent();
 
-    //此处代码在其他手机上出现Bug，需要排查
+    //此处在其他手机上运行出现Bug，需要调试。
     SharedPreferences settings = getSharedPreferences("setTime", 0);
     SharedPreferences.Editor editor = settings.edit();
 
