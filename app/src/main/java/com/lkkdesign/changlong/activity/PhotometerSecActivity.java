@@ -3,6 +3,8 @@ package com.lkkdesign.changlong.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -26,30 +28,27 @@ import static com.lkkdesign.changlong.utils.MyFunc.getAbsorbance;
 
 public class PhotometerSecActivity extends AppCompatActivity {
 
+
+    @BindView(R.id.iv_return)
+    ImageView ivReturn;
+    @BindView(R.id.tv_return)
+    TextView tvReturn;
+    @BindView(R.id.tv_ll_title)
+    TextView tvLlTitle;
     @BindView(R.id.tv_user)
     TextView tvUser;
-    @BindView(R.id.tv_cod)
-    TextView tvCod;
-    @BindView(R.id.ll_title)
-    LinearLayout llTitle;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.tv_title)
     TextView tvTitle;
+    @BindView(R.id.tv_cod)
+    TextView tvCod;
+    @BindView(R.id.cardview1)
+    CardView cardview1;
     @BindView(R.id.tv_show1)
     TextView tvShow1;
-    //    @BindView(R.id.tv_show2)
-//    TextView tvShow2;
-//    @BindView(R.id.tv_show3)
-//    TextView tvShow3;
-//    @BindView(R.id.tv_show4)
-//    TextView tvShow4;
-//    @BindView(R.id.tv_show5)
-//    TextView tvShow5;
-    @BindView(R.id.tv_ll_title)
-    TextView tvLlTitlte;
-    @BindView(R.id.tv_result)
-    TextView tvResult;
-    @BindView(R.id.tv_timer)
-    TextView tvTimer;
+    @BindView(R.id.cardview2)
+    CardView cardview2;
     @BindView(R.id.tv_TransmissionRate)
     TextView tvTransmissionRate;
     @BindView(R.id.tv_Current)
@@ -58,14 +57,20 @@ public class PhotometerSecActivity extends AppCompatActivity {
     TextView tvVoltage;
     @BindView(R.id.tv_Temper)
     TextView tvTemper;
+    @BindView(R.id.cardview3)
+    CardView cardview3;
+    @BindView(R.id.tv_result)
+    TextView tvResult;
+    @BindView(R.id.cardview33)
+    CardView cardview33;
+    @BindView(R.id.tv_timer)
+    TextView tvTimer;
     @BindView(R.id.btn_measure)
     Button btnMeasure;
     @BindView(R.id.btn_blank)
     Button btnBlank;
     @BindView(R.id.btn_save)
     Button btnSave;
-    @BindView(R.id.iv_return)
-    ImageView ivReturn;
     @BindView(R.id.ll_bottom)
     LinearLayout llBottom;
     private String strTitle = "";
@@ -95,23 +100,23 @@ public class PhotometerSecActivity extends AppCompatActivity {
         tvCod.setText("λ= " + strTitle + " nm");
         tvTimer.setText(DateUtil.getDate());
         if ("InputDataActivity".equals(strfrom)) {
-            tvLlTitlte.setText("数据输入");
+            tvLlTitle.setText("数据输入");
         } else if ("CurveMeasureActivity".equals(strfrom)) {
-            tvLlTitlte.setText("公式输入");
+            tvLlTitle.setText("公式输入");
         } else if ("CMActivity_ssjz".equals(strfrom)) {
-            tvLlTitlte.setText("曲线校准");
+            tvLlTitle.setText("曲线校准");
         } else {
-            tvLlTitlte.setText("光度计");
+            tvLlTitle.setText("光度计");
         }
 
     }
 
-    @OnClick({R.id.tv_user, R.id.iv_return, R.id.tv_cod, R.id.tv_result, R.id.tv_timer, R.id.btn_blank, R.id.btn_save})
+    @OnClick({R.id.tv_user, R.id.tv_return, R.id.tv_cod, R.id.tv_result, R.id.tv_timer, R.id.btn_blank, R.id.btn_save})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_user:
                 break;
-            case R.id.iv_return:
+            case R.id.tv_return:
                 if ("InputDataActivity".equals(strfrom)) {
                     intent.setClass(this, InputDataActivity.class);
                     startActivity(intent);

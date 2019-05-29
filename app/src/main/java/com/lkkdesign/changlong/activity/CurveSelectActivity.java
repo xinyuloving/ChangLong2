@@ -108,15 +108,6 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
 
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged(mDataList);
-        tvReturn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                intent.setClass(CurveSelectActivity.this, ManualMeasureFristActivity.class);
-                intent.setClass(CurveSelectActivity.this, TimingSetupActivity.class);
-                startActivity(intent);
-                CurveSelectActivity.this.finish();
-            }
-        });
     }
 
     /**
@@ -258,6 +249,7 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
             CustomToast.showToast(this, "请选择对应的曲线！");
         }else {
             intent.setClass(this, TimingMeasureTipActivity.class);
+            intent.putExtra("type", "jiaozhun");
             intent.putExtra("strStartTime", strStratTime);
             intent.putExtra("strEndTime", strEndTime);
             intent.putExtra("jiange", strJiange);
@@ -266,6 +258,10 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
             this.finish();
         }
 
+    }
+
+    public void onBackTvReturn(View view){
+        onBackPressed();
     }
 
     @Override
@@ -293,6 +289,8 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
             this.finish();
         }
     }
+
+
 
     @Override
     protected void onStop() {

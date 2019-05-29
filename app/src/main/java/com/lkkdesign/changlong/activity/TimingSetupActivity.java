@@ -86,7 +86,7 @@ public class TimingSetupActivity extends AppCompatActivity {
                 break;
             case R.id.endTime:
                 DateUtil.showTimePickerDialog(this, tvEndTime, calendar);
-                DateUtil.showDatePickerDialog(this, 0, tvEndTime, calendar);
+                DateUtil.showDatePickerDialog(this, 2, tvEndTime, calendar);
                 break;
             case R.id.timeInterval://时间间隔
                 setTimeInterval();
@@ -95,28 +95,19 @@ public class TimingSetupActivity extends AppCompatActivity {
                 strStartTime = tvStartTime.getLeftString().replaceAll("已选时间:", "") + " " + tvStartTime.getCenterString();
                 strEndTime = tvEndTime.getLeftString().replaceAll("已选时间:", "") + " " + tvEndTime.getCenterString();
                 strJianGe = tvTimeInterval.getLeftString().replaceAll("时间间隔：", "");
-//                Log.i(TAG, "strStartTime=" + strStartTime);
-//                Log.i(TAG, "strEndTime=" + strEndTime);
-//                Log.i(TAG, "strJianGe=" + strJianGe);
+                Log.i(TAG, "strStartTime=" + strStartTime);
+                Log.i(TAG, "strEndTime=" + strEndTime);
+                Log.i(TAG, "strJianGe=" + strJianGe);
                 Log.i(TAG, "calculate=" + calculate(strStartTime, strEndTime));
-                //1、先判断开始时间的合法性
-                if (0 == calculate(strStartTime, strEndTime) ) {
-                    CustomToast.showToast(this, "开始时间不能为空");
-                    return;
-                }else if(-1 ==calculate(strStartTime, strEndTime)){
-                    CustomToast.showToast(this, "请设置正确的开始时间");
-                    return;
-                }
 
                 if(calculate(strStartTime, strEndTime) > 0){
                     CustomToast.showToast(this, "开始时间不得小于当前时间");
                     return;
                 }
 
-//                Long longDiff = DateUtil.getDateTime(strStartTime, strEndTime);
+                Long longDiff = DateUtil.getDateTime(strStartTime, strEndTime);
                 /*strStartTime.length() > 0 && strEndTime.length() > 0 && strJianGe.length() > 0*/
                 if (strStartTime.length() > 0 && strEndTime.length() >= 0 && strJianGe.length() > 0) {
-                    Long longDiff = DateUtil.getDateTime(strStartTime, strEndTime);
                     if (longDiff > 0) {
                         intent.setClass(this, CurveSelectActivity.class);
                         intent.putExtra("type", "time");
@@ -125,7 +116,7 @@ public class TimingSetupActivity extends AppCompatActivity {
                         intent.putExtra("jiange", strJianGe);
                         startActivity(intent);
                     } else {
-//                        CustomToast.showToast(this, "请选择正确的日期和时间");
+                        //CustomToast.showToast(this, "请选择正确的日期和时间");
                         //CustomToast.showToast(this, "时间间隔：" + longDiff);
 
                         intent.setClass(this, CurveSelectActivity.class);
@@ -174,34 +165,19 @@ public class TimingSetupActivity extends AppCompatActivity {
     }
 
     /**
-     * 没有开始时间，直接返回0
-     * 有开始时间，先判断开始时间是否小于当前时间，小于当前时间返回0.大于零表示开始时间正确。
-     *
+     * 计算开始时间是否小于当前时间
      * @param strStartTime
      * @param strEndTime
-     * @return long数值，0表示没有开始时间，大于零表示开始时间小于当前时间
+     * @return
      */
     private long calculate(String strStartTime, String strEndTime) {
-        Long longDiff = 0L;
-        if (" ".equals(strStartTime)) {//没有开始时间
-            Log.i(TAG, "没有开始时间！");
-            longDiff = 0L;
-        } else {//有开始时间
-            Log.i(TAG, "strStartTime=" + strStartTime);
-            if (" ".equals(strEndTime)) {//（1）没有结束时间，取当前时间作为结束时间
-                Log.i(TAG, "没有结束时间！");
-                strEndTime = DateUtil.getNowDateTime4();
-                Log.i(TAG, "strEndTime2=" + strEndTime);
-                //开始时间小于当前时间
-                if (DateUtil.getDateTime(strStartTime, strEndTime) > 0) {
-                    longDiff = -1L;
-                } else {//开始时间大于当前时间
-                    longDiff = DateUtil.getDateTime(strStartTime, strEndTime);
-                }
-            }else{//有结束时间
-                longDiff = DateUtil.getDateTime(strStartTime, strEndTime);
-            }
+        Log.i(TAG, "strEndTime1=" + strEndTime);
+        if (" ".equals(strEndTime)) {
+            strEndTime = DateUtil.getNowDateTime4();
+            Log.i(TAG, "strEndTime2=" + strEndTime);
         }
+        Log.i(TAG, "strStartTime2=" + strStartTime);
+        Long longDiff = DateUtil.getDateTime(strStartTime, strEndTime);
         return longDiff;
     }
 

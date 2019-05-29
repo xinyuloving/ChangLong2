@@ -29,6 +29,10 @@ public class PhotometerFristActivity extends AppCompatActivity {
 
     @BindView(R.id.iv_return)
     ImageView ivReturn;
+    @BindView(R.id.tv_return)
+    TextView tvReturn;
+    @BindView(R.id.tv_title_toolbar)
+    TextView tvTitleToolbar;
     @BindView(R.id.tv_user)
     TextView tvUser;
     @BindView(R.id.toolbar)
@@ -112,10 +116,10 @@ public class PhotometerFristActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick({R.id.iv_return, R.id.tv_timer, R.id.btn_calculate})
+    @OnClick({R.id.tv_return, R.id.tv_timer, R.id.btn_calculate})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.iv_return:
+            case R.id.tv_return:
                 intent.setClass(this, Main2Activity.class);
                 startActivity(intent);
                 this.finish();
