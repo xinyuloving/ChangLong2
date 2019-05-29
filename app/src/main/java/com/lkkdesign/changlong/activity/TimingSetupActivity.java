@@ -28,7 +28,6 @@ import butterknife.OnClick;
 
 public class TimingSetupActivity extends AppCompatActivity {
 
-
     Calendar calendar = Calendar.getInstance();
     @BindView(R.id.iv_return)
     ImageView ivReturn;
