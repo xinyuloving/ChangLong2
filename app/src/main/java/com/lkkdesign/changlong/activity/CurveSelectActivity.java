@@ -108,15 +108,6 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
 
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged(mDataList);
-        tvReturn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                intent.setClass(CurveSelectActivity.this, ManualMeasureFristActivity.class);
-                intent.setClass(CurveSelectActivity.this, TimingSetupActivity.class);
-                startActivity(intent);
-                CurveSelectActivity.this.finish();
-            }
-        });
     }
 
     /**
@@ -127,6 +118,7 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
         public void onItemLongClick(View view, int i) {
             intent.setClass(CurveSelectActivity.this, CurveManageActivity.class);
             intent.putExtra("curve", mDataList.get(i)); //将计算的值回传回去
+            intent.putExtra("type",Constants.strFormActivity);
             startActivity(intent);
             CurveSelectActivity.this.finish();
         }
@@ -258,6 +250,7 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
             CustomToast.showToast(this, "请选择对应的曲线！");
         }else {
             intent.setClass(this, TimingMeasureTipActivity.class);
+            intent.putExtra("type", Constants.strFormActivity);
             intent.putExtra("strStartTime", strStratTime);
             intent.putExtra("strEndTime", strEndTime);
             intent.putExtra("jiange", strJiange);
@@ -268,6 +261,10 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
 
     }
 
+    public void onBackTvReturn(View view){
+        onBackPressed();
+    }
+
     @Override
     public void onBackPressed() {
 
@@ -276,7 +273,7 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
             startActivity(intent);
             this.finish();
         } else if ("time".equals(Constants.strFormActivity)) {//定时测量
-            intent.setClass(CurveSelectActivity.this, TimingMeasureActivity.class);
+            intent.setClass(CurveSelectActivity.this, TimingSetupActivity.class);
             startActivity(intent);
             this.finish();
         } else if ("xiaozhun".equals(Constants.strFormActivity)) {//返回主页面
@@ -293,6 +290,8 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
             this.finish();
         }
     }
+
+
 
     @Override
     protected void onStop() {

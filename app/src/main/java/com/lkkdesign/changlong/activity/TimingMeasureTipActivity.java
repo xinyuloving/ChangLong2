@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -44,11 +45,18 @@ public class TimingMeasureTipActivity extends AppCompatActivity {
     Button btnMeasure;
     @BindView(R.id.tv_cod)
     TextView tvCod;
+    @BindView(R.id.tv_return)
+    TextView tvReturn;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.cardview0)
+    CardView cardview0;
     private String strStartTime = "";
     private String strEndTime = "";
     private String jiange = "";
     private String wavelength = "";
     private String strInfo = "";
+    private String strType = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,21 +67,36 @@ public class TimingMeasureTipActivity extends AppCompatActivity {
     }
 
     private void initView() {
-
+        Intent getIntent = getIntent();
+        strType = getIntent.getStringExtra("type");
+        Constants.strFormActivity = strType;
+        Log.i("TimingMeasure", "strType" + Constants.strFormActivity);
         tvUser.setText(Constants.strLoginName);
         wavelength = Constants.strWavelength;
         tvCod.setText(wavelength);
+        Intent intent = getIntent();
+        if ("xiaozhun".equals(Constants.strFormActivity)) {
+            tvTitle.setText(" 曲线校准");
+        }else if("time".equals(Constants.strFormActivity)){
+            tvTitle.setText(" 定时测量");
+        }
 
     }
 
-    @OnClick({R.id.btn_empty, R.id.btn_measure,R.id.iv_return})
+    @OnClick({R.id.btn_empty, R.id.btn_measure, R.id.tv_return})
     public void onViewClicked(View view) {
-        Intent intent=getIntent();
+        Intent intent = getIntent();
         switch (view.getId()) {
-            case R.id.iv_return:
-                intent.setClass(this, TimingSetupActivity.class);
-                startActivity(intent);
-                this.finish();
+            case R.id.tv_return:
+                if ("time".equals(Constants.strFormActivity)) {
+                    intent.setClass(this, TimingSetupActivity.class);
+                    startActivity(intent);
+                    this.finish();
+                } else if ("xiaozhun".equals(Constants.strFormActivity)) {
+                    intent.setClass(this, CurveSelectActivity.class);
+                    startActivity(intent);
+                    this.finish();
+                }
                 break;
             case R.id.btn_empty:
                 tvLine1.setVisibility(View.INVISIBLE);
@@ -85,6 +108,7 @@ public class TimingMeasureTipActivity extends AppCompatActivity {
                 jiange = intent.getStringExtra("jiange");
                 strInfo = intent.getStringExtra("strInfo");
                 intent.setClass(this, TimingMeasureSecActivity.class);
+                intent.putExtra("type",strType);
                 intent.putExtra("strStartTime", strStartTime);
                 intent.putExtra("strEndTime", strEndTime);
                 intent.putExtra("jiange", jiange);
@@ -98,8 +122,14 @@ public class TimingMeasureTipActivity extends AppCompatActivity {
 
     public void onBackPressed() {
         Intent intent = getIntent();
-        intent.setClass(this, TimingSetupActivity.class);
-        startActivity(intent);
-        this.finish();
+        if ("time".equals(Constants.strFormActivity)) {
+            intent.setClass(this, TimingSetupActivity.class);
+            startActivity(intent);
+            this.finish();
+        } else if ("xiaozhun".equals(Constants.strFormActivity)) {
+            intent.setClass(this, CurveSelectActivity.class);
+            startActivity(intent);
+            this.finish();
+        }
     }
 }

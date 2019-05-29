@@ -32,7 +32,8 @@
                 android:text="＜返回"
                 android:textSize="@dimen/textsize_20"
                 android:textColor="@color/white"
-                android:gravity="start|center"/>
+                android:gravity="start|center"
+                android:onClick="onBackTvReturn"/>
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="5"

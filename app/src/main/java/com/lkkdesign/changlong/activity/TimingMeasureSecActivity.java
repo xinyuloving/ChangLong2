@@ -4,18 +4,15 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -66,12 +63,15 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
     TextView tvReturn;
     @BindView(R.id.btn_calculate)
     Button btnCalculate;
+    @BindView(R.id.tv_ll_title)
+    TextView tvLlTitle;
     private String strTitle = "";
     private String strStartTime = "";
     private String strEndTime = "";
     private String strJiange = "";
     private String strTime = "";
     private String strInfo = "";
+    private String strType = "";
 
     private Intent intent = new Intent();
 
@@ -86,6 +86,8 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
 
     private void initView() {
         Intent intent = getIntent();
+        strType = intent.getStringExtra("type");
+        Constants.strFormActivity = strType;
         strTitle = intent.getStringExtra("wavelength");
         strStartTime = intent.getStringExtra("strStartTime");
         strEndTime = intent.getStringExtra("strEndTime");
@@ -97,16 +99,21 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
         tvUser.setText(Constants.strLoginName);
         tvStartTime.setLeftString(strStartTime);
         tvJgTime.setLeftString(strJiange + "分钟");
-        tvEndTime.setLeftString( strEndTime);
+        tvEndTime.setLeftString(strEndTime);
         strTime = "开始时间：" + strStartTime + "\n" +
                 "时间间隔：" + strJiange + " 分钟" + "\n" +
                 "结束时间：" + strEndTime + "\n";
         strInfo = intent.getStringExtra("strInfo");
         tvShow.setText(strInfo);
+        if ("xiaozhun".equals(Constants.strFormActivity)) {
+            tvLlTitle.setText(" 曲线校准");
+        } else if ("time".equals(Constants.strFormActivity)) {
+            tvLlTitle.setText(" 定时测量");
+        }
 
     }
 
-    @OnClick({R.id.tv_user, R.id.btn_calculate, R.id.iv_return, R.id.tv_return,R.id.cardview1, R.id.tv_startTime, R.id.tv_jgTime,
+    @OnClick({R.id.tv_user, R.id.btn_calculate, R.id.iv_return, R.id.tv_return, R.id.cardview1, R.id.tv_startTime, R.id.tv_jgTime,
             R.id.tv_endTime})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -117,9 +124,15 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
                 break;
             case R.id.iv_return:
             case R.id.tv_return:
-                intent.setClass(this, TimingSetupActivity.class);
-                startActivity(intent);
-                this.finish();
+                if ("time".equals(Constants.strFormActivity)) {
+                    intent.setClass(this, TimingSetupActivity.class);
+                    startActivity(intent);
+                    this.finish();
+                } else if ("xiaozhun".equals(Constants.strFormActivity)) {
+                    intent.setClass(this, CurveSelectActivity.class);
+                    startActivity(intent);
+                    this.finish();
+                }
                 break;
             case R.id.cardview1:
                 Dialog dialog = new Dialog(TimingMeasureSecActivity.this);
@@ -194,9 +207,15 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        intent.setClass(this, TimingSetupActivity.class);
-        startActivity(intent);
-        this.finish();
+        if ("time".equals(Constants.strFormActivity)) {
+            intent.setClass(this, TimingSetupActivity.class);
+            startActivity(intent);
+            this.finish();
+        } else if ("xiaozhun".equals(Constants.strFormActivity)) {
+            intent.setClass(this, CurveSelectActivity.class);
+            startActivity(intent);
+            this.finish();
+        }
 
     }
 
