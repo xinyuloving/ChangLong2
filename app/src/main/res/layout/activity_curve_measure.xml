@@ -8,67 +8,56 @@
     tools:context=".activity.CurveMeasureActivity">
 
     <LinearLayout
-        android:id="@+id/linearlayout1"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorBluePrimary"
+        android:layout_height="@dimen/dp_48"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
+        android:background="@color/statusBarColor"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/iv_return"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_24"
+            android:layout_weight="2"
+            android:layout_gravity="start|center"
+            android:src="@mipmap/iv_return"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/tv_return"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_48"
+            android:layout_weight="3"
+            android:text="＜返回"
+            android:textSize="@dimen/textsize_20"
+            android:textColor="@color/white"
+            android:gravity="start|center" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="@dimen/dp_48"
+            android:text="@string/tv_cure_adjust"
+            android:textSize="@dimen/textsize_30"
+            android:textColor="#ffffff"
+            android:gravity="center"/>
         <TextView
             android:id="@+id/tv_user"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/padding_10"
-            android:layout_weight="4"
-            android:ellipsize="end"
-            android:gravity="start"
-            android:maxEms="4"
-            android:maxLines="1"
-            android:text="@string/textview_click_before"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textsize_large" />
-
-        <TextView
-            android:id="@+id/tv_title1"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:layout_weight="4"
-            android:ellipsize="end"
+            android:layout_weight="3"
+            android:layout_height="@dimen/dp_48"
+            android:text="用户名"
+            android:textSize="20dp"
             android:gravity="center"
-            android:maxLines="1"
-            android:text="@string/tv_cure_adjust"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textsize_28" />
-
-        <TextView
-            android:id="@+id/tv_cod"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="4"
-            android:ellipsize="end"
-            android:gravity="end"
-            android:maxLines="1"
-            android:text="COD（0-100 mg/L）"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textsize_large" />
+            android:textColor="#ffffff"/>
     </LinearLayout>
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardview1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@+id/linearlayout1"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar"
         app:layout_constraintHorizontal_bias="0.568"
-        app:layout_constraintStart_toStartOf="@+id/linearlayout1"
-        app:layout_constraintTop_toBottomOf="@+id/linearlayout1"
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         android:layout_marginTop="15dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
@@ -157,7 +146,7 @@
         android:layout_marginTop="8dp"
         android:gravity="start|center"
         android:textColor="@color/black"
-        android:textSize="@dimen/textsize_28"
+        android:textSize="@dimen/sp_16"
         android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="@+id/cardview2"
         app:layout_constraintStart_toStartOf="@+id/cardview2"
