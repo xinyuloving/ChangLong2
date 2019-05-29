@@ -200,7 +200,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/card_marginLeft_60"
             android:layout_marginTop="@dimen/card_marginTop_90"
-            android:text="电压（λ）" />
+            android:text="电压" />
 
         <TextView
             android:id="@+id/tv_Voltage"
