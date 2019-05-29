@@ -118,6 +118,7 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
         public void onItemLongClick(View view, int i) {
             intent.setClass(CurveSelectActivity.this, CurveManageActivity.class);
             intent.putExtra("curve", mDataList.get(i)); //将计算的值回传回去
+            intent.putExtra("type",Constants.strFormActivity);
             startActivity(intent);
             CurveSelectActivity.this.finish();
         }
@@ -272,7 +273,7 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
             startActivity(intent);
             this.finish();
         } else if ("time".equals(Constants.strFormActivity)) {//定时测量
-            intent.setClass(CurveSelectActivity.this, TimingMeasureActivity.class);
+            intent.setClass(CurveSelectActivity.this, TimingSetupActivity.class);
             startActivity(intent);
             this.finish();
         } else if ("xiaozhun".equals(Constants.strFormActivity)) {//返回主页面

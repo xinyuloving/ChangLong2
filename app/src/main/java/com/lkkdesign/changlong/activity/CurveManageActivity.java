@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.lkkdesign.changlong.R;
+import com.lkkdesign.changlong.config.Constants;
 import com.lkkdesign.changlong.utils.CustomToast;
 
 import org.angmarch.views.NiceSpinner;
@@ -54,6 +55,7 @@ public class CurveManageActivity extends AppCompatActivity {
     LinearLayout initem;
 
     private Intent intent = new Intent();
+    private String strType="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,9 @@ public class CurveManageActivity extends AppCompatActivity {
     }
 
     private void initView(){
+        Intent intent = getIntent();
+        strType = intent.getStringExtra("type");
+        Constants.strFormActivity = strType;
         String[] strName = getResources().getStringArray(R.array.resolution_ratio);
         final List<String> dataset = new LinkedList<>(Arrays.asList(strName));
         nsFbl.attachDataSource(dataset);
@@ -89,11 +94,13 @@ public class CurveManageActivity extends AppCompatActivity {
     @OnClick({R.id.iv_return, R.id.tv_title, R.id.etName, R.id.etXishi, R.id.stv_open, R.id.stv_close, R.id.etTranrate, R.id.ns_fbl,
             R.id.et_jiaozhun, R.id.addbtn, R.id.cancelbtn, R.id.initem})
     public void onViewClicked(View view) {
+        Intent intent = getIntent();
         switch (view.getId()) {
             case R.id.iv_return:
-                intent.setClass(CurveManageActivity.this, CurveSelectActivity.class);
+                intent.setClass(this, CurveSelectActivity.class);
+                intent.putExtra("type", Constants.strFormActivity);
                 startActivity(intent);
-                CurveManageActivity.this.finish();
+                this.finish();
                 break;
             case R.id.tv_title:
                 break;
@@ -114,9 +121,10 @@ public class CurveManageActivity extends AppCompatActivity {
             case R.id.addbtn:
                 break;
             case R.id.cancelbtn:
-                intent.setClass(CurveManageActivity.this, CurveSelectActivity.class);
+                intent.setClass(this, CurveSelectActivity.class);
+                intent.putExtra("type", Constants.strFormActivity);
                 startActivity(intent);
-                CurveManageActivity.this.finish();
+                this.finish();
                 break;
             case R.id.initem:
                 break;
@@ -129,6 +137,13 @@ public class CurveManageActivity extends AppCompatActivity {
         CurveManageActivity.this.finish();
     }
 
+    public void onBackPressed() {
+        intent.setClass(this, CurveSelectActivity.class);
+        intent.putExtra("type", Constants.strFormActivity);
+        startActivity(intent);
+        this.finish();
+
+    }
     @Override
     protected void onDestroy() {
 
