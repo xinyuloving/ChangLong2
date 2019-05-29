@@ -1,17 +1,23 @@
 package com.lkkdesign.changlong.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,35 +48,37 @@ import butterknife.OnClick;
 
 public class InputDataActivity extends AppCompatActivity implements SwipeItemClickListener {
 
+
+    @BindView(R.id.iv_return)
+    ImageView ivReturn;
+    @BindView(R.id.tv_return)
+    TextView tvReturn;
     @BindView(R.id.tv_user)
     TextView tvUser;
-//    @BindView(R.id.tv_show)
-//    TextView tvShow;
-    @BindView(R.id.tv_cod)
-    TextView tvCod;
-    @BindView(R.id.ll_title)
-    LinearLayout llTitle;
+    @BindView(R.id.toolbar)
+    LinearLayout toolbar;
     @BindView(R.id.tv_title)
     TextView tvTitle;
-//    @BindView(R.id.view1)
-//    View view1;
-//    @BindView(R.id.ed_input)
-//    EditText edInput;
-//    @BindView(R.id.view2)
-//    View view2;
-    @BindView(R.id.tv_show_data)
-    TextView tvShowData;
-//    @BindView(R.id.view3)
-//    View view3;
-    @BindView(R.id.tv_timer)
-    TextView tvTimer;
-//    @BindView(R.id.view4)
-//    View view4;
-    @BindView(R.id.btn_calculate)
-    Button btnCalculate;
+    @BindView(R.id.tv_cod)
+    TextView tvCod;
+    @BindView(R.id.cardview1)
+    CardView cardview1;
+    @BindView(R.id.btn_add)
+    FloatingActionButton btnAdd;
     @BindView(R.id.rv_curve)
     SwipeMenuRecyclerView mRecyclerView;
-
+    @BindView(R.id.cardview2)
+    CardView cardview2;
+    @BindView(R.id.ed_input)
+    EditText edInput;
+    @BindView(R.id.view2)
+    View view2;
+    @BindView(R.id.tv_show_data)
+    TextView tvShowData;
+    @BindView(R.id.tv_timer)
+    TextView tvTimer;
+    @BindView(R.id.btn_calculate)
+    Button btnCalculate;
     private Intent intent = new Intent();
     private String strTitle = "";
     private String strInfo = "";
@@ -79,6 +87,11 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
     protected BaseAdapter mAdapter;
     protected List<String> mDataList;//自动测量
     private String TAG = "InputDataActivity";
+    private String strAValue = "";
+    private String strCValue = "";
+    private String strType = "";
+    private List<String> dataList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,9 +104,12 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
 
     private void initView() {
         Intent intent = getIntent();
+        strType = intent.getStringExtra("type");
+        Constants.strFormActivity = strType;
         strTitle = intent.getStringExtra("wavelength");
+        strInfo = intent.getStringExtra("strInfo");
         tvUser.setText(Constants.strLoginName);
-        tvCod.setText(strTitle);
+        tvCod.setText(strInfo);
         tvTimer.setText(DateUtil.getDate());
 
         mLayoutManager = createLayoutManager();
@@ -119,17 +135,74 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
         mAdapter.notifyDataSetChanged(mDataList);
     }
 
-    @OnClick({R.id.tv_show_data, R.id.btn_calculate})
+    @OnClick({R.id.tv_return, R.id.btn_add, R.id.tv_show_data, R.id.btn_calculate})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.tv_return:
+                intent.setClass(this, CurveSelectActivity.class);
+                intent.putExtra("type", Constants.strFormActivity);
+                startActivity(intent);
+                this.finish();
+                break;
+            case R.id.btn_add:
+                AlertDialog.Builder setDeBugDialog = new AlertDialog.Builder(this);
+                //获取界面
+                View dialogView = LayoutInflater.from(this).inflate(R.layout.inputdata_dialog_layout, null);
+                //将界面填充到AlertDiaLog容器
+                setDeBugDialog.setView(dialogView);
+
+                setDeBugDialog.create();
+                final EditText aValue = dialogView.findViewById(R.id.et_aValue);
+                final EditText cValue = dialogView.findViewById(R.id.et_cValue);
+
+
+                final AlertDialog customAlert = setDeBugDialog.show();
+                dialogView.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        strCValue = "C=" + cValue.getText().toString().trim() + "mg/L";
+                        strAValue = "A=" + aValue.getText().toString().trim();
+                        dataList.add(strCValue + "\n" + strAValue);
+                        customAlert.dismiss();
+                    }
+                });
+
+                dialogView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        customAlert.dismiss();
+                    }
+                });
+
+                break;
             case R.id.tv_show_data:
                 showData();
                 break;
             case R.id.btn_calculate:
-                intent.setClass(InputDataActivity.this, PhotometerSecActivity.class);
+               /* intent.setClass(InputDataActivity.this, PhotometerSecActivity.class);
                 intent.putExtra("from", "InputDataActivity");
                 intent.putExtra("wavelength", strTitle);
-                startActivity(intent);
+                startActivity(intent);*/
+                new AlertDialog.Builder(this)
+                        .setTitle("保存")
+                        .setMessage("保存吗？")
+                        .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                intent.setClass(InputDataActivity.this, PhotometerSecActivity.class);
+                                intent.putExtra("from", "InputDataActivity");
+                                intent.putExtra("wavelength", strTitle);
+                                intent.putExtra("type", Constants.strFormActivity);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .show();
                 break;
         }
     }
@@ -259,7 +332,7 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
     }
 
     protected List<String> createDataList() {
-        List<String> dataList = new ArrayList<>();
+
         String[] listItem = getResources().getStringArray(R.array.list_shuju);//曲线列表
         for (int i = 0; i < listItem.length; i++) {
             dataList.add(listItem[i]);
@@ -296,7 +369,8 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
 
     @Override
     public void onBackPressed() {
-        intent.setClass(this, CurveMeasureActivity.class);
+        intent.setClass(this, CurveSelectActivity.class);
+        intent.putExtra("type", Constants.strFormActivity);
         startActivity(intent);
         this.finish();
     }

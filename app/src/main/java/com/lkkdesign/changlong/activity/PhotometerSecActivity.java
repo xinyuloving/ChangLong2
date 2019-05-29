@@ -82,6 +82,7 @@ public class PhotometerSecActivity extends AppCompatActivity {
     private boolean booIsPre = false;
     private float floTranrate = 0f;
     private float floAbsorbance = 0f;
+    private String strType="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +96,8 @@ public class PhotometerSecActivity extends AppCompatActivity {
         tvUser.setText(Constants.strLoginName);
         mixSpeakUtil = MixSpeakUtil.getInstance(this);
         Intent intent = getIntent();
+        strType = intent.getStringExtra("type");
+        Constants.strFormActivity = strType;
         strTitle = intent.getStringExtra("wavelength");
         strfrom = intent.getStringExtra("from");
         tvCod.setText("λ= " + strTitle + " nm");
@@ -119,18 +122,22 @@ public class PhotometerSecActivity extends AppCompatActivity {
             case R.id.tv_return:
                 if ("InputDataActivity".equals(strfrom)) {
                     intent.setClass(this, InputDataActivity.class);
+                    intent.putExtra("type",Constants.strFormActivity);
                     startActivity(intent);
                     this.finish();
                 } else if ("CurveMeasureActivity".equals(strfrom)) {
                     intent.setClass(this, CurveMeasureActivity.class);
+                    intent.putExtra("type",Constants.strFormActivity);
                     startActivity(intent);
                     this.finish();
                 } else if ("CMActivity_ssjz".equals(strfrom)) {
                     intent.setClass(this, CurveMeasureActivity.class);
+                    intent.putExtra("type",Constants.strFormActivity);
                     startActivity(intent);
                     this.finish();
                 } else {
                     intent.setClass(PhotometerSecActivity.this, PhotometerFristActivity.class);
+                    intent.putExtra("type",Constants.strFormActivity);
                     startActivity(intent);
                     PhotometerSecActivity.this.finish();
                 }
@@ -208,18 +215,22 @@ public class PhotometerSecActivity extends AppCompatActivity {
         // super.onBackPressed();//注释掉这行,back键不退出activity
         if ("InputDataActivity".equals(strfrom)) {
             intent.setClass(this, InputDataActivity.class);
+            intent.putExtra("type",Constants.strFormActivity);
             startActivity(intent);
             this.finish();
         } else if ("CurveMeasureActivity".equals(strfrom)) {
             intent.setClass(this, CurveMeasureActivity.class);
+            intent.putExtra("type",Constants.strFormActivity);
             startActivity(intent);
             this.finish();
         } else if ("CMActivity_ssjz".equals(strfrom)) {
             intent.setClass(this, CurveMeasureActivity.class);
+            intent.putExtra("type",Constants.strFormActivity);
             startActivity(intent);
             this.finish();
         } else {
             intent.setClass(PhotometerSecActivity.this, PhotometerFristActivity.class);
+            intent.putExtra("type",Constants.strFormActivity);
             startActivity(intent);
             PhotometerSecActivity.this.finish();
         }
