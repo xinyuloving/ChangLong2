@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -28,18 +30,19 @@ import butterknife.OnClick;
  */
 public class CurveMeasureActivity extends AppCompatActivity {
 
+
+    @BindView(R.id.iv_return)
+    ImageView ivReturn;
+    @BindView(R.id.tv_return)
+    TextView tvReturn;
     @BindView(R.id.tv_user)
     TextView tvUser;
-    @BindView(R.id.tv_title1)
-    TextView tvTitle1;
-    @BindView(R.id.tv_cod)
-    TextView tvCod;
-    @BindView(R.id.linearlayout1)
-    LinearLayout linearlayout1;
-//    @BindView(R.id.tv_title)
-//    TextView tvTitle;
-//    @BindView(R.id.view1)
-//    View view1;
+    @BindView(R.id.toolbar)
+    LinearLayout toolbar;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.cardview1)
+    CardView cardview1;
     @BindView(R.id.rb_shuju)
     RadioButton rbShuju;
     @BindView(R.id.rb_gongsi)
@@ -48,22 +51,20 @@ public class CurveMeasureActivity extends AppCompatActivity {
     RadioButton rbSsxz;
     @BindView(R.id.radiogroup)
     RadioGroup radiogroup;
-//    @BindView(R.id.view2)
-//    View view2;
+    @BindView(R.id.cardview2)
+    CardView cardview2;
     @BindView(R.id.tv_result2)
     TextView tvResult2;
-//    @BindView(R.id.view3)
-//    View view3;
     @BindView(R.id.tv_timer)
     TextView tvTimer;
-//    @BindView(R.id.view4)
-//    View view4;
     @BindView(R.id.btn_calculate)
     Button btnCalculate;
     @BindView(R.id.tv_result)
     TextView tvResult;
     private String strTitle = "";
+    private String strInfo = "";
     private int intSelectFun = 0;
+    private String strType="";
     private Intent intent = new Intent();
 
     @Override
@@ -80,10 +81,14 @@ public class CurveMeasureActivity extends AppCompatActivity {
     private void initView() {
 
         Intent intent = getIntent();
+        strType = intent.getStringExtra("type");
+        Constants.strFormActivity = strType;
         strTitle = intent.getStringExtra("wavelength");
+        strInfo = intent.getStringExtra("strInfo");
         tvUser.setText(Constants.strLoginName);
         tvTimer.setText(DateUtil.getDate());
-        tvCod.setText(strTitle);
+        tvResult2.setText(strInfo);
+//        tvCod.setText(strTitle);
 //        tvTitle.setText(strTitle);
 //        tvShow.setText(R.string.tv_show);
     }
@@ -125,32 +130,42 @@ public class CurveMeasureActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //按下确定键后的事件
                         //view2.setVisibility(View.VISIBLE);
-                        tvResult2.setText("输入的公式：\n"+et.getText().toString());
+                        tvResult2.setText("输入的公式：\n" + et.getText().toString());
                         //Toast.makeText(getApplicationContext(), et.getText().toString(), Toast.LENGTH_LONG).show();
                     }
                 }).setNegativeButton("取消", null).show();
     }
 
 
-    @OnClick({R.id.tv_user, R.id.btn_calculate})
+    @OnClick({R.id.tv_return,R.id.tv_user, R.id.btn_calculate})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.tv_return:
+                intent.setClass(this, CurveSelectActivity.class);
+                intent.putExtra("type", Constants.strFormActivity);
+                startActivity(intent);
+                this.finish();
+                break;
             case R.id.tv_user:
                 break;
             case R.id.btn_calculate:
                 if (intSelectFun > 0) {
                     if (1 == intSelectFun) {
                         intent.setClass(this, InputDataActivity.class);
+                        intent.putExtra("type",Constants.strFormActivity);
+                        intent.putExtra("strInfo", strInfo);
                         intent.putExtra("wavelength", strTitle);
                         startActivity(intent);
-                    }else if(2 == intSelectFun){
-                        intent.setClass(this,PhotometerSecActivity.class);
-                        intent.putExtra("from","CurveMeasureActivity");
+                    } else if (2 == intSelectFun) {
+                        intent.setClass(this, PhotometerSecActivity.class);
+                        intent.putExtra("type",Constants.strFormActivity);
+                        intent.putExtra("from", "CurveMeasureActivity");
                         intent.putExtra("wavelength", strTitle);
                         startActivity(intent);
-                    }else{
-                        intent.setClass(this,PhotometerSecActivity.class);
-                        intent.putExtra("from","CMActivity_ssjz");
+                    } else {
+                        intent.setClass(this, PhotometerSecActivity.class);
+                        intent.putExtra("type",Constants.strFormActivity);
+                        intent.putExtra("from", "CMActivity_ssjz");
                         intent.putExtra("wavelength", strTitle);
                         startActivity(intent);
                     }
@@ -165,6 +180,7 @@ public class CurveMeasureActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         intent.setClass(this, CurveSelectActivity.class);
+        intent.putExtra("type", Constants.strFormActivity);
         startActivity(intent);
         this.finish();
     }
