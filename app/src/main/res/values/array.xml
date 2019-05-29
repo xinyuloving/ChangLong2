@@ -111,8 +111,6 @@
         <item>C1=5mg/L\nA1=0.100</item>
         <item>C2=10mg/L\nA2=0.200</item>
         <item>C3=20mg/L\nA3=0.400</item>
-        <item>C4=50mg/L\nA4=1.000</item>
-        <item>C5=100mg/L\nA5=2.00</item>
 
     </string-array>
     <string-array name="list_quxian">

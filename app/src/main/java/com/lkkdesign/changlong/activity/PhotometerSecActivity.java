@@ -220,17 +220,14 @@ public class PhotometerSecActivity extends AppCompatActivity {
             this.finish();
         } else if ("CurveMeasureActivity".equals(strfrom)) {
             intent.setClass(this, CurveMeasureActivity.class);
-            intent.putExtra("type",Constants.strFormActivity);
             startActivity(intent);
             this.finish();
         } else if ("CMActivity_ssjz".equals(strfrom)) {
             intent.setClass(this, CurveMeasureActivity.class);
-            intent.putExtra("type",Constants.strFormActivity);
             startActivity(intent);
             this.finish();
         } else {
             intent.setClass(PhotometerSecActivity.this, PhotometerFristActivity.class);
-            intent.putExtra("type",Constants.strFormActivity);
             startActivity(intent);
             PhotometerSecActivity.this.finish();
         }

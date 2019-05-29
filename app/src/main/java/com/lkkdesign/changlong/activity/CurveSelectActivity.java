@@ -280,22 +280,27 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
 
         if ("curve".equals(Constants.strFormActivity)) {
             intent.setClass(CurveSelectActivity.this, Main2Activity.class);
+            intent.putExtra("type",Constants.strFormActivity);
             startActivity(intent);
             this.finish();
         } else if ("time".equals(Constants.strFormActivity)) {//定时测量
             intent.setClass(CurveSelectActivity.this, TimingSetupActivity.class);
+            intent.putExtra("type",Constants.strFormActivity);
             startActivity(intent);
             this.finish();
         } else if ("xiaozhun".equals(Constants.strFormActivity)) {//返回主页面
             intent.setClass(CurveSelectActivity.this, Main2Activity.class);
+            intent.putExtra("type",Constants.strFormActivity);
             startActivity(intent);
             this.finish();
         } else if("manual".equals(Constants.strFormActivity)){//手动测量
             intent.setClass(CurveSelectActivity.this, ManualMeasureFristActivity.class);
+            intent.putExtra("type",Constants.strFormActivity);
             startActivity(intent);
             this.finish();
         }else{
             intent.setClass(CurveSelectActivity.this, Main2Activity.class);
+            intent.putExtra("type",Constants.strFormActivity);
             startActivity(intent);
             this.finish();
         }
