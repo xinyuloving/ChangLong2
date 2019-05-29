@@ -249,7 +249,7 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
             CustomToast.showToast(this, "请选择对应的曲线！");
         }else {
             intent.setClass(this, TimingMeasureTipActivity.class);
-            intent.putExtra("type", "jiaozhun");
+            intent.putExtra("type", Constants.strFormActivity);
             intent.putExtra("strStartTime", strStratTime);
             intent.putExtra("strEndTime", strEndTime);
             intent.putExtra("jiange", strJiange);

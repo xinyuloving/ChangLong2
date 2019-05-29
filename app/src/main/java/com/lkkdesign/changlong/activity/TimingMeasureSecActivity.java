@@ -105,7 +105,7 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
                 "结束时间：" + strEndTime + "\n";
         strInfo = intent.getStringExtra("strInfo");
         tvShow.setText(strInfo);
-        if ("jiaozhun".equals(Constants.strFormActivity)) {
+        if ("xiaozhun".equals(Constants.strFormActivity)) {
             tvLlTitle.setText(" 曲线校准");
         } else if ("time".equals(Constants.strFormActivity)) {
             tvLlTitle.setText(" 定时测量");
@@ -128,7 +128,7 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
                     intent.setClass(this, TimingSetupActivity.class);
                     startActivity(intent);
                     this.finish();
-                } else if ("jiaozhun".equals(Constants.strFormActivity)) {
+                } else if ("xiaozhun".equals(Constants.strFormActivity)) {
                     intent.setClass(this, CurveSelectActivity.class);
                     startActivity(intent);
                     this.finish();
@@ -211,7 +211,7 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
             intent.setClass(this, TimingSetupActivity.class);
             startActivity(intent);
             this.finish();
-        } else if ("jiaozhun".equals(Constants.strFormActivity)) {
+        } else if ("xiaozhun".equals(Constants.strFormActivity)) {
             intent.setClass(this, CurveSelectActivity.class);
             startActivity(intent);
             this.finish();

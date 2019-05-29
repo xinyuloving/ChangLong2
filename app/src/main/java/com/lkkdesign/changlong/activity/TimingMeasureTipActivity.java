@@ -75,7 +75,7 @@ public class TimingMeasureTipActivity extends AppCompatActivity {
         wavelength = Constants.strWavelength;
         tvCod.setText(wavelength);
         Intent intent = getIntent();
-        if ("jiaozhun".equals(Constants.strFormActivity)) {
+        if ("xiaozhun".equals(Constants.strFormActivity)) {
             tvTitle.setText(" 曲线校准");
         }else if("time".equals(Constants.strFormActivity)){
             tvTitle.setText(" 定时测量");
@@ -92,7 +92,7 @@ public class TimingMeasureTipActivity extends AppCompatActivity {
                     intent.setClass(this, TimingSetupActivity.class);
                     startActivity(intent);
                     this.finish();
-                } else if ("jiaozhun".equals(Constants.strFormActivity)) {
+                } else if ("xiaozhun".equals(Constants.strFormActivity)) {
                     intent.setClass(this, CurveSelectActivity.class);
                     startActivity(intent);
                     this.finish();
@@ -126,7 +126,7 @@ public class TimingMeasureTipActivity extends AppCompatActivity {
             intent.setClass(this, TimingSetupActivity.class);
             startActivity(intent);
             this.finish();
-        } else if ("jiaozhun".equals(Constants.strFormActivity)) {
+        } else if ("xiaozhun".equals(Constants.strFormActivity)) {
             intent.setClass(this, CurveSelectActivity.class);
             startActivity(intent);
             this.finish();
