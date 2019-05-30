@@ -262,10 +262,21 @@
         android:layout_below="@id/cardview3"
         android:layout_marginTop="5dp"
         android:textSize="18dp"
-        android:textColor="#6E6F6F"/>
+        android:textColor="#6E6F6F"
+        android:visibility="gone"/>
+    <TextClock
+        android:id="@+id/tc_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="#6E6F6F"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/cardview3"
+        android:format24Hour="yyyy年MM月dd日 HH:mm"/>
 
     <LinearLayout
-        android:layout_below="@+id/tv_time"
+        android:layout_below="@+id/tc_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"

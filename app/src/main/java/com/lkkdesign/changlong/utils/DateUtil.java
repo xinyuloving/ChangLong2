@@ -29,6 +29,7 @@ public class DateUtil {
     public static final SimpleDateFormat DATE_TIME_FORMAT2 = new SimpleDateFormat("yyyy年MM月dd日");
     public static final SimpleDateFormat DATE_TIME_FORMAT3 = new SimpleDateFormat("yyyyMMddHHmmss");
     public static final SimpleDateFormat DATE_TIME_FORMAT4 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    public static final SimpleDateFormat DATE_TIME_FORMAT5=new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
 
     public static String getDate(){
         java.util.Date tdate = new java.util.Date();
