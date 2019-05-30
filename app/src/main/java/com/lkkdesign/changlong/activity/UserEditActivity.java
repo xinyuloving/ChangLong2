@@ -30,8 +30,10 @@ public class UserEditActivity extends AppCompatActivity {
     ImageView ivReturn;
     @BindView(R.id.etName)
     EditText etName;
-    @BindView(R.id.etJobNo)
-    EditText etJobNo;
+    @BindView(R.id.etPWD)
+    EditText etPWD;
+//    @BindView(R.id.etJobNo)
+//    EditText etJobNo;
     @BindView(R.id.etCompany)
     EditText etCompany;
     @BindView(R.id.etAddress)
@@ -77,7 +79,8 @@ public class UserEditActivity extends AppCompatActivity {
         tb_user = userDao.findByID(""+intId);
         int_id = tb_user.get_id();
         etName.setText(tb_user.getName());
-        etJobNo.setText(tb_user.getJobNo());
+        etPWD.setText(tb_user.getPassword());
+//        etJobNo.setText(tb_user.getJobNo());
         etCompany.setText(tb_user.getCompany());
         etAddress.setText(tb_user.getAddress());
         txtInTime.setText(tb_user.getTime());
@@ -101,15 +104,17 @@ public class UserEditActivity extends AppCompatActivity {
                 break;
             case R.id.addbtn:
                 String strName = etName.getText().toString().replaceAll(" ","");
-                String strJobNo = etJobNo.getText().toString().replaceAll(" ","");
-                if(strName.length() > 0 && strJobNo.length() >0) {
+//                String strJobNo = etJobNo.getText().toString().replaceAll(" ","");
+//                if(strName.length() > 0 && strJobNo.length() >0) {
+                if(strName.length() > 0 ) {
                     tb_user = new Tb_user();
                     tb_user.set_id(int_id);
                     tb_user.setAddress(etAddress.getText().toString());
                     tb_user.setCompany(etCompany.getText().toString());
                     tb_user.setContact(etContact.getText().toString());
-                    tb_user.setJobNo(etJobNo.getText().toString());
+                    tb_user.setJobNo("");
                     tb_user.setName(etName.getText().toString());
+                    tb_user.setPassword(etPWD.getText().toString());
                     tb_user.setTime(txtInTime.getText().toString());
 
                     Log.i("UEActivity", "tb_user=" + tb_user.toString());
@@ -125,7 +130,8 @@ public class UserEditActivity extends AppCompatActivity {
                 break;
             case R.id.cancelbtn:
                 etName.setText("");
-                etJobNo.setText("");
+//                etJobNo.setText("");
+                etPWD.setText("");
                 etCompany.setText("");
                 etAddress.setText("");
                 txtInTime.setText("");
