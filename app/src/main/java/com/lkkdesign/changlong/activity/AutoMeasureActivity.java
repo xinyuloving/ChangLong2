@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.lkkdesign.changlong.R;
@@ -72,11 +72,16 @@ public class AutoMeasureActivity extends AppCompatActivity {
     Button btnMeasure;
     @BindView(R.id.btn_save)
     Button btnSave;
+    @BindView(R.id.tv_title_toolbar)
+    TextView tvTitleToolbar;
+    @BindView(R.id.tc_time)
+    TextClock tcTime;
     private String strInfo = "";
     private String strShow = "COD（0-100 mg/L）";
     private MixSpeakUtil mixSpeakUtil;
     private Intent intent = new Intent();
     private final String TAG = "AutoMeasureActivity";
+    private Boolean running = false;
 
     private int intWavelength;//曲线波长
     private float floDensity;//密度
@@ -84,7 +89,9 @@ public class AutoMeasureActivity extends AppCompatActivity {
     private float floAbsorbance;//吸光度
     private int intResult;//测量结果
     private int inttemp;//测量结果
+
     private boolean booIsMeasure = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,9 +105,12 @@ public class AutoMeasureActivity extends AppCompatActivity {
 
     private void initView() {
         tvUser.setText(Constants.strLoginName);
+
         tvTime.setText(DateUtil.getDate());
+        // startThread();
         //strShow = "排放标准\nA：20mg/L\t\nB：30mg/L";
 //        tvCod.setText(strShow);
+
     }
 
 

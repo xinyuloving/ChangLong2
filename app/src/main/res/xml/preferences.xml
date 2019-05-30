@@ -67,6 +67,11 @@
             android:title="提示音与震动"></CheckBoxPreference>
 
     </PreferenceCategory>
+    <PreferenceCategory android:title="账号设置">
+        <Preference
+            android:key="backaccount"
+            android:title="注销账号"></Preference>
+    </PreferenceCategory>
     <PreferenceCategory android:title="关于">
         <Preference
             android:key="checkupdate"

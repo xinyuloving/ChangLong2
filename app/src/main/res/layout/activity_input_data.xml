@@ -101,13 +101,30 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cardview2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:layout_margin="@dimen/dp_16"
         app:layout_constraintEnd_toEndOf="@+id/cardview1"
         app:layout_constraintStart_toStartOf="@+id/cardview1"
         app:layout_constraintTop_toBottomOf="@+id/cardview1"
         app:cardCornerRadius="@dimen/padding_10">
 
+        <TextView
+            android:id="@+id/tv_show1"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="start|center"
+            android:text="请放入空白比色管\n请按空白键\n请取出空白比色管\n请放入样品\n请按确认键"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textsize_28"
+            android:visibility="invisible"/>
+
+        <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+            android:id="@+id/rv_curve"
+            android:layout_width="match_parent"
+            android:layout_height="240dp" />
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btn_add"
             android:layout_width="@dimen/dp_40"
@@ -117,11 +134,6 @@
             android:src="@mipmap/float_add"
             app:fabSize="mini"
             android:layout_gravity="bottom|end"/>
-
-        <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
-            android:id="@+id/rv_curve"
-            android:layout_width="match_parent"
-            android:layout_height="260dp" />
     </android.support.v7.widget.CardView>
 
 
@@ -193,5 +205,45 @@
         app:layout_constraintEnd_toEndOf="@+id/tv_timer"
         app:layout_constraintStart_toStartOf="@+id/tv_timer"
         app:layout_constraintTop_toBottomOf="@+id/tv_timer" />
+    <LinearLayout
+        android:id="@+id/line_xiaozhun"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/tv_timer"
+        app:layout_constraintStart_toStartOf="@+id/tv_timer"
+        app:layout_constraintTop_toBottomOf="@+id/tv_timer"
+        android:layout_marginLeft="@dimen/dp_8"
+        android:layout_marginRight="@dimen/dp_8"
+        android:visibility="invisible">
+        <Button
+            android:id="@+id/btn_blank"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_bg_blue"
+            android:gravity="center"
+            android:text="@string/blank"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/textsize_24"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_bg_blue"
+            android:gravity="center"
+            android:text="@string/confirm"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/textsize_24"
+            android:layout_weight="1" />
+    </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>

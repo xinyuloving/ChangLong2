@@ -2,8 +2,9 @@
     <string name="app_name">水质监测</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">长隆水质分析仪</string>
+    <string name="nav_header_title">多参数水质分析仪</string>
     <string name="nav_header_subtitle">家园守望者，保碧水蓝天</string>
+    <string name="nav_footer_phonenumber">联系电话：0755-84297315</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">设置</string>
     <string name="theme">主题</string>
