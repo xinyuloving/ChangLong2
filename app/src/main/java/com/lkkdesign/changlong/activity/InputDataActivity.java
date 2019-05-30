@@ -11,7 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +32,7 @@ import com.lkkdesign.changlong.adapter.MainAdapter;
 import com.lkkdesign.changlong.config.Constants;
 import com.lkkdesign.changlong.utils.CustomToast;
 import com.lkkdesign.changlong.utils.DateUtil;
+import com.lkkdesign.changlong.utils.RandomUntil;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemLongClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
@@ -45,6 +48,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.view.View.GONE;
+import static com.lkkdesign.changlong.utils.MyFunc.getAbsorbance;
 
 public class InputDataActivity extends AppCompatActivity implements SwipeItemClickListener {
 
@@ -79,6 +85,14 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
     TextView tvTimer;
     @BindView(R.id.btn_calculate)
     Button btnCalculate;
+    @BindView(R.id.btn_blank)
+    Button btnBlank;
+    @BindView(R.id.btn_save)
+    Button btnSave;
+    @BindView(R.id.line_xiaozhun)
+    LinearLayout lineXiaozhun;
+    @BindView(R.id.tv_show1)
+    TextView tvShow1;
     private Intent intent = new Intent();
     private String strTitle = "";
     private String strInfo = "";
@@ -90,6 +104,7 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
     private String strAValue = "";
     private String strCValue = "";
     private String strType = "";
+    private String strfrom = "";
     private List<String> dataList = new ArrayList<>();
 
 
@@ -108,6 +123,9 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
         Constants.strFormActivity = strType;
         strTitle = intent.getStringExtra("wavelength");
         strInfo = intent.getStringExtra("strInfo");
+        strfrom = intent.getStringExtra("from");
+
+
         tvUser.setText(Constants.strLoginName);
         tvCod.setText(strInfo);
         tvTimer.setText(DateUtil.getDate());
@@ -133,77 +151,162 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
 
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged(mDataList);
+
+        if ("InputDataActivity".equals(strfrom)) {
+
+        } else if ("CurveMeasureActivity".equals(strfrom)) {
+
+        } else if ("CMActivity_ssjz".equals(strfrom)) {
+            tvCod.setText(strInfo);
+            btnCalculate.setVisibility(GONE);
+            lineXiaozhun.setVisibility(View.VISIBLE);
+            tvShow1.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(GONE);
+
+        }
     }
 
-    @OnClick({R.id.tv_return, R.id.btn_add, R.id.tv_show_data, R.id.btn_calculate})
+    @OnClick({R.id.tv_return, R.id.btn_add, R.id.tv_show_data, R.id.btn_calculate,R.id.btn_blank,R.id.btn_save})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_return:
                 intent.setClass(this, CurveSelectActivity.class);
                 intent.putExtra("type", Constants.strFormActivity);
+                intent.putExtra("strInfo", strInfo);
                 startActivity(intent);
                 this.finish();
                 break;
-            case R.id.btn_add:
-                AlertDialog.Builder setDeBugDialog = new AlertDialog.Builder(this);
-                //获取界面
-                View dialogView = LayoutInflater.from(this).inflate(R.layout.inputdata_dialog_layout, null);
-                //将界面填充到AlertDiaLog容器
-                setDeBugDialog.setView(dialogView);
-
-                setDeBugDialog.create();
-                final EditText aValue = dialogView.findViewById(R.id.et_aValue);
-                final EditText cValue = dialogView.findViewById(R.id.et_cValue);
-
-
-                final AlertDialog customAlert = setDeBugDialog.show();
-                dialogView.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        strCValue = "C=" + cValue.getText().toString().trim() + "mg/L";
-                        strAValue = "A=" + aValue.getText().toString().trim();
-                        dataList.add(strCValue + "\n" + strAValue);
-                        customAlert.dismiss();
-                    }
-                });
-
-                dialogView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        customAlert.dismiss();
-                    }
-                });
-
+            case R.id.btn_blank:
+                if ("InputDataActivity".equals(strfrom) || "CurveMeasureActivity".equals(strfrom)){
+                    tvShow1.setText("\n\n请取出空白比色管\n请放入样品\n请按确认键");
+//                tvShow2.setVisibility(View.INVISIBLE);
+//                    booIsPre = true;
+                }else{
+                    tvShow1.setVisibility(View.VISIBLE);
+                    tvShow1.setText("\n\n请取出空白比色管\n请放入样品\n请按确认键");
+                    mRecyclerView.setVisibility(View.GONE);
+//                    booIsPre=true;
+                }
                 break;
+            case R.id.btn_save:
+                tvTitle.setText("实时校准结果");
+                dataList.add("C=" + strCValue + "mg/L,\n" + "A=0.666");
+                strInfo = "";
+                //tvResult.setText(strInfo);
+                //文字提示隐藏，数据列表显示
+                tvShow1.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                if (strAValue.equals("0")&&strCValue.equals("0")){
+                    new AlertDialog.Builder(this)
+                            .setTitle("保存")
+                            .setMessage("保存吗？")
+                            .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    intent.setClass(InputDataActivity.this, PhotometerSecActivity.class);
+                                    intent.putExtra("from", "InputDataActivity");
+                                    intent.putExtra("wavelength", strTitle);
+                                    intent.putExtra("type", Constants.strFormActivity);
+                                    intent.putExtra("strInfo", strInfo);
+                                    startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .show();
+                }
+                    break;
+            case R.id.btn_add:
+                if ("InputDataActivity".equals(strfrom)) {
+                    AlertDialog.Builder setDeBugDialog = new AlertDialog.Builder(this);
+                    //获取界面
+                    View dialogView = LayoutInflater.from(this).inflate(R.layout.inputdata_dialog_layout, null);
+                    //将界面填充到AlertDiaLog容器
+                    setDeBugDialog.setView(dialogView);
+                    setDeBugDialog.create();
+                    final EditText aValue = dialogView.findViewById(R.id.et_aValue);
+                    final EditText cValue = dialogView.findViewById(R.id.et_cValue);
+                    final AlertDialog customAlert = setDeBugDialog.show();
+                    dialogView.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            strCValue = "C=" + cValue.getText().toString().replace("", "") + "mg/L";
+                            strAValue = "A=" + aValue.getText().toString().replace("", "");
+                            if (strCValue.isEmpty() || strAValue.isEmpty()) {
+                                CustomToast.showToast(getApplicationContext(), "A、C值不可为空！");
+                            }
+                            if (strCValue.length() > 0 && strCValue.length() > 0) {
+                                dataList.add(strCValue + "\n" + strAValue);
+                                customAlert.dismiss();
+                            }
+                        }
+                    });
+                    dialogView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            customAlert.dismiss();
+                        }
+                    });
+                } else if ("CurveMeasureActivity".equals(strfrom)) {
+
+                } else if ("CMActivity_ssjz".equals(strfrom)) {
+                    final EditText inputServer = new EditText(this);
+                    inputServer.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("请输入C值：").setIcon(android.R.mipmap.sym_def_app_icon).setView(inputServer)
+                            .setNegativeButton("Cancel", null);
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            strCValue = inputServer.getText().toString();
+                            mRecyclerView.setVisibility(View.GONE);
+                            tvShow1.setVisibility(View.VISIBLE);
+                            tvShow1.setText("请放入空白比色管\n请按空白键\n请取出空白比色管\n请放入样品\n请按确认键");
+                        }
+                    });
+                    builder.show();
+
+                }
+                break;
+
             case R.id.tv_show_data:
                 showData();
                 break;
+
             case R.id.btn_calculate:
                /* intent.setClass(InputDataActivity.this, PhotometerSecActivity.class);
                 intent.putExtra("from", "InputDataActivity");
                 intent.putExtra("wavelength", strTitle);
                 startActivity(intent);*/
-                new AlertDialog.Builder(this)
-                        .setTitle("保存")
-                        .setMessage("保存吗？")
-                        .setPositiveButton("是", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                intent.setClass(InputDataActivity.this, PhotometerSecActivity.class);
-                                intent.putExtra("from", "InputDataActivity");
-                                intent.putExtra("wavelength", strTitle);
-                                intent.putExtra("type", Constants.strFormActivity);
-                                startActivity(intent);
-                            }
-                        })
-                        .setNegativeButton("否", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                if ("InputDataActivity".equals(strfrom) || "CurveMeasureActivity".equals(strfrom)) {
+                    new AlertDialog.Builder(this)
+                            .setTitle("保存")
+                            .setMessage("保存吗？")
+                            .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    intent.setClass(InputDataActivity.this, PhotometerSecActivity.class);
+                                    intent.putExtra("from", "InputDataActivity");
+                                    intent.putExtra("wavelength", strTitle);
+                                    intent.putExtra("type", Constants.strFormActivity);
+                                    intent.putExtra("strInfo", strInfo);
+                                    startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
-                            }
-                        })
-                        .show();
+                                }
+                            })
+                            .show();
+
+                }
                 break;
+
         }
     }
 
@@ -328,7 +431,7 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
         //嫑忘记刷新适配器
         mAdapter.notifyDataSetChanged();
         CustomToast.showToast(this, mDataList.get(position));
-        strInfo = mDataList.get(position);
+//        strInfo = mDataList.get(position);
     }
 
     protected List<String> createDataList() {
@@ -371,6 +474,7 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
     public void onBackPressed() {
         intent.setClass(this, CurveSelectActivity.class);
         intent.putExtra("type", Constants.strFormActivity);
+        intent.putExtra("strInfo", strInfo);
         startActivity(intent);
         this.finish();
     }
