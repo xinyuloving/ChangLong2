@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".activity.Main2Activity">
 
-    <include layout="@layout/activity_normal_toolbar"
+    <include
+        android:id="@+id/include"
+        layout="@layout/activity_normal_toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,4 +67,16 @@
         app:layout_constraintStart_toStartOf="@+id/showText"
         app:layout_constraintTop_toBottomOf="@+id/showText"
         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_16"
+        android:textColor="@color/statusBarColor"
+        android:text="@string/nav_footer_phonenumber"
+        app:layout_constraintEnd_toEndOf="@+id/gridview"
+        app:layout_constraintStart_toStartOf="@+id/gridview"
+        app:layout_constraintTop_toBottomOf="@+id/gridview" />
 </android.support.constraint.ConstraintLayout>

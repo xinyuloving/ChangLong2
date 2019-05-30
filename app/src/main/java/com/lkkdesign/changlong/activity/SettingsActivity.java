@@ -1,5 +1,6 @@
 package com.lkkdesign.changlong.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +23,11 @@ import com.lkkdesign.changlong.config.Constants;
 import com.lkkdesign.changlong.utils.AppSharePreferenceMgr;
 import com.lkkdesign.changlong.utils.CustomToast;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
     private static final int REQUEST_CODE_PERMISSION_SD = 101;
@@ -29,6 +35,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
     Context mContext = null;
     private ListPreference preference_countdown;
     private Intent intent = new Intent();
+
 
     //此处在其他手机上运行出现Bug，需要调试。
 //    SharedPreferences settings = getSharedPreferences("setTime", 0);
@@ -46,7 +53,9 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
 //        System.out.println("保存的数据CountDown：" + str_list_CountDown);
         Constants.intCountDwonTime = Integer.parseInt(str_list_CountDown) * 1000;
 
+
     }
+
 
     private void init() {
 
@@ -138,6 +147,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         Preference preExitapp = (Preference) findPreference("exitapp");
         Preference preexhibitgoods = (Preference) findPreference("exhibitgoods");
         Preference prebqdyj = (Preference) findPreference("bqdyj");
+        Preference preBackAccount=findPreference("backaccount");
 
 //        Preference preopenDoor = (Preference) findPreference("openDoor");
 //        Preference precloseDoor = (Preference) findPreference("closeDoor");
@@ -159,7 +169,22 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
 //                return true;
 //            }
 //        });
-
+/**
+ * 注销账号
+ */
+        preBackAccount.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).setClass(SettingsActivity.this, LoginActivity.class);
+                SharedPreferences settings = getSharedPreferences("UserInfo", 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putString("Username","");
+                editor.putString("Password","");
+                editor.commit();
+                startActivity(intent);
+                return true;
+            }
+        });
         spPlayAuto.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
