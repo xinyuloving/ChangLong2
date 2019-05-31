@@ -130,7 +130,8 @@ public class UserInfoActivity extends AppCompatActivity implements SwipeItemClic
         List<Tb_user> listinfos = userDao.getScrollData(0, userDao.getCount());
         List<String> dataList = new ArrayList<>();
         for (Tb_user tb_user : listinfos) {
-            dataList.add("姓名：" + tb_user.getName() + "\t\t工号：" + tb_user.getJobNo());
+//            dataList.add("姓名：" + tb_user.getName() + "\t\t工号：" + tb_user.getJobNo());
+            dataList.add("姓名：" + tb_user.getName());
         }
         return dataList;
     }
@@ -155,7 +156,6 @@ public class UserInfoActivity extends AppCompatActivity implements SwipeItemClic
     public void onItemClick(View itemView, int position) {
         Log.i(TAG, "mDataList=" + mDataList.get(position));
         showCruveData("当前用户详细信息", mDataList.get(position));
-
     }
 
     /**
@@ -167,18 +167,21 @@ public class UserInfoActivity extends AppCompatActivity implements SwipeItemClic
     private void showCruveData(String strTitle, final String strInfo) {
 
 
-        Log.i(TAG, "strinfo=" + strInfo.toLowerCase().replaceAll("^.*工号：", ""));
+        Log.i(TAG, "strinfo=" + strInfo.toLowerCase().replaceAll("姓名：", ""));
 
         try {
-            tb_user = userDao.findByJobNo(strInfo.replaceAll("^.*工号：", ""));
+//            tb_user = userDao.findByName(strInfo.replaceAll("^.*工号：", ""));
+            tb_user = userDao.findByName(strInfo.replaceAll("姓名：", ""));
             Log.i(TAG, "tb_user=" + tb_user.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
         Log.i(TAG, "tb_user=" + tb_user.toString());
         String strContent = "\n姓名："
-                + tb_user.getName() + "\n工号："
-                + tb_user.getJobNo() + "\n单位："
+                + tb_user.getName()
+//                + "\n工号："
+//                + tb_user.getJobNo()
+                + "\n单位："
                 + tb_user.getCompany() + "\n联系方式："
                 + tb_user.getContact() + "\n地址："
                 + tb_user.getAddress();
@@ -208,7 +211,7 @@ public class UserInfoActivity extends AppCompatActivity implements SwipeItemClic
                 .onNeutral(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(MaterialDialog dialog, DialogAction which) {
-                        Constants.strLoginName = tb_user.getJobNo();
+                        Constants.strLoginName = tb_user.getName();
                         // 信息提示
                         CustomToast.showLongToast(getApplicationContext(), "已选择用户："+tb_user.getJobNo());
                     }

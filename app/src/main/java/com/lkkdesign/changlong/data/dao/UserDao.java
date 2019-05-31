@@ -78,6 +78,30 @@ public class UserDao {
         }
         return null;// 返回集合
     }
+    /**
+     * 查找用户信息
+     * 查询条件：用户名称
+     *
+     * @param strName
+     * @return
+     */
+    public Tb_user findByName(String strName) {
+        db = helper.getWritableDatabase();// 初始化SQLiteDatabase对象
+        Cursor cursor = db.rawQuery("select * from tb_user where name = ?", new String[]{strName});// 根据编号查找用户信息，并存储到Cursor类中
+        // 遍历所有的用户信息
+        while (cursor.moveToNext()) {
+            // 将遍历到的用户信息添加到集合中
+            return new Tb_user(cursor.getInt(cursor.getColumnIndex("_id")),
+                    cursor.getString(cursor.getColumnIndex("name")),
+                    cursor.getString(cursor.getColumnIndex("password")),
+                    cursor.getString(cursor.getColumnIndex("jobNo")),
+                    cursor.getString(cursor.getColumnIndex("company")),
+                    cursor.getString(cursor.getColumnIndex("contact")),
+                    cursor.getString(cursor.getColumnIndex("address")),
+                    cursor.getString(cursor.getColumnIndex("time")));
+        }
+        return null;// 返回集合
+    }
 
  /**
      * 查找用户信息

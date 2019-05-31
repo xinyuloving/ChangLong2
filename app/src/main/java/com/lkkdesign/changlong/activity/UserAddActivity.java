@@ -39,8 +39,8 @@ public class UserAddActivity extends AppCompatActivity {
     EditText etName;
     @BindView(R.id.textView2)
     TextView textView2;
-    @BindView(R.id.etJobNo)
-    EditText etJobNo;
+//    @BindView(R.id.etJobNo)
+//    EditText etJobNo;
     @BindView(R.id.et_pwd)
     EditText etPWD;
     @BindView(R.id.textView5)
@@ -111,12 +111,14 @@ public class UserAddActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.addbtn:
-                if(etJobNo.getText().toString().length() > 0 || etName.getText().toString().length() > 0
-                        || etPWD.getText().toString().length() > 0) {
-                    saveData();
-                }else{
-                    CustomToast.showToast(this,"请输入完整的用户信息");
-                }
+//                if(etJobNo.getText().toString().length() > 0 || etName.getText().toString().length() > 0
+//                        || etPWD.getText().toString().length() > 0) {
+                    if( etName.getText().toString().length() > 0 || etPWD.getText().toString().length() > 0) {
+                        saveData();
+                    }else{
+                        CustomToast.showToast(this,"请输入完整的用户信息");
+                    }
+//                }
                 break;
             case R.id.cancelbtn:
                 if("login".equals(strType)) {
@@ -170,7 +172,7 @@ public class UserAddActivity extends AppCompatActivity {
         strInfos = new String[listinfos.size()];//
         int m = 0;//
         for (Tb_user tb_user : listinfos) {//
-            strInfos[m] = tb_user.getJobNo() + "";
+            strInfos[m] = tb_user.getName() + "";
             m++;//
         }
         return strInfos;
@@ -181,10 +183,11 @@ public class UserAddActivity extends AppCompatActivity {
      */
     private void saveData() {
         StringBuffer sb = new StringBuffer();
-        String strJobNo = etJobNo.getText().toString().trim();
-        Log.i(FLG, "strJobNo=" + strJobNo);
+//        String strJobNo = etJobNo.getText().toString().trim();
+        String strName = etName.getText().toString().trim();
+        Log.i(FLG, "strName=" + strName);
 
-        if(true == ArrayUtils.contains(datainfo,strJobNo)){
+        if(true == ArrayUtils.contains(datainfo,strName)){
             // 信息提示
             CustomToast.showToast(getApplicationContext(), "工号已存在，请检查");
             return;
@@ -194,7 +197,8 @@ public class UserAddActivity extends AppCompatActivity {
         Tb_user tb_user = new Tb_user(userDao.getMaxId() + 1,
                 etName.getText().toString().trim(),
                 etPWD.getText().toString().trim(),
-                etJobNo.getText().toString().trim(),
+//                etJobNo.getText().toString().trim(),
+                "",
                 etCompany.getText().toString().trim(),
                 etContact.getText().toString().trim(),
                 etAddress.getText().toString().trim(),
