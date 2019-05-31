@@ -13,7 +13,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,6 +93,16 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
     LinearLayout lineXiaozhun;
     @BindView(R.id.tv_show1)
     TextView tvShow1;
+    @BindView(R.id.tv_line1)
+    TextView tvLine1;
+    @BindView(R.id.tv_line2)
+    TextView tvLine2;
+    @BindView(R.id.tv_line3)
+    TextView tvLine3;
+    @BindView(R.id.tv_line4)
+    TextView tvLine4;
+    @BindView(R.id.tv_line5)
+    TextView tvLine5;
     private Intent intent = new Intent();
     private String strTitle = "";
     private String strInfo = "";
@@ -108,7 +117,9 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
     private String strfrom = "";
     private List<String> dataList = new ArrayList<>();
 
-    private boolean booAddBtn=false;//默认添加按钮的状态为false，当false时，A/C的值默认为零
+    private boolean booAddBtn = false;//默认添加按钮的状态为false，当false时，A/C的值默认为零
+    private boolean booIsEmpty = false;//是否已按“空白”键，默认没有
+    private int lineState=1;//当前提示文字
 
 
     @Override
@@ -165,11 +176,12 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
             lineXiaozhun.setVisibility(View.VISIBLE);
             tvShow1.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);
+            btnBlank.setVisibility(View.GONE);
 
         }
     }
 
-    @OnClick({R.id.tv_return, R.id.btn_add, R.id.tv_show_data, R.id.btn_calculate,R.id.btn_blank,R.id.btn_save})
+    @OnClick({R.id.tv_return, R.id.btn_add, R.id.tv_show_data, R.id.btn_calculate, R.id.btn_blank, R.id.btn_save})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_return:
@@ -180,33 +192,68 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                 this.finish();
                 break;
             case R.id.btn_blank:
-                if ("InputDataActivity".equals(strfrom) || "CurveMeasureActivity".equals(strfrom)){
+                if ("InputDataActivity".equals(strfrom) || "CurveMeasureActivity".equals(strfrom)) {
                     tvShow1.setText("\n\n请取出空白比色管\n请放入样品\n请按确认键");
 //                tvShow2.setVisibility(View.INVISIBLE);
 //                    booIsPre = true;
-                }else{
-                    tvShow1.setVisibility(View.VISIBLE);
-                    tvShow1.setText("\n\n请取出空白比色管\n请放入样品\n请按确认键");
+                } else {
+                    booIsEmpty=true;
+                    btnBlank.setVisibility(View.GONE);
                     mRecyclerView.setVisibility(View.GONE);
 //                    booIsPre=true;
                 }
                 break;
             case R.id.btn_save:
-                if(booAddBtn==true){
+                if (booAddBtn == true) {
                     tvTitle.setText("实时校准结果");
                     float floClosed = RandomUntil.getRandomFloat(0.10f, 0.50f);//光源在关闭的情况下，检测器产生的电流数值
                     float floEmpty = RandomUntil.getRandomFloat(100.0f, 105.50f);//光源点亮，样品仓放置空样品管的情况下，检测器产生的电流数值
                     float floSample = RandomUntil.getRandomFloat(10.10f, 20.50f);//空样品管拿出来，将装有样品的样品管放置进样品仓，此时，检测器产生的电流数值
                     float floTranrate = calculateTransmittance(floClosed, floEmpty, floSample);//透过率
-                    strAValue= getAbsorbance(floTranrate)+"";
-                    dataList.add("C=" + strCValue + "mg/L,\n" + "A="+strAValue);
+                    strAValue = getAbsorbance(floTranrate) + "";
                     strInfo = "";
                     //tvResult.setText(strInfo);
                     //文字提示隐藏，数据列表显示
-                    tvShow1.setVisibility(View.GONE);
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    booAddBtn=false;
-                }else{
+                    switch (lineState){
+                        case 1:
+                            tvLine2.setVisibility(View.VISIBLE);
+                            tvLine1.setVisibility(View.GONE);
+                            btnBlank.setVisibility(View.VISIBLE);
+                            lineState++;
+                            break;
+                        case 2:
+                            if(booIsEmpty==false){
+                                CustomToast.showToast(getApplicationContext(), "请按照步骤执行");
+                            }else {
+                                tvLine3.setVisibility(View.VISIBLE);
+                                tvLine2.setVisibility(View.GONE);
+                                btnBlank.setVisibility(View.GONE);
+                                lineState++;
+                            }
+                            break;
+                        case 3:
+                            tvLine4.setVisibility(View.VISIBLE);
+                            tvLine3.setVisibility(View.GONE);
+                            lineState++;
+                            break;
+                        case 4:
+                            tvLine5.setVisibility(View.VISIBLE);
+                            tvLine4.setVisibility(View.GONE);
+                            btnSave.setText(R.string.confirm);
+                            lineState++;
+                            break;
+                        case 5:
+                            tvShow1.setVisibility(View.GONE);
+                            mRecyclerView.setVisibility(View.VISIBLE);
+                            dataList.add("C=" + strCValue + "mg/L,\n" + "A=" + strAValue);
+                            booAddBtn = false;
+                            btnSave.setText(R.string.save);
+                            break;
+                    }
+
+                } else {
+
+
                     new AlertDialog.Builder(this)
                             .setTitle("保存")
                             .setMessage("保存吗？")
@@ -230,7 +277,7 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                 }
 
 
-                    break;
+                break;
             case R.id.btn_add:
                 if ("InputDataActivity".equals(strfrom)) {
                     AlertDialog.Builder setDeBugDialog = new AlertDialog.Builder(this);
@@ -265,6 +312,7 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                 } else if ("CurveMeasureActivity".equals(strfrom)) {
 
                 } else if ("CMActivity_ssjz".equals(strfrom)) {
+
                     final EditText inputServer = new EditText(this);
                     inputServer.setInputType(InputType.TYPE_CLASS_NUMBER);
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -272,11 +320,17 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                             .setNegativeButton("Cancel", null);
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
+                            tvLine1.setVisibility(View.VISIBLE);
+                            tvLine2.setVisibility(View.GONE);
+                            tvLine3.setVisibility(View.GONE);
+                            tvLine4.setVisibility(View.GONE);
+                            tvLine5.setVisibility(View.GONE);
+                            lineState=1;
                             strCValue = inputServer.getText().toString();
                             mRecyclerView.setVisibility(View.GONE);
-                            tvShow1.setVisibility(View.VISIBLE);
-                            tvShow1.setText("请放入空白比色管\n请按空白键\n请取出空白比色管\n请放入样品\n请按确认键");
-                            booAddBtn=true;
+                            btnBlank.setVisibility(View.GONE);
+                            btnSave.setText(R.string.next);
+                            booAddBtn = true;
                         }
                     });
                     builder.show();
@@ -289,11 +343,7 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                 break;
 
             case R.id.btn_calculate:
-               /* intent.setClass(InputDataActivity.this, PhotometerSecActivity.class);
-                intent.putExtra("from", "InputDataActivity");
-                intent.putExtra("wavelength", strTitle);
-                startActivity(intent);*/
-                if ("InputDataActivity".equals(strfrom) || "CurveMeasureActivity".equals(strfrom)||"CMActivity_ssjz".equals(strfrom)) {
+                if ("InputDataActivity".equals(strfrom) || "CurveMeasureActivity".equals(strfrom) ) {
                     new AlertDialog.Builder(this)
                             .setTitle("保存")
                             .setMessage("保存吗？")
@@ -315,7 +365,6 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                                 }
                             })
                             .show();
-
                 }
                 break;
 
