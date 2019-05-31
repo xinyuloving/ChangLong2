@@ -158,7 +158,7 @@ public class CurveMeasureActivity extends AppCompatActivity {
                         intent.putExtra("wavelength", strTitle);
                         startActivity(intent);
                     } else if (2 == intSelectFun) {
-                        intent.setClass(this, PhotometerSecActivity.class);
+                        intent.setClass(this, AutoMeasureActivity.class);
                         intent.putExtra("type",Constants.strFormActivity);
                         intent.putExtra("from", "CurveMeasureActivity");
                         intent.putExtra("strInfo", strInfo);

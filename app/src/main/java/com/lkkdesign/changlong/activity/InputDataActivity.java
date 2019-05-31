@@ -50,6 +50,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static android.view.View.GONE;
+import static com.lkkdesign.changlong.utils.MyFunc.calculateTransmittance;
 import static com.lkkdesign.changlong.utils.MyFunc.getAbsorbance;
 
 public class InputDataActivity extends AppCompatActivity implements SwipeItemClickListener {
@@ -107,6 +108,8 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
     private String strfrom = "";
     private List<String> dataList = new ArrayList<>();
 
+    private boolean booAddBtn=false;//默认添加按钮的状态为false，当false时，A/C的值默认为零
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,8 +163,8 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
             tvCod.setText(strInfo);
             btnCalculate.setVisibility(GONE);
             lineXiaozhun.setVisibility(View.VISIBLE);
-            tvShow1.setVisibility(View.VISIBLE);
-            mRecyclerView.setVisibility(GONE);
+            tvShow1.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
 
         }
     }
@@ -189,21 +192,28 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                 }
                 break;
             case R.id.btn_save:
-                tvTitle.setText("实时校准结果");
-                dataList.add("C=" + strCValue + "mg/L,\n" + "A=0.666");
-                strInfo = "";
-                //tvResult.setText(strInfo);
-                //文字提示隐藏，数据列表显示
-                tvShow1.setVisibility(View.GONE);
-                mRecyclerView.setVisibility(View.VISIBLE);
-                if (strAValue.equals("0")&&strCValue.equals("0")){
+                if(booAddBtn==true){
+                    tvTitle.setText("实时校准结果");
+                    float floClosed = RandomUntil.getRandomFloat(0.10f, 0.50f);//光源在关闭的情况下，检测器产生的电流数值
+                    float floEmpty = RandomUntil.getRandomFloat(100.0f, 105.50f);//光源点亮，样品仓放置空样品管的情况下，检测器产生的电流数值
+                    float floSample = RandomUntil.getRandomFloat(10.10f, 20.50f);//空样品管拿出来，将装有样品的样品管放置进样品仓，此时，检测器产生的电流数值
+                    float floTranrate = calculateTransmittance(floClosed, floEmpty, floSample);//透过率
+                    strAValue= getAbsorbance(floTranrate)+"";
+                    dataList.add("C=" + strCValue + "mg/L,\n" + "A="+strAValue);
+                    strInfo = "";
+                    //tvResult.setText(strInfo);
+                    //文字提示隐藏，数据列表显示
+                    tvShow1.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    booAddBtn=false;
+                }else{
                     new AlertDialog.Builder(this)
                             .setTitle("保存")
                             .setMessage("保存吗？")
                             .setPositiveButton("是", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    intent.setClass(InputDataActivity.this, PhotometerSecActivity.class);
+                                    intent.setClass(InputDataActivity.this, AutoMeasureActivity.class);
                                     intent.putExtra("from", "InputDataActivity");
                                     intent.putExtra("wavelength", strTitle);
                                     intent.putExtra("type", Constants.strFormActivity);
@@ -214,11 +224,12 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                             .setNegativeButton("否", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
                                 }
                             })
                             .show();
                 }
+
+
                     break;
             case R.id.btn_add:
                 if ("InputDataActivity".equals(strfrom)) {
@@ -265,6 +276,7 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                             mRecyclerView.setVisibility(View.GONE);
                             tvShow1.setVisibility(View.VISIBLE);
                             tvShow1.setText("请放入空白比色管\n请按空白键\n请取出空白比色管\n请放入样品\n请按确认键");
+                            booAddBtn=true;
                         }
                     });
                     builder.show();
@@ -281,14 +293,14 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                 intent.putExtra("from", "InputDataActivity");
                 intent.putExtra("wavelength", strTitle);
                 startActivity(intent);*/
-                if ("InputDataActivity".equals(strfrom) || "CurveMeasureActivity".equals(strfrom)) {
+                if ("InputDataActivity".equals(strfrom) || "CurveMeasureActivity".equals(strfrom)||"CMActivity_ssjz".equals(strfrom)) {
                     new AlertDialog.Builder(this)
                             .setTitle("保存")
                             .setMessage("保存吗？")
                             .setPositiveButton("是", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    intent.setClass(InputDataActivity.this, PhotometerSecActivity.class);
+                                    intent.setClass(InputDataActivity.this, AutoMeasureActivity.class);
                                     intent.putExtra("from", "InputDataActivity");
                                     intent.putExtra("wavelength", strTitle);
                                     intent.putExtra("type", Constants.strFormActivity);

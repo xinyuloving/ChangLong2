@@ -39,6 +39,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.view.View.GONE;
 import static com.lkkdesign.changlong.utils.MyFunc.getAbsorbance;
 
 public class PhotometerSecActivity extends AppCompatActivity {
@@ -92,6 +93,16 @@ public class PhotometerSecActivity extends AppCompatActivity {
     FloatingActionButton btnAdd;
     @BindView(R.id.rv_curve)
     SwipeMenuRecyclerView rvCurve;
+    @BindView(R.id.tv_line1)
+    TextView tvLine1;
+    @BindView(R.id.tv_line2)
+    TextView tvLine2;
+    @BindView(R.id.tv_line3)
+    TextView tvLine3;
+    @BindView(R.id.tv_line4)
+    TextView tvLine4;
+    @BindView(R.id.tv_line5)
+    TextView tvLine5;
     private String strTitle = "";
 
     private Intent intent = new Intent();
@@ -112,6 +123,9 @@ public class PhotometerSecActivity extends AppCompatActivity {
     protected List<String> mDataList;
     private List<String> dataList = new ArrayList<>();
 
+    private boolean booIsEmpty = false;//是否已按“空白”键，默认没有
+    private int lineState=1;//当前提示文字
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,7 +143,6 @@ public class PhotometerSecActivity extends AppCompatActivity {
         strTitle = intent.getStringExtra("wavelength");
         strfrom = intent.getStringExtra("from");
         strInfo = intent.getStringExtra("strInfo");
-
         tvCod.setText(strInfo);
         tvTimer.setText(DateUtil.getDate());
         if ("InputDataActivity".equals(strfrom)) {
@@ -144,11 +157,15 @@ public class PhotometerSecActivity extends AppCompatActivity {
         } else if ("CMActivity_ssjz".equals(strfrom)) {
             tvLlTitle.setText("曲线校准");
             cardview3.setVisibility(View.GONE);
-        } else {
+        } else{
             tvLlTitle.setText("光度计");
             tvCod.setText("λ= " + strTitle + " nm");
-            tvShow1.setText("请放入空白比色管\n请按空白键\n请取出空白比色管\n请放入样品\n请按确认键");
+            tvLine2.setVisibility(GONE);
+            tvLine3.setVisibility(GONE);
+            tvLine4.setVisibility(GONE);
+            tvLine5.setVisibility(GONE);
             btnAdd.hide();
+            btnSave.setText(R.string.next);
         }
 
         mLayoutManager = createLayoutManager();
@@ -200,16 +217,13 @@ public class PhotometerSecActivity extends AppCompatActivity {
                 builder.show();
                 break;
             case R.id.btn_blank:
-                 if ("InputDataActivity".equals(strfrom) || "CurveMeasureActivity".equals(strfrom)){
-                     tvShow1.setText("\n\n请取出空白比色管\n请放入样品\n请按确认键");
+                if ("InputDataActivity".equals(strfrom) || "CurveMeasureActivity".equals(strfrom)) {
+                    //tvShow1.setText("\n\n请取出空白比色管\n请放入样品\n请按确认键");
 //                tvShow2.setVisibility(View.INVISIBLE);
-                     booIsPre = true;
-                 }else{
-                     tvShow1.setVisibility(View.VISIBLE);
-                     tvShow1.setText("\n\n请取出空白比色管\n请放入样品\n请按确认键");
-                     rvCurve.setVisibility(View.GONE);
-                     booIsPre=true;
-                 }
+                } else {
+                    booIsEmpty=true;
+                    btnBlank.setVisibility(View.GONE);
+                }
 
 
                 break;
@@ -233,34 +247,67 @@ public class PhotometerSecActivity extends AppCompatActivity {
                     //文字提示隐藏，数据列表显示
                     tvShow1.setVisibility(View.GONE);
                     rvCurve.setVisibility(View.VISIBLE);
-                    if (strAValue.equals("0")&&strCValue.equals("0")){
+                    if (strAValue.equals("0") && strCValue.equals("0")) {
                         intent.setClass(PhotometerSecActivity.this, PhotometerSecActivity.class);
                         intent.putExtra("from", "InputDataActivity");
                         intent.putExtra("wavelength", strTitle);
                         intent.putExtra("type", Constants.strFormActivity);
-                        intent.putExtra("strInfo",strInfo);
+                        intent.putExtra("strInfo", strInfo);
                         startActivity(intent);
                     }
-                } else {
-                    if (false == booIsPre) {
+                } else{
+                    switch (lineState){
+                        case 1:
+                            tvLine2.setVisibility(View.VISIBLE);
+                            tvLine1.setVisibility(View.GONE);
+                            btnBlank.setVisibility(View.VISIBLE);
+                            lineState++;
+                            break;
+                        case 2:
+                            if(booIsEmpty==false){
+                                CustomToast.showToast(getApplicationContext(), "请按照步骤执行");
+                            }else {
+                                tvLine3.setVisibility(View.VISIBLE);
+                                tvLine2.setVisibility(View.GONE);
+                                btnBlank.setVisibility(View.GONE);
+                                lineState++;
+                            }
+                            break;
+                        case 3:
+                            tvLine4.setVisibility(View.VISIBLE);
+                            tvLine3.setVisibility(View.GONE);
+                            lineState++;
+                            break;
+                        case 4:
+                            tvLine5.setVisibility(View.VISIBLE);
+                            tvLine4.setVisibility(View.GONE);
+                            btnSave.setText(R.string.confirm);
+                            lineState++;
+                            break;
+                        case 5:
+                            btnSave.setText(R.string.celiang);
+                            tvLine5.setVisibility(View.GONE);
+                            tvShow1.setVisibility(View.VISIBLE);
+                            floTranrate = RandomUntil.getNum(10, 20);
+                            Log.i("PSA", "floTranrate=" + floTranrate);
+                            tvTransmissionRate.setText(floTranrate + "00%\n");
+                            tvCurrent.setText(RandomUntil.getNum(100, 120) + "μA\n");
+                            tvVoltage.setText(RandomUntil.getNum(10, 12) + "mV\n");
+                            tvTemper.setText(RandomUntil.getNum(20, 25) + "℃\n");
+                            floAbsorbance = getAbsorbance(floTranrate);
+                            Log.i("PSA", "floAbsorbance=" + floAbsorbance);
+                            strInfo = "吸光度\nA=" + (-1) * floAbsorbance;
+                            tvShow1.setText(strInfo);
+                            tvShow1.setGravity(Gravity.CENTER);
+                            tvShow1.setTextSize(getResources().getDimension(R.dimen.textsize_24));
+                            tvShow1.setTextColor(getResources().getColor(R.color.statusBarColor));
+                            break;
+                    }
+                   /* if (false == booIsPre) {
                         CustomToast.showToast(this, "请按步骤执行");
                         return;
-                    }
-                    floTranrate = RandomUntil.getNum(10, 20);
-                    Log.i("PSA", "floTranrate=" + floTranrate);
-                    tvTransmissionRate.setText(floTranrate + "00%\n");
-                    tvCurrent.setText(RandomUntil.getNum(100, 120) + "μA\n");
-                    tvVoltage.setText(RandomUntil.getNum(10, 12) + "mV\n");
-                    tvTemper.setText(RandomUntil.getNum(20, 25) + "℃\n");
-//                    tvTitle.setText("");
+                    }*/
 
-                    floAbsorbance = getAbsorbance(floTranrate);
-                    Log.i("PSA", "floAbsorbance=" + floAbsorbance);
-                    strInfo = "吸光度\nA=" + (-1) * floAbsorbance;
-                    tvShow1.setText(strInfo);
-                    tvShow1.setGravity(Gravity.CENTER);
-                    tvShow1.setTextSize(getResources().getDimension(R.dimen.textsize_24));
-                    tvShow1.setTextColor(getResources().getColor(R.color.statusBarColor));
 //                    strInfo = "透过率（T）：" + RandomUntil.getNum(10, 20) + ".00%\n" +
 //                            "电流：" + RandomUntil.getNum(85, 100) + " μA\n" +
 //                            "电压：10 mV\n" +
@@ -284,6 +331,7 @@ public class PhotometerSecActivity extends AppCompatActivity {
     protected BaseAdapter createAdapter() {
         return new MainAdapter(this);
     }
+
     protected List<String> createDataList() {
 
         String[] listItem = getResources().getStringArray(R.array.list_shuju);//曲线列表
