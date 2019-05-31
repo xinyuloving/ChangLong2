@@ -260,7 +260,7 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                             .setPositiveButton("是", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    intent.setClass(InputDataActivity.this, AutoMeasureActivity.class);
+                                    intent.setClass(InputDataActivity.this, ManualMeasureSecActivity.class);
                                     intent.putExtra("from", "InputDataActivity");
                                     intent.putExtra("wavelength", strTitle);
                                     intent.putExtra("type", Constants.strFormActivity);
@@ -350,9 +350,9 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                             .setPositiveButton("是", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    intent.setClass(InputDataActivity.this, AutoMeasureActivity.class);
+                                    intent.setClass(InputDataActivity.this, ManualMeasureTipActivity.class);
                                     intent.putExtra("from", "InputDataActivity");
-                                    intent.putExtra("wavelength", strTitle);
+                                    intent.putExtra("wavelength", strInfo);
                                     intent.putExtra("type", Constants.strFormActivity);
                                     intent.putExtra("strInfo", strInfo);
                                     startActivity(intent);

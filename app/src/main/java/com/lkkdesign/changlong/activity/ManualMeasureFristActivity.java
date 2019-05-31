@@ -261,6 +261,7 @@ public class ManualMeasureFristActivity extends AppCompatActivity implements Swi
                 } else {
                     intent.setClass(this, ManualMeasureTipActivity.class);
                     intent.putExtra("wavelength", strInfo);
+                    intent.putExtra("from","ManualMeasureFristActivity");
                     startActivity(intent);
                     this.finish();
                 }
