@@ -119,7 +119,7 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
 
     private boolean booAddBtn = false;//默认添加按钮的状态为false，当false时，A/C的值默认为零
     private boolean booIsEmpty = false;//是否已按“空白”键，默认没有
-    private int lineState=1;//当前提示文字
+    private int lineState=4;//当前提示文字
 
 
     @Override
@@ -320,12 +320,12 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                             .setNegativeButton("Cancel", null);
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            tvLine1.setVisibility(View.VISIBLE);
+                            tvLine1.setVisibility(View.GONE);
                             tvLine2.setVisibility(View.GONE);
                             tvLine3.setVisibility(View.GONE);
-                            tvLine4.setVisibility(View.GONE);
+                            tvLine4.setVisibility(View.VISIBLE);
                             tvLine5.setVisibility(View.GONE);
-                            lineState=1;
+                            lineState=4;
                             strCValue = inputServer.getText().toString();
                             mRecyclerView.setVisibility(View.GONE);
                             btnBlank.setVisibility(View.GONE);
