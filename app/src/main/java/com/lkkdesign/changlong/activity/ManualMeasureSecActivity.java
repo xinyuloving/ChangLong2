@@ -2,6 +2,7 @@ package com.lkkdesign.changlong.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.lkkdesign.changlong.utils.DateUtil.intCountDwonTime;
 import static com.lkkdesign.changlong.utils.MyFunc.calculateTransmittance;
 import static com.lkkdesign.changlong.utils.MyFunc.getAbsorbance;
 
@@ -72,6 +74,8 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
     TextView textLimitB;
     @BindView(R.id.cardview2)
     CardView cardview2;
+    @BindView(R.id.timeCount)
+    TextView timeCount;
     private String strInfo = "";
     private String strfrom = "";
     private MixSpeakUtil mixSpeakUtil;
@@ -87,6 +91,8 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
     private int inttemp;//测量结果
 
     private final String TAG = "MMSActivity";
+    private CountDownTimer timer;
+    private long second = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +117,21 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
         } else if ("ManualMeasureFristActivity".equals(strfrom)) {
             tvLlTitle.setText(R.string.tv_manual);
         }
+        timer = new CountDownTimer(intCountDwonTime, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                second =  millisUntilFinished / 1000;
+                timeCount.setText("还有"+second + "秒"+"返回主页面");
+            }
+
+            @Override
+            public void onFinish() {
+                intent.setClass(ManualMeasureSecActivity.this, Main2Activity.class);
+                startActivity(intent);
+                ManualMeasureSecActivity.this.finish();
+            }
+        };
+        timer.start();
 
     }
 
