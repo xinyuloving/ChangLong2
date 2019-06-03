@@ -5,18 +5,24 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.allen.library.SuperTextView;
 import com.lkkdesign.changlong.R;
 import com.lkkdesign.changlong.baidutts.util.MixSpeakUtil;
 import com.lkkdesign.changlong.config.Constants;
@@ -26,6 +32,8 @@ import com.lkkdesign.changlong.printer.SearchBTActivity;
 import com.lkkdesign.changlong.utils.CustomToast;
 import com.lkkdesign.changlong.utils.DateUtil;
 import com.lkkdesign.changlong.utils.RandomUntil;
+
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -106,6 +114,15 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
     MeasureDao measureDao = new MeasureDao(this);
     private String strContent = "";
     private boolean booIsSave = false;
+
+    //保存自定义字段
+    private String strMeasureName="";//测点名称
+    private String strEntityName="";//单位名称
+    private String strSamplingTime="";//取样时间
+    private String strClassic="";//测量类型
+    private String strSampler="";//采样人
+    private String strInspector="";//检测人
+    Calendar calendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,7 +235,61 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
                 break;
             case R.id.btn_save:
                 if (true == booIsMeasure) {
-                    saveData();
+                    AlertDialog.Builder setDeBugDialog = new AlertDialog.Builder(this);
+                    //获取界面
+                    View dialogView = LayoutInflater.from(this).inflate(R.layout.input_save_data_dialoglayout, null);
+                    //将界面填充到AlertDiaLog容器
+                    setDeBugDialog.setView(dialogView);
+                    setDeBugDialog.create();
+                    final EditText measureName = dialogView.findViewById(R.id.et_measure_name);
+                    final EditText entityName = dialogView.findViewById(R.id.et_entity_name);
+                    final SuperTextView samplingTime = dialogView.findViewById(R.id.et_sampling_time);
+                    final Spinner classic=dialogView.findViewById(R.id.sp_classic);
+                    final EditText sampler = dialogView.findViewById(R.id.et_sampler);
+                    final EditText inspector = dialogView.findViewById(R.id.et_inspector);
+                    samplingTime.setCenterString(DateUtil.getNowDateTime());
+
+                    samplingTime.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            DateUtil.showTimePickerDialog(ManualMeasureSecActivity.this, samplingTime, calendar);
+                            DateUtil.showDatePickerDialog(ManualMeasureSecActivity.this, 0, samplingTime, calendar);
+                        }
+                    });
+
+                    final AlertDialog customAlert = setDeBugDialog.show();
+                    dialogView.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            strMeasureName =measureName.getText().toString();
+                            strEntityName=entityName.getText().toString();
+                            strSamplingTime=samplingTime.getLeftString()+" "+samplingTime.getCenterString()+"";
+                            strClassic = (String) classic.getSelectedItem();
+                            classic.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view,
+                                                           int position, long id) {
+                                    strClassic =classic.getSelectedItem().toString();
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+                                    // TODO Auto-generated method stub
+
+                                }
+                            });
+                            strSampler=sampler.getText().toString();
+                            strInspector=inspector.getText().toString();
+                            saveData();
+                            customAlert.dismiss();
+                        }
+                    });
+                    dialogView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            customAlert.dismiss();
+                        }
+                    });
                 } else {
                     CustomToast.showToast(ManualMeasureSecActivity.this, "没有可保存的数据，请先测量");
                 }
@@ -231,7 +302,7 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
 
         MeasureDao measureDao = new MeasureDao(this);
         Tb_measure tb_measure = new Tb_measure(measureDao.getMaxId() + 1,
-                "手动测量",//测量类别
+                strClassic,//测量类别
                 Constants.strLoginName + DateUtil.getNowDateTime2() + "手动测量",
                 "手动测量" + Constants.strLoginName + DateUtil.getNowDateTime2(),//曲线名称
                 intWavelength,//曲线波长
@@ -239,19 +310,19 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
                 floTranrate,//透过率
                 floAbsorbance,//吸光度
                 Constants.strLoginName,//操作员
-                Constants.strWavelength,//COD（0-100 mg/L）
+                "COD（0-100 mg/L）",//COD（0-100 mg/L）
                 intResult + ".000 mg/L",//测量结果
                 inttemp + "℃",//温度
                 DateUtil.getNowDateTime(),//时间
                 "备注",
-                "",//测点名称
-                "",//单位名称
-                "",//采样时间
-                "",//采样员
-                ""//检测员
+                strMeasureName,
+                strEntityName,
+                strSamplingTime,
+                strSampler,
+                strInspector
         );
         Log.i(TAG, "保存数据=" + tb_measure.toString());
-        strContent ="\n分类：" + "手动测量"
+        strContent ="\n分类：" + strClassic
                 + "\n条目：" + Constants.strLoginName + DateUtil.getNowDateTime2() + "手动测量"
                 + "\n名称：" + "手动测量" + Constants.strLoginName + DateUtil.getNowDateTime2()
                 + "\n波长：" + intWavelength
@@ -263,7 +334,12 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
                 + "\n测量结果：" + intResult + ".000 mg/L"
                 + "\n类型：" + "COD（0-100 mg/L）"
                 + "\n时间：" + DateUtil.getNowDateTime()
-                + "\n备注：" + "备注";
+                + "\n备注：" + "备注"
+                + "\n测点名称：" + strMeasureName
+                + "\n单位名称：" + strEntityName
+                + "\n取样时间：" + strSamplingTime
+                + "\n采样人：" + strSampler
+                + "\n监测人：" + strInspector;
         measureDao.add(tb_measure);
         // 信息提示
         CustomToast.showToast(getApplicationContext(), "数据保存成功");
