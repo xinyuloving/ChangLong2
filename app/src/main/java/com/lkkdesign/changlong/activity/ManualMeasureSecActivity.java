@@ -284,7 +284,7 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         intent.setClass(ManualMeasureSecActivity.this, SearchBTActivity.class);
                         intent.putExtra("printInfo", strContent); //传递需要打印的数据
-                        intent.putExtra("type","AutoMeasureActivity");//从何处跳转
+                        intent.putExtra("type","ManualMeasureSecActivity");//从何处跳转
                         startActivity(intent);
                         ManualMeasureSecActivity.this.finish();
                     }
