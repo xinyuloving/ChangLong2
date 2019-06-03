@@ -102,6 +102,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
     private int intResult;//测量结果
     private int inttemp;//测量结果
 
+
     private boolean booIsMeasure = false;
     private CountDownTimer timer;
     private long second = 0;
@@ -109,6 +110,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
     private Tb_measure tb_measure;
     MeasureDao measureDao = new MeasureDao(this);
     private String strContent = "";
+    private boolean booIsSave=false;
 
 
     @Override
@@ -163,9 +165,11 @@ public class AutoMeasureActivity extends AppCompatActivity {
                 this.finish();
                 break;
             case R.id.fab_print:
-                saveData();
-                showData("曲线：", "");
-
+                if (true == booIsSave){
+                    printData(strContent);
+                }else{
+                    CustomToast.showToast(AutoMeasureActivity.this, "没有可打印的数据，请先保存");
+                }
 
                 break;
             case R.id.btn_measure:
@@ -223,73 +227,56 @@ public class AutoMeasureActivity extends AppCompatActivity {
                 DateUtil.getNowDateTime(),//时间
                 "备注"
         );
+
+        strContent ="\n分类：" + "自动测量"
+                + "\n条目：" + Constants.strLoginName + DateUtil.getNowDateTime2() + "自动测量"
+                + "\n名称：" + "自动测量" + Constants.strLoginName + DateUtil.getNowDateTime2()
+                + "\n波长：" + intWavelength
+                + "\n浓度：" +  floDensity
+                + "\n透过率：" + floTranrate
+                + "\n吸光度：" + floAbsorbance
+                + "\n操作员：" + Constants.strLoginName
+                + "\n温度：" + inttemp + "℃"
+                + "\n测量结果：" + intResult + ".000 mg/L"
+                + "\n类型：" + strShow
+                + "\n时间：" + DateUtil.getNowDateTime()
+                + "\n备注：" + "备注";
         Log.i(TAG, "保存数据=" + tb_measure.toString());
         measureDao.add(tb_measure);
         // 信息提示
         CustomToast.showToast(getApplicationContext(), "数据保存成功");
         booIsMeasure = false;//保存数据之后改变状态，防止多次提交保存同一条数据
+        booIsSave=true;
     }
 
-    private void showData(String strTitle, final String strinfo) {
-//        Tb_data tb_data = dataDAO.findByItem(strinfo.replaceAll("曲线：", ""));
-        try {
-            tb_measure = measureDao.findByItem(strinfo.replaceAll("曲线：", ""));
-//            Log.i(TAG, "tb_measure=" + tb_measure.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Log.i("BSMRVActivity", "tb_measure=" + tb_measure.toString());
-        strContent ="\n分类：" + tb_measure.getClassic()
-                + "\n条目：" + tb_measure.getItem()
-                + "\n名称：" + tb_measure.getName()
-                + "\n波长：" + tb_measure.getWavelength()
-                + "\n浓度：" + tb_measure.getDensity()
-                + "\n透过率：" + tb_measure.getTranatre()
-                + "\n吸光度：" + tb_measure.getAbsorbance()
-                + "\n操作员：" + tb_measure.getUserId()
-                + "\n温度：" + tb_measure.getTemperature()
-                + "\n测量结果：" + tb_measure.getResult()
-                + "\n类型：" + tb_measure.getType()
-                + "\n时间：" + tb_measure.getTime()
-                + "\n备注：" + tb_measure.getMark();
-        Log.i("BSMRVActivity", "strContent=" + strContent);
-        //当接收到Click事件之后触发
-        new MaterialDialog.Builder(AutoMeasureActivity.this)// 初始化建造者
+    private void printData(String strContent){
+            new MaterialDialog.Builder(AutoMeasureActivity.this)// 初始化建造者
 //                        .icon(R.mipmap.icon_exit)
-                .title(strTitle)// 标题
-                .content(strContent)// 内容
-//                .positiveText(R.string.edit)
-                .negativeText(R.string.cancel)
-                .neutralText(R.string.print)
-//                .onPositive(new MaterialDialog.SingleButtonCallback() {
-//                    @Override
-//                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-//                        intent.setClass(BaseSMRecycleViewActivity.this, DataManageActivity.class);
-//                        intent.putExtra("curve", strinfo); //将计算的值回传回去
-//                        startActivity(intent);
-//                        BaseSMRecycleViewActivity.this.finish();
-//                    }
-//                })
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    .title("打印内容：")// 标题
+                    .content(strContent)// 内容
+                    .negativeText(R.string.cancel)
+                    .neutralText(R.string.print)
+                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
-                    }
-                })
-                .onNeutral(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        intent.setClass(AutoMeasureActivity.this, SearchBTActivity.class);
-                        intent.putExtra("printInfo", strContent); //传递需要打印的数据
-                        intent.putExtra("type","BaseSMRecycleViewActivity");//从何处跳转
-                        startActivity(intent);
-                        AutoMeasureActivity.this.finish();
-                    }
-                })
+                        }
+                    })
+                    .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            intent.setClass(AutoMeasureActivity.this, SearchBTActivity.class);
+                            intent.putExtra("printInfo", strContent); //传递需要打印的数据
+                            intent.putExtra("type","AutoMeasureActivity");//从何处跳转
+                            startActivity(intent);
+                            AutoMeasureActivity.this.finish();
+                        }
+                    })
 
-                .show();// 显示对话框
+                    .show();// 显示对话框
 
     }
+
 
     @Override
     public void onBackPressed() {

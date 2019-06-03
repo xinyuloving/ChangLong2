@@ -3,6 +3,8 @@ package com.lkkdesign.changlong.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -13,11 +15,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.lkkdesign.changlong.R;
 import com.lkkdesign.changlong.baidutts.util.MixSpeakUtil;
 import com.lkkdesign.changlong.config.Constants;
 import com.lkkdesign.changlong.data.dao.MeasureDao;
 import com.lkkdesign.changlong.data.model.Tb_measure;
+import com.lkkdesign.changlong.printer.SearchBTActivity;
 import com.lkkdesign.changlong.utils.CustomToast;
 import com.lkkdesign.changlong.utils.DateUtil;
 import com.lkkdesign.changlong.utils.RandomUntil;
@@ -76,6 +81,8 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
     CardView cardview2;
     @BindView(R.id.timeCount)
     TextView timeCount;
+    @BindView(R.id.fab_print)
+    FloatingActionButton fabPrint;
     private String strInfo = "";
     private String strfrom = "";
     private MixSpeakUtil mixSpeakUtil;
@@ -93,6 +100,12 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
     private final String TAG = "MMSActivity";
     private CountDownTimer timer;
     private long second = 0;
+
+    //打印内容
+    private Tb_measure tb_measure;
+    MeasureDao measureDao = new MeasureDao(this);
+    private String strContent = "";
+    private boolean booIsSave = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,8 +133,8 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
         timer = new CountDownTimer(intCountDwonTime, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                second =  millisUntilFinished / 1000;
-                timeCount.setText("还有"+second + "秒"+"返回主页面");
+                second = millisUntilFinished / 1000;
+                timeCount.setText("还有" + second + "秒" + "返回主页面");
             }
 
             @Override
@@ -136,7 +149,7 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.tv_user, R.id.tv_cod, R.id.tv_title, R.id.tv_timer,
-            R.id.btn_measure, R.id.btn_save, R.id.iv_return, R.id.tv_return})
+            R.id.btn_measure, R.id.btn_save, R.id.iv_return, R.id.tv_return,R.id.fab_print})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_user:
@@ -152,6 +165,13 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
                 intent.setClass(this, Main2Activity.class);
                 startActivity(intent);
                 this.finish();
+                break;
+            case R.id.fab_print:
+                if (true == booIsSave){
+                    printData(strContent);
+                }else{
+                    CustomToast.showToast(ManualMeasureSecActivity.this, "没有可打印的数据，请先保存");
+                }
                 break;
             case R.id.btn_measure:
 
@@ -226,12 +246,53 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
                 "备注"
         );
         Log.i(TAG, "保存数据=" + tb_measure.toString());
+        strContent ="\n分类：" + "手动测量"
+                + "\n条目：" + Constants.strLoginName + DateUtil.getNowDateTime2() + "手动测量"
+                + "\n名称：" + "手动测量" + Constants.strLoginName + DateUtil.getNowDateTime2()
+                + "\n波长：" + intWavelength
+                + "\n浓度：" +  floDensity
+                + "\n透过率：" + floTranrate
+                + "\n吸光度：" + floAbsorbance
+                + "\n操作员：" + Constants.strLoginName
+                + "\n温度：" + inttemp + "℃"
+                + "\n测量结果：" + intResult + ".000 mg/L"
+                + "\n类型：" + "COD（0-100 mg/L）"
+                + "\n时间：" + DateUtil.getNowDateTime()
+                + "\n备注：" + "备注";
         measureDao.add(tb_measure);
         // 信息提示
         CustomToast.showToast(getApplicationContext(), "数据保存成功");
         booIsMeasure = false;
+        booIsSave=true;
     }
 
+    private void printData(String strContent){
+        new MaterialDialog.Builder(ManualMeasureSecActivity.this)// 初始化建造者
+//                        .icon(R.mipmap.icon_exit)
+                .title("打印内容：")// 标题
+                .content(strContent)// 内容
+                .negativeText(R.string.cancel)
+                .neutralText(R.string.print)
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                    }
+                })
+                .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        intent.setClass(ManualMeasureSecActivity.this, SearchBTActivity.class);
+                        intent.putExtra("printInfo", strContent); //传递需要打印的数据
+                        intent.putExtra("type","AutoMeasureActivity");//从何处跳转
+                        startActivity(intent);
+                        ManualMeasureSecActivity.this.finish();
+                    }
+                })
+
+                .show();// 显示对话框
+
+    }
     @Override
     public void onBackPressed() {
         intent.setClass(this, Main2Activity.class);
