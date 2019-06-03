@@ -157,7 +157,12 @@ public class TimingMeasureActivity extends AppCompatActivity {
                 intResult + ".000 mg/L",//测量结果
                 inttemp + "℃",//温度
                 DateUtil.getNowDateTime(),//时间
-                "备注"
+                "备注",
+                "",//测点名称
+                "",//单位名称
+                "",//采样时间
+                "",//采样员
+                ""//检测员
         );
         measureDao.add(tb_measure);
         // 信息提示

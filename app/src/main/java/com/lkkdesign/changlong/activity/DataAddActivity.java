@@ -193,7 +193,12 @@ public class DataAddActivity extends AppCompatActivity {
                 "C=15.000 mg/L",//测量结果
                 "温度℃",//温度
                 DateUtil.getNowDateTime(),//时间
-                etmark.getText().toString().trim()
+                etmark.getText().toString().trim(),
+                "",//测点名称
+                "",//单位名称
+                "",//采样时间
+                "",//采样员
+                ""//检测员
                 );
         Log.i(TAG,"保存数据="+tb_measure.toString());
         measureDao.add(tb_measure);

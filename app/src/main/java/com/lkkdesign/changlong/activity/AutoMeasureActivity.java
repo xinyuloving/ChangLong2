@@ -112,6 +112,15 @@ public class AutoMeasureActivity extends AppCompatActivity {
     private String strContent = "";
     private boolean booIsSave=false;
 
+    //保存自定义字段
+    private String measureName="";//测点名称
+    private String entityName="";//单位名称
+    private String samplingTime="";//取样时间
+    private String sampler="";//采样人
+    private String inspector="";//检测人
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -225,7 +234,12 @@ public class AutoMeasureActivity extends AppCompatActivity {
                 intResult + ".000 mg/L",//测量结果
                 inttemp + "℃",//温度
                 DateUtil.getNowDateTime(),//时间
-                "备注"
+                "备注",
+                "",
+                "",
+                "",
+                "",
+                ""
         );
 
         strContent ="\n分类：" + "自动测量"
