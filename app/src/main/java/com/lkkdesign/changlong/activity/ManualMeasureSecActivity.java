@@ -64,7 +64,16 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
     ImageView ivReturn;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.tv_ll_title)
+    TextView tvLlTitle;
+    @BindView(R.id.text_limitA)
+    TextView textLimitA;
+    @BindView(R.id.text_limitB)
+    TextView textLimitB;
+    @BindView(R.id.cardview2)
+    CardView cardview2;
     private String strInfo = "";
+    private String strfrom = "";
     private MixSpeakUtil mixSpeakUtil;
     private String strWavelength = "";
     private boolean booIsMeasure = false;
@@ -92,14 +101,21 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        Intent getIntent = getIntent();
         tvCod.setText(strWavelength);
         tvUser.setText(Constants.strLoginName);
         tvTimer.setText(DateUtil.getDate());
+        strfrom = getIntent.getStringExtra("from");
+        if ("InputDataActivity".equals(strfrom)) {
+            tvLlTitle.setText(R.string.tv_cure_adjust);
+        } else if ("ManualMeasureFristActivity".equals(strfrom)) {
+            tvLlTitle.setText(R.string.tv_manual);
+        }
 
     }
 
     @OnClick({R.id.tv_user, R.id.tv_cod, R.id.tv_title, R.id.tv_timer,
-            R.id.btn_measure, R.id.btn_save,R.id.iv_return,R.id.tv_return})
+            R.id.btn_measure, R.id.btn_save, R.id.iv_return, R.id.tv_return})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_user:
@@ -112,7 +128,7 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
                 break;
             case R.id.iv_return:
             case R.id.tv_return:
-                intent.setClass(this, ManualMeasureFristActivity.class);
+                intent.setClass(this, Main2Activity.class);
                 startActivity(intent);
                 this.finish();
                 break;
@@ -197,7 +213,7 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        intent.setClass(this, ManualMeasureFristActivity.class);
+        intent.setClass(this, Main2Activity.class);
         startActivity(intent);
         this.finish();
     }

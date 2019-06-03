@@ -19,6 +19,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.view.View.GONE;
+
 public class ManualMeasureTipActivity extends AppCompatActivity {
 
 
@@ -48,10 +50,16 @@ public class ManualMeasureTipActivity extends AppCompatActivity {
     Button btnEmpty;
     @BindView(R.id.btn_measure)
     Button btnMeasure;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.cardview0)
+    CardView cardview0;
     private String strInfo = "";
     private Intent intent = new Intent();
     private String TAG = "ManualMeasureTipActivity";
     private boolean booIsEmpty = false;//是否已按“空白”键，默认没有
+    private int lineState = 1;//当前提示文字
+    private String strfrom = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,41 +72,79 @@ public class ManualMeasureTipActivity extends AppCompatActivity {
     private void initView() {
         Intent intent1 = getIntent();
         strInfo = intent1.getStringExtra("wavelength");
+        strfrom = intent1.getStringExtra("from");
+        Constants.strFormActivity=strfrom;
         Log.i(TAG, "strInfo=" + strInfo);
         tvUser.setText(Constants.strLoginName);
         tvCod.setText(strInfo);
+        tvLine2.setVisibility(GONE);
+        tvLine3.setVisibility(GONE);
+        tvLine4.setVisibility(GONE);
+        tvLine5.setVisibility(GONE);
+        if("ManualMeasureFristActivity".equals(Constants.strFormActivity)){
+            tvTitle.setText(R.string.tv_manual);
+        }else {
+            tvTitle.setText(R.string.tv_cure_adjust);
+        }
     }
 
-    @OnClick({R.id.btn_empty, R.id.btn_measure, R.id.iv_return,R.id.tv_return})
+    @OnClick({R.id.btn_empty, R.id.btn_measure, R.id.iv_return, R.id.tv_return})
     public void onViewClicked(View view) {
 //        Intent intent = getIntent();
         switch (view.getId()) {
             case R.id.iv_return:
             case R.id.tv_return:
-                intent.setClass(this, ManualMeasureFristActivity.class);
+                intent.setClass(this, Main2Activity.class);
                 startActivity(intent);
                 this.finish();
                 break;
             case R.id.btn_empty:
                 booIsEmpty = true;
-                tvLine1.setVisibility(View.INVISIBLE);
-                tvLine2.setVisibility(View.INVISIBLE);
+                btnEmpty.setVisibility(View.GONE);
                 break;
             case R.id.btn_measure:
-                if(false == booIsEmpty){
-                    CustomToast.showToast(this,"请按步骤执行");
-                    return;
+                switch (lineState) {
+                    case 1:
+                        tvLine2.setVisibility(View.VISIBLE);
+                        tvLine1.setVisibility(View.GONE);
+                        btnEmpty.setVisibility(View.VISIBLE);
+                        lineState++;
+                        break;
+                    case 2:
+                        if (booIsEmpty == false) {
+                            CustomToast.showToast(getApplicationContext(), "请按照步骤执行");
+                        } else {
+                            tvLine3.setVisibility(View.VISIBLE);
+                            tvLine2.setVisibility(View.GONE);
+                            btnEmpty.setVisibility(View.GONE);
+                            lineState++;
+                        }
+                        break;
+                    case 3:
+                        tvLine4.setVisibility(View.VISIBLE);
+                        tvLine3.setVisibility(View.GONE);
+                        lineState++;
+                        break;
+                    case 4:
+                        tvLine5.setVisibility(View.VISIBLE);
+                        tvLine4.setVisibility(View.GONE);
+                        btnMeasure.setText(R.string.confirm);
+                        lineState++;
+                        break;
+                    case 5:
+                        intent.setClass(this, ManualMeasureSecActivity.class);
+                        intent.putExtra("wavelength", strInfo);
+                        intent.putExtra("from",strfrom);
+                        startActivity(intent);
+                        this.finish();
+                        break;
                 }
-                intent.setClass(this, ManualMeasureSecActivity.class);
-                intent.putExtra("wavelength", strInfo);
-                startActivity(intent);
-                this.finish();
                 break;
         }
     }
 
     public void onBackPressed() {
-        intent.setClass(this, ManualMeasureFristActivity.class);
+        intent.setClass(this, Main2Activity.class);
         startActivity(intent);
         this.finish();
     }

@@ -158,11 +158,11 @@ public class CurveMeasureActivity extends AppCompatActivity {
                         intent.putExtra("wavelength", strTitle);
                         startActivity(intent);
                     } else if (2 == intSelectFun) {
-                        intent.setClass(this, PhotometerSecActivity.class);
+                        intent.setClass(this,ManualMeasureTipActivity.class);
                         intent.putExtra("type",Constants.strFormActivity);
-                        intent.putExtra("from", "CurveMeasureActivity");
+                        intent.putExtra("from", "InputDataActivity");
                         intent.putExtra("strInfo", strInfo);
-                        intent.putExtra("wavelength", strTitle);
+                        intent.putExtra("wavelength", strInfo);
                         startActivity(intent);
                     } else {
                         intent.setClass(this, InputDataActivity.class);

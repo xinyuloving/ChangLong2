@@ -141,6 +141,7 @@ public class PhotometerFristActivity extends AppCompatActivity {
 //                    startActivity(intent);
 
                     intent.setClass(this, PhotometerSecActivity.class);
+                    intent.putExtra("strfrom","PhotometerFristActivity");
                     intent.putExtra("wavelength", strPhotometer);
                     startActivity(intent);
                     PhotometerFristActivity.this.finish();

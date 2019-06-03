@@ -13,10 +13,13 @@ import android.widget.TextView;
 
 import com.lkkdesign.changlong.R;
 import com.lkkdesign.changlong.config.Constants;
+import com.lkkdesign.changlong.utils.CustomToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.view.View.GONE;
 
 public class TimingMeasureTipActivity extends AppCompatActivity {
 
@@ -57,6 +60,8 @@ public class TimingMeasureTipActivity extends AppCompatActivity {
     private String wavelength = "";
     private String strInfo = "";
     private String strType = "";
+    private boolean booIsEmpty = false;//是否已按“空白”键，默认没有
+    private int lineState=1;//当前提示文字
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +85,10 @@ public class TimingMeasureTipActivity extends AppCompatActivity {
         }else if("time".equals(Constants.strFormActivity)){
             tvTitle.setText(" 定时测量");
         }
+        tvLine2.setVisibility(GONE);
+        tvLine3.setVisibility(GONE);
+        tvLine4.setVisibility(GONE);
+        tvLine5.setVisibility(GONE);
 
     }
 
@@ -99,23 +108,55 @@ public class TimingMeasureTipActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.btn_empty:
-                tvLine1.setVisibility(View.INVISIBLE);
-                tvLine2.setVisibility(View.INVISIBLE);
+                booIsEmpty=true;
+                btnEmpty.setVisibility(View.GONE);
                 break;
             case R.id.btn_measure:
-                strStartTime = intent.getStringExtra("strStartTime");
-                strEndTime = intent.getStringExtra("strEndTime");
-                jiange = intent.getStringExtra("jiange");
-                strInfo = intent.getStringExtra("strInfo");
-                intent.setClass(this, TimingMeasureSecActivity.class);
-                intent.putExtra("type",strType);
-                intent.putExtra("strStartTime", strStartTime);
-                intent.putExtra("strEndTime", strEndTime);
-                intent.putExtra("jiange", jiange);
-                intent.putExtra("wavelength", wavelength);
-                intent.putExtra("strInfo", strInfo);
-                startActivity(intent);
-                this.finish();
+                switch (lineState){
+                    case 1:
+                        tvLine2.setVisibility(View.VISIBLE);
+                        tvLine1.setVisibility(View.GONE);
+                        btnEmpty.setVisibility(View.VISIBLE);
+                        lineState++;
+                        break;
+                    case 2:
+                        if(booIsEmpty==false){
+                            CustomToast.showToast(getApplicationContext(), "请按照步骤执行");
+                        }else {
+                            tvLine3.setVisibility(View.VISIBLE);
+                            tvLine2.setVisibility(View.GONE);
+                            btnEmpty.setVisibility(View.GONE);
+                            lineState++;
+                        }
+                        break;
+                    case 3:
+                        tvLine4.setVisibility(View.VISIBLE);
+                        tvLine3.setVisibility(View.GONE);
+                        lineState++;
+                        break;
+                    case 4:
+                        tvLine5.setVisibility(View.VISIBLE);
+                        tvLine4.setVisibility(View.GONE);
+                        btnMeasure.setText(R.string.confirm);
+                        lineState++;
+                        break;
+                    case 5:
+                        strStartTime = intent.getStringExtra("strStartTime");
+                        strEndTime = intent.getStringExtra("strEndTime");
+                        jiange = intent.getStringExtra("jiange");
+                        strInfo = intent.getStringExtra("strInfo");
+                        intent.setClass(this, TimingMeasureSecActivity.class);
+                        intent.putExtra("type",strType);
+                        intent.putExtra("strStartTime", strStartTime);
+                        intent.putExtra("strEndTime", strEndTime);
+                        intent.putExtra("jiange", jiange);
+                        intent.putExtra("wavelength", wavelength);
+                        intent.putExtra("strInfo", strInfo);
+                        startActivity(intent);
+                        this.finish();
+                        break;
+                }
+
                 break;
         }
     }

@@ -113,8 +113,58 @@
         android:layout_marginTop="10dp">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="260dp"
+            android:orientation="vertical"
+           android:gravity="center">
+            <TextView
+                android:id="@+id/tv_line1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="请放入空白比色管"
+                android:textColor="@color/statusBarColor"
+                android:textSize="@dimen/textsize_38"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_line2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="请按空白键"
+                android:textColor="@color/statusBarColor"
+                android:textSize="@dimen/textsize_38"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_line3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="请取出空白比色管"
+                android:textColor="@color/statusBarColor"
+                android:textSize="@dimen/textsize_38"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_line4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="请放入样品"
+                android:textColor="@color/statusBarColor"
+                android:textSize="@dimen/textsize_38"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_line5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="请按确认键"
+                android:textColor="@color/statusBarColor"
+                android:textSize="@dimen/textsize_38"
+                android:textStyle="bold"
+                android:gravity="center"/>
             <TextView
                 android:id="@+id/tv_show1"
                 android:layout_width="match_parent"
@@ -126,12 +176,12 @@
                 android:text="请放入空白比色管\n请按空白键\n请取出空白比色管\n请放入样品\n请按确认键"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textsize_28"
-                />
+                android:visibility="gone"/>
             <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
                 android:id="@+id/rv_curve"
                 android:layout_width="match_parent"
                 android:layout_height="260dp"
-                android:visibility="invisible"/>
+                android:visibility="gone"/>
         </LinearLayout>
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btn_add"
@@ -319,14 +369,15 @@
             android:layout_margin="@dimen/padding_half"
             android:layout_gravity="center"
             android:gravity="center"
-            android:background="@drawable/btn_bg_blue"
+            android:background="@drawable/btn_bg_yellow"
             android:text="@string/blank"
             android:textSize="@dimen/textsize_24"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/cardview1"
             app:layout_constraintStart_toStartOf="@+id/cardview1"
-            app:layout_constraintTop_toBottomOf="@+id/cardview1"/>
+            app:layout_constraintTop_toBottomOf="@+id/cardview1"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/btn_save"
@@ -339,7 +390,7 @@
             android:textColor="@color/white"
             android:layout_gravity="center"
             android:gravity="center"
-            android:background="@drawable/btn_bg_yellow"
+            android:background="@drawable/btn_bg_blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

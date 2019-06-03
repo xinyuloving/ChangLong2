@@ -82,6 +82,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
     private Intent intent = new Intent();
     private final String TAG = "AutoMeasureActivity";
     private Boolean running = false;
+    private String strType="";
 
     private int intWavelength;//曲线波长
     private float floDensity;//密度
@@ -104,12 +105,17 @@ public class AutoMeasureActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        Intent intent = getIntent();
+        strType = intent.getStringExtra("type");
+        Constants.strFormActivity = strType;
         tvUser.setText(Constants.strLoginName);
-
         tvTime.setText(DateUtil.getDate());
         // startThread();
         //strShow = "排放标准\nA：20mg/L\t\nB：30mg/L";
 //        tvCod.setText(strShow);
+        /*if ("InputDataActivity".equals(Constants.strFormActivity)){
+            tvTitleToolbar.setText("");
+        }*/
 
     }
 
