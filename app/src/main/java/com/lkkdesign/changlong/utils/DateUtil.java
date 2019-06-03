@@ -31,6 +31,8 @@ public class DateUtil {
     public static final SimpleDateFormat DATE_TIME_FORMAT4 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     public static final SimpleDateFormat DATE_TIME_FORMAT5=new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
 
+    public static final long intCountDwonTime=120000;
+
     public static String getDate(){
         java.util.Date tdate = new java.util.Date();
         return DateUtil.DATE_TIME_FORMAT2.format(tdate);
