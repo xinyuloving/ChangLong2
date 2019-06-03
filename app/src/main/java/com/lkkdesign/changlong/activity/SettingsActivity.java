@@ -68,7 +68,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         SharedPreferences settings = getSharedPreferences("setTime", 0);
         epCT.setSummary(settings.getString("epCT", ""));
         epCF.setSummary(settings.getString("epCF", ""));
-        SwitchPreference spPlayAuto = (SwitchPreference)findPreference("sp_playAuto");
+        SwitchPreference spPlayAuto = (SwitchPreference) findPreference("sp_playAuto");
 
         serverip.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 
@@ -91,7 +91,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
                 Log.i("SettingActivity", "222=" + newValue);
                 //AppSharePreferenceMgr.put(getApplication(), "epCT", "" + newValue);
                 SharedPreferences.Editor editor = settings.edit();
-                editor.putString("epCT","" + newValue);
+                editor.putString("epCT", "" + newValue);
                 editor.commit();
                 return true;
             }
@@ -107,7 +107,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
                 //AppSharePreferenceMgr.put(getApplication(), "epCF", "" + newValue);
 //                SharedPreferences settings = getSharedPreferences("setTime", 0);
                 SharedPreferences.Editor editor = settings.edit();
-                editor.putString("epCF","" + newValue);
+                editor.putString("epCF", "" + newValue);
                 editor.commit();
                 return true;
             }
@@ -147,7 +147,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         Preference preExitapp = (Preference) findPreference("exitapp");
         Preference preexhibitgoods = (Preference) findPreference("exhibitgoods");
         Preference prebqdyj = (Preference) findPreference("bqdyj");
-        Preference preBackAccount=findPreference("backaccount");
+        Preference preBackAccount = findPreference("backaccount");
 
 //        Preference preopenDoor = (Preference) findPreference("openDoor");
 //        Preference precloseDoor = (Preference) findPreference("closeDoor");
@@ -175,12 +175,14 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         preBackAccount.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).setClass(SettingsActivity.this, LoginActivity.class);
-                SharedPreferences settings = getSharedPreferences("UserInfo", 0);
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putString("Username","");
-                editor.putString("Password","");
-                editor.commit();
+                intent.setClass(SettingsActivity.this,AccountActivity.class);
+
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).setClass(SettingsActivity.this, LoginActivity.class);
+//                SharedPreferences settings = getSharedPreferences("UserInfo", 0);
+//                SharedPreferences.Editor editor = settings.edit();
+//                editor.putString("Username", "");
+//                editor.putString("Password", "");
+//                editor.commit();
                 startActivity(intent);
                 return true;
             }
@@ -188,7 +190,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         spPlayAuto.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                CustomToast.showToast(mContext,newValue.toString());
+                CustomToast.showToast(mContext, newValue.toString());
                 return true;
             }
         });
@@ -196,7 +198,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         prebqdyj.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                intent.setClass(SettingsActivity.this,com.lkkdesign.changlong.printer.AppStart.class);
+                intent.setClass(SettingsActivity.this, com.lkkdesign.changlong.printer.AppStart.class);
                 startActivity(intent);
                 return true;
             }

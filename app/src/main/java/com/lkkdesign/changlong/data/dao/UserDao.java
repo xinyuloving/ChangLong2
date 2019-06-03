@@ -40,7 +40,7 @@ public class UserDao {
     public void update(Tb_user tb_user) {
         db = helper.getWritableDatabase();// 初始化SQLiteDatabase对象
         db.execSQL("update tb_user set name = ?,password = ?,jobNo = ?,company = ?,contact = ?,address = ?,time = ? where _id = ?",
-                new Object[]{tb_user.getName(),tb_user.getPassword(), tb_user.getJobNo(), tb_user.getCompany(), tb_user.getContact(), tb_user.getAddress(), tb_user.getTime(), tb_user.get_id()});
+                new Object[]{tb_user.getName(), tb_user.getPassword(), tb_user.getJobNo(), tb_user.getCompany(), tb_user.getContact(), tb_user.getAddress(), tb_user.getTime(), tb_user.get_id()});
     }
 
     /**
@@ -51,7 +51,7 @@ public class UserDao {
     public void updateByJobNo(Tb_user tb_user) {
         db = helper.getWritableDatabase();// 初始化SQLiteDatabase对象
         db.execSQL("update tb_user set _id = ?, name = ?,password = ?, company = ?,contact = ?,address = ?,time=? where jobNo = ?",
-                new Object[]{tb_user.get_id(), tb_user.getName(),tb_user.getPassword(), tb_user.getCompany(), tb_user.getContact(), tb_user.getAddress(), tb_user.getTime(), tb_user.getJobNo()});
+                new Object[]{tb_user.get_id(), tb_user.getName(), tb_user.getPassword(), tb_user.getCompany(), tb_user.getContact(), tb_user.getAddress(), tb_user.getTime(), tb_user.getJobNo()});
     }
 
     /**
@@ -78,6 +78,7 @@ public class UserDao {
         }
         return null;// 返回集合
     }
+
     /**
      * 查找用户信息
      * 查询条件：用户名称
@@ -103,7 +104,7 @@ public class UserDao {
         return null;// 返回集合
     }
 
- /**
+    /**
      * 查找用户信息
      * 查询条件：用户工号 ， 用户密码
      *
@@ -111,9 +112,9 @@ public class UserDao {
      * @param password
      * @return
      */
-    public int findByNameAndPassword(String name,String password) {
+    public int findByNameAndPassword(String name, String password) {
         db = helper.getWritableDatabase();// 初始化SQLiteDatabase对象
-        Cursor cursor = db.rawQuery("select count(*) from tb_user where name = ? and password = ?", new String[]{name,password});// 根据编号查找用户信息，并存储到Cursor类中
+        Cursor cursor = db.rawQuery("select count(*) from tb_user where name = ? and password = ?", new String[]{name, password});// 根据编号查找用户信息，并存储到Cursor类中
         // 遍历所有的用户信息
         // 判断Cursor中是否有数据
         if (cursor.moveToNext()) {
@@ -135,6 +136,24 @@ public class UserDao {
 //        }
 //        return null;// 返回集合
 //        return intCount;
+    }
+
+    /**
+     * 查找用户密码
+     * 查询条件：用户姓名
+     *
+     * @param name
+     * @return
+     */
+    public String findPWDByName(String name) {
+        db = helper.getWritableDatabase();// 初始化SQLiteDatabase对象
+        Cursor cursor = db.rawQuery("select password from tb_user where name = ? ", new String[]{name});// 根据编号查找用户信息，并存储到Cursor类中
+        // 遍历所有的用户信息
+        // 判断Cursor中是否有数据
+        if (cursor.moveToNext()) {
+            return cursor.getString(cursor.getColumnIndex("password"));
+        }
+        return "";// 如果没有数据，则返回0
     }
 
     /**
@@ -206,6 +225,19 @@ public class UserDao {
         //删除SQL语句
         String sql = "delete from tb_user where jobNo = \'" + jobNo + "\'";
 
+        //执行SQL语句
+        db.execSQL(sql);
+        //db.execSQL("delete from tb_product where itemNum = ?");
+    }
+
+    /**
+     * 刪除用户信息--通过姓名删除
+     *
+     * @param name
+     */
+    public void deteleByName(String name) {
+        //删除SQL语句
+        String sql = "delete from tb_user where name = \'" + name + "\'";
         //执行SQL语句
         db.execSQL(sql);
         //db.execSQL("delete from tb_product where itemNum = ?");

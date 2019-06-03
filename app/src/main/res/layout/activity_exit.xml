@@ -11,5 +11,6 @@
         android:background="@drawable/border_line_orange"
         android:text="返回主页面"
         android:textSize="@dimen/textsize_24"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:visibility="invisible"/>
 </LinearLayout>

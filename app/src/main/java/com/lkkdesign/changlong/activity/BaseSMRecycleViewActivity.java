@@ -104,9 +104,9 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
         tab.setText("定时测量");
         tabLayout.addTab(tab);
 
-        tab = tabLayout.newTab();
-        tab.setText("添加数据");
-        tabLayout.addTab(tab);
+//        tab = tabLayout.newTab();
+//        tab.setText("添加数据");
+//        tabLayout.addTab(tab);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

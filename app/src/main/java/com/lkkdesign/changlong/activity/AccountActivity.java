@@ -1,18 +1,22 @@
 package com.lkkdesign.changlong.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +37,6 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
-import com.yanzhenjie.recyclerview.swipe.widget.StickyNestedScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,18 +45,24 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class UserInfoActivity extends AppCompatActivity implements SwipeItemClickListener {
+public class AccountActivity extends AppCompatActivity implements SwipeItemClickListener {
 
     @BindView(R.id.iv_return)
     ImageView ivReturn;
-    @BindView(R.id.title)
-    TextView title;
-    @BindView(R.id.iv_addUser)
-    ImageView ivAddUser;
-    @BindView(R.id.recycler_view)
-    SwipeMenuRecyclerView recyclerView;
-    @BindView(R.id.scroll_view)
-    StickyNestedScrollView scrollView;
+    @BindView(R.id.tv_return)
+    TextView tvReturn;
+    @BindView(R.id.tv_user)
+    TextView tvUser;
+    @BindView(R.id.toolbar)
+    LinearLayout toolbar;
+    @BindView(R.id.rv_curve)
+    SwipeMenuRecyclerView rvCurve;
+    @BindView(R.id.ll_content)
+    CardView llContent;
+    @BindView(R.id.btn_switch)
+    Button btnSwitch;
+    @BindView(R.id.btn_del)
+    Button btnDel;
 
     protected SwipeMenuRecyclerView mRecyclerView;
     protected RecyclerView.LayoutManager mLayoutManager;
@@ -61,22 +70,27 @@ public class UserInfoActivity extends AppCompatActivity implements SwipeItemClic
 
     protected BaseAdapter mAdapter;
     protected List<String> mDataList;
+    protected List<String> mDataListNoPWD;
+    private Tb_user tb_user;
+    UserDao userDao = new UserDao(AccountActivity.this);
 
     private Intent intent = new Intent();
-    private Tb_user tb_user;
-    UserDao userDao = new UserDao(UserInfoActivity.this);
-
-    private final String TAG = "UserInfoActivity";
+    private String TAG = "AccountActivity";
+    private String strSelectInfo = "";
+    private String strSelectInfoPwd = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getContentView());
+        setContentView(R.layout.activity_account);
         ButterKnife.bind(this);
 
-//        mToolbar = findViewById(R.id.toolbar);
-        mRecyclerView = findViewById(R.id.recycler_view);
+        initView();
+    }
 
+    private void initView(){
+        tvUser.setText(Constants.strLoginName);
+        mRecyclerView = findViewById(R.id.rv_curve);
         mLayoutManager = createLayoutManager();
         mItemDecoration = createItemDecoration();
         mDataList = createDataList();
@@ -94,11 +108,6 @@ public class UserInfoActivity extends AppCompatActivity implements SwipeItemClic
 
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged(mDataList);
-
-    }
-
-    protected int getContentView() {
-        return R.layout.activity_user_info;
     }
 
     protected RecyclerView.LayoutManager createLayoutManager() {
@@ -109,43 +118,15 @@ public class UserInfoActivity extends AppCompatActivity implements SwipeItemClic
         return new DefaultItemDecoration(ContextCompat.getColor(this, R.color.divider_color));
     }
 
-    @OnClick({R.id.iv_return, R.id.iv_addUser})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.iv_return:
-                intent.setClass(UserInfoActivity.this,Main2Activity.class);
-                startActivity(intent);
-                UserInfoActivity.this.finish();
-                break;
-            case R.id.iv_addUser:
-                intent.setClass(UserInfoActivity.this, UserAddActivity.class);
-                startActivity(intent);
-                UserInfoActivity.this.finish();
-                break;
-        }
-    }
-
     protected List<String> createDataList() {
         //查询数据库
         List<Tb_user> listinfos = userDao.getScrollData(0, userDao.getCount());
         List<String> dataList = new ArrayList<>();
         for (Tb_user tb_user : listinfos) {
 //            dataList.add("姓名：" + tb_user.getName() + "\t\t工号：" + tb_user.getJobNo());
-            dataList.add("姓名：" + tb_user.getName());
+            dataList.add(tb_user.getName());
         }
         return dataList;
-    }
-
-    /**
-     *
-     */
-    private void updateAdpater() {
-        mDataList.clear();
-        mAdapter.notifyDataSetChanged();
-        //mDataList = createDataList(strClassic);
-        mDataList.addAll(createDataList());
-        Log.i(TAG, "mDataList_zd：" + mDataList.toString());
-        mAdapter.notifyDataSetChanged(mDataList);
     }
 
     protected BaseAdapter createAdapter() {
@@ -155,28 +136,35 @@ public class UserInfoActivity extends AppCompatActivity implements SwipeItemClic
     @Override
     public void onItemClick(View itemView, int position) {
         Log.i(TAG, "mDataList=" + mDataList.get(position));
-        showCruveData("当前用户详细信息", mDataList.get(position));
+//        showCruveData("当前用户详细信息", mDataList.get(position));
+        mAdapter.setThisPosition(position);
+        //嫑忘记刷新适配器
+        mAdapter.notifyDataSetChanged();
+        CustomToast.showToast(this, "已选账号：\n" + mDataList.get(position));
+//        CustomToast.showToast(this, "已选账号的密码：\n" + ));
+        strSelectInfo = mDataList.get(position);
+        strSelectInfoPwd = userDao.findPWDByName(mDataList.get(position));
     }
 
     /**
-         * 弹窗显示曲线数据
-         *
-         * @param strTitle
-         * @param strInfo
-         */
-        private void showCruveData(String strTitle, final String strInfo) {
+     * 弹窗显示曲线数据
+     *
+     * @param strTitle
+     * @param strInfo
+     */
+    private void showCruveData(String strTitle, final String strInfo) {
 
 
-            Log.i(TAG, "strinfo=" + strInfo.toLowerCase().replaceAll("姓名：", ""));
+        Log.i(TAG, "strinfo=" + strInfo.toLowerCase().replaceAll("姓名：", ""));
 
-            try {
+        try {
 //            tb_user = userDao.findByName(strInfo.replaceAll("^.*工号：", ""));
-                tb_user = userDao.findByName(strInfo.replaceAll("姓名：", ""));
-                Log.i(TAG, "tb_user=" + tb_user.toString());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            tb_user = userDao.findByName(strInfo.replaceAll("姓名：", ""));
             Log.i(TAG, "tb_user=" + tb_user.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Log.i(TAG, "tb_user=" + tb_user.toString());
         String strContent = "\n姓名："
                 + tb_user.getName()
 //                + "\n工号："
@@ -186,7 +174,7 @@ public class UserInfoActivity extends AppCompatActivity implements SwipeItemClic
                 + tb_user.getContact() + "\n地址："
                 + tb_user.getAddress();
         //当接收到Click事件之后触发
-        new MaterialDialog.Builder(UserInfoActivity.this)// 初始化建造者
+        new MaterialDialog.Builder(AccountActivity.this)// 初始化建造者
 //                        .icon(R.mipmap.icon_exit)
                 .title(strTitle)// 标题
                 .content(strContent)// 内容
@@ -196,10 +184,10 @@ public class UserInfoActivity extends AppCompatActivity implements SwipeItemClic
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        intent.setClass(UserInfoActivity.this, UserEditActivity.class);
+                        intent.setClass(AccountActivity.this, UserEditActivity.class);
                         intent.putExtra("id", tb_user.get_id()); //将id传递到下一页面
                         startActivity(intent);
-                        UserInfoActivity.this.finish();
+                        AccountActivity.this.finish();
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -236,14 +224,14 @@ public class UserInfoActivity extends AppCompatActivity implements SwipeItemClic
 
             // 添加右侧的，如果不添加，则右侧不会出现菜单。
             {
-                SwipeMenuItem deleteItem = new SwipeMenuItem(UserInfoActivity.this).setBackground(
+                SwipeMenuItem deleteItem = new SwipeMenuItem(AccountActivity.this).setBackground(
                         R.drawable.selector_green)
                         .setImage(R.mipmap.ic_action_delete)
                         .setText(R.string.delete)
                         .setTextColor(Color.WHITE)
                         .setWidth(width)
                         .setHeight(height);
-                swipeRightMenu.addMenuItem(deleteItem);// 添加一个按钮到右侧侧菜单。
+                //swipeRightMenu.addMenuItem(deleteItem);// 添加一个按钮到右侧侧菜单。
 
             }
         }
@@ -262,7 +250,9 @@ public class UserInfoActivity extends AppCompatActivity implements SwipeItemClic
 
             if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
 
-                String strItem = mDataList.get(position).replaceAll("姓名：.*工号：", "");
+                String strItem = mDataList.get(position);
+//                String strItem = mDataList.get(position).replaceAll("姓名：", "");
+                //String strItem = mDataList.get(position).replaceAll("姓名：.*密码：", "");
 
                 Log.i(TAG, "strItem=" + strItem);
                 Log.i(TAG, "position=" + position);
@@ -271,7 +261,7 @@ public class UserInfoActivity extends AppCompatActivity implements SwipeItemClic
                 Log.i(TAG, "position=" + position);
                 Log.i(TAG, "menuPosition=" + menuPosition);
 
-                userDao.deteleByJobNo(strItem);
+                userDao.deteleByName(strItem);
                 mDataList.remove(position);
                 mAdapter.notifyItemRemoved(position);
                 // 信息提示
@@ -279,7 +269,7 @@ public class UserInfoActivity extends AppCompatActivity implements SwipeItemClic
 
             } else if (direction == SwipeMenuRecyclerView.LEFT_DIRECTION) {
 
-                Toast.makeText(UserInfoActivity.this, "list第" + position + "; 左侧菜单第" + menuPosition, Toast.LENGTH_SHORT)
+                Toast.makeText(AccountActivity.this, "list第" + position + "; 左侧菜单第" + menuPosition, Toast.LENGTH_SHORT)
                         .show();
             }
         }
@@ -294,33 +284,59 @@ public class UserInfoActivity extends AppCompatActivity implements SwipeItemClic
     }
 
 
-    @Override
-    public void onBackPressed() {
-        intent.setClass(this, Main2Activity.class);
+    @OnClick({R.id.tv_return, R.id.btn_switch, R.id.btn_del,R.id.tv_user})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_user:
+                intent.setClass(AccountActivity.this,UserInfoActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.tv_return:
+                returnToActivity();
+                break;
+            case R.id.btn_switch:
+//                strSelectInfo
+                if (strSelectInfoPwd.length() > 0 && strSelectInfo.length() > 0) {
+                    SharedPreferences settings = getSharedPreferences("UserInfo", 0);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("Username", strSelectInfo);
+                    editor.putString("Password", strSelectInfoPwd);
+                    editor.commit();
+                    tvUser.setText(strSelectInfo);
+                    Constants.strLoginName = strSelectInfo;
+                }else{
+                    CustomToast.showToast(this,"请选择要切换的账号");
+                }
+
+                break;
+            case R.id.btn_del:
+                break;
+        }
+    }
+
+    private void returnToActivity(){
+        intent.setClass(this, SettingsActivity.class);
         startActivity(intent);
         this.finish();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
+    public void onBackPressed() {
+        returnToActivity();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        UserInfoActivity.this.finish();
+        AccountActivity.this.finish();
+        Log.i(TAG, "ManualMeasureFristActivity-->onStop()");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        UserInfoActivity.this.finish();
+        AccountActivity.this.finish();
+        Log.i(TAG, "ManualMeasureFristActivity-->onDestroy()");
     }
 
 }

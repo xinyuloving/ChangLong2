@@ -11,6 +11,9 @@
     <string name="cancel">取消</string>
     <string name="select">选择</string>
     <string name="print">打印</string>
+    <string name="account">账号中心</string>
+    <string name="account_switch">切换至已选账号</string>
+    <string name="account_del">删除已选账号</string>
     <string name="gotoRegedit">去注册新账号</string>
     <string name="gotoInput">重新输入</string>
     <string name="login_content_err">名称或者密码不正确，请检查……</string>

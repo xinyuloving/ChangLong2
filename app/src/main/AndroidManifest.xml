@@ -36,7 +36,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".activity.ManualMeasureTipActivity"></activity>
+        <activity android:name=".activity.ManualMeasureTipActivity" />
         <activity android:name=".activity.SendEmailActivity" />
         <activity android:name=".activity.TBSActivity" />
         <activity android:name=".activity.ListEmReportActivity" />
@@ -107,7 +107,6 @@
         <activity
             android:name=".activity.PhotometerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".activity.CurveSelectActivity"
             android:label="@string/select_curve"
@@ -158,6 +157,7 @@
             android:name=".printer.SearchBLEActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.AccountActivity" />
     </application>
 
 </manifest>

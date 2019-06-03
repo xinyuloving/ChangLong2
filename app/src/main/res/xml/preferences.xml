@@ -70,7 +70,7 @@
     <PreferenceCategory android:title="账号设置">
         <Preference
             android:key="backaccount"
-            android:title="注销账号"></Preference>
+            android:title="账号中心"></Preference>
     </PreferenceCategory>
     <PreferenceCategory android:title="关于">
         <Preference
@@ -85,6 +85,6 @@
         <Preference
             android:key="exitapp"
             android:layout="@layout/activity_exit"
-            android:title="返回主页面" />
+            android:title="返回主页面"/>
     </PreferenceCategory>
 </PreferenceScreen>
