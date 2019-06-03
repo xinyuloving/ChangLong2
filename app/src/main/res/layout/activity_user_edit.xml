@@ -108,7 +108,8 @@
             android:layout_weight="7"
             android:maxLength="18"
             android:hint="@string/et_inputPWD"
-            android:inputType="textPassword">
+            android:inputType="textPassword
+">
         </EditText>
     </LinearLayout>
 
