@@ -3,8 +3,11 @@ package com.lkkdesign.changlong.printer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.lkkdesign.changlong.activity.AutoMeasureActivity;
 import com.lkkdesign.changlong.activity.BaseSMRecycleViewActivity;
 import com.lkkdesign.changlong.activity.Main2Activity;
+import com.lkkdesign.changlong.activity.ManualMeasureSecActivity;
+import com.lkkdesign.changlong.config.Constants;
 import com.lkkdesign.changlong.utils.CustomToast;
 import com.lvrenyang.io.BTPrinting;
 import com.lvrenyang.io.Pos;
@@ -449,7 +452,15 @@ public class SearchBTActivity extends Activity implements OnClickListener, IOCal
             intent.setClass(SearchBTActivity.this,BaseSMRecycleViewActivity.class);
             startActivity(intent);
             this.finish();
-        } else {
+        } else if("AutoMeasureActivity".equals(strType)){
+            intent.setClass(SearchBTActivity.this, AutoMeasureActivity.class);
+            startActivity(intent);
+            this.finish();
+        }else if("ManualMeasureSecActivity".equals(strType)){
+            intent.setClass(SearchBTActivity.this, ManualMeasureSecActivity.class);
+            startActivity(intent);
+            this.finish();
+        }else {
             intent.setClass(SearchBTActivity.this, com.lkkdesign.changlong.printer.AppStart.class);
             startActivity(intent);
             this.finish();
