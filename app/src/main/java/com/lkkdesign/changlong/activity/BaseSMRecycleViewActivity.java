@@ -7,18 +7,25 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.lkkdesign.changlong.R;
+import com.lkkdesign.changlong.adapter.BaseAdapter;
+import com.lkkdesign.changlong.adapter.MainAdapter;
 import com.lkkdesign.changlong.data.dao.MeasureDao;
 import com.lkkdesign.changlong.data.model.Tb_measure;
 import com.lkkdesign.changlong.printer.SearchBTActivity;
@@ -30,12 +37,14 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
-import com.lkkdesign.changlong.adapter.BaseAdapter;
-import com.lkkdesign.changlong.adapter.MainAdapter;
 import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
+import com.yanzhenjie.recyclerview.swipe.widget.StickyNestedScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by huangyaoyu on 2017/7/21.
@@ -53,6 +62,8 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
     protected List<String> mDataList;//自动测量
     private String strType = "";
     private String strContent = "";
+    private String strSearch= "";//搜索内容
+    private String strSearchCon= "";//搜索限制条件
 
     private Intent intent = new Intent();
     //    private Tb_data tb_data;
@@ -64,6 +75,7 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
+        ButterKnife.bind(this);
 
         initView();
 
@@ -71,18 +83,61 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
 
     }
 
-    private void initView(){
+    private void initView() {
         int i = measureDao.getCount();
         Log.i(TAG, "数据表中记录总数 getCount()=" + i);
 
 //        mToolbar = findViewById(R.id.toolbar);
         mRecyclerView = findViewById(R.id.recycler_view);
-        fabSearch =(FloatingActionButton)findViewById(R.id.fab_search);
+        fabSearch = (FloatingActionButton) findViewById(R.id.fab_search);
 
         fabSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CustomToast.showToast(BaseSMRecycleViewActivity.this,"FloatActionButton");
+                AlertDialog.Builder setDeBugDialog = new AlertDialog.Builder(BaseSMRecycleViewActivity.this);
+                //获取界面
+                View dialogView = LayoutInflater.from(BaseSMRecycleViewActivity.this).inflate(R.layout.input_search_data_dialoglayout, null);
+                //将界面填充到AlertDiaLog容器
+                setDeBugDialog.setView(dialogView);
+                setDeBugDialog.create();
+                final EditText etSearch = dialogView.findViewById(R.id.et_search);
+                final Spinner spSearch= dialogView.findViewById(R.id.sp_search);
+                final AlertDialog customAlert = setDeBugDialog.show();
+                dialogView.findViewById(R.id.btn_search).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        strSearch=etSearch.getText().toString();
+                        strSearchCon = (String) spSearch.getSelectedItem();
+                        spSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view,
+                                                       int position, long id) {
+                                strSearchCon =spSearch.getSelectedItem().toString();
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+                                // TODO Auto-generated method stub
+
+                            }
+                        });
+                        Log.i("BSMRActivity","searchData:"+strSearch+","+strSearchCon);
+                        intent.setClass(BaseSMRecycleViewActivity.this, SearchDataActivity.class);
+                        intent.putExtra("searchContent", strContent); //传递搜索内容
+                        intent.putExtra("searchConditions",strSearchCon);//传递搜索条件
+                        intent.putExtra("type", "BaseSMRecycleViewActivity");//从何处跳转
+                        startActivity(intent);
+                        BaseSMRecycleViewActivity.this.finish();
+                        customAlert.dismiss();
+
+                    }
+                });
+                dialogView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        customAlert.dismiss();
+                    }
+                });
             }
         });
 
@@ -213,6 +268,7 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
     /**
      * 弹窗显示曲线数据
      * 点击
+     *
      * @param strTitle
      * @param strinfo
      */
@@ -225,7 +281,7 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
             e.printStackTrace();
         }
         Log.i("BSMRVActivity", "tb_measure=" + tb_measure.toString());
-        strContent ="\n分类：" + tb_measure.getClassic()
+        strContent = "\n分类：" + tb_measure.getClassic()
                 + "\n条目：" + tb_measure.getItem()
                 + "\n名称：" + tb_measure.getName()
                 + "\n波长：" + tb_measure.getWavelength()
@@ -272,7 +328,7 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         intent.setClass(BaseSMRecycleViewActivity.this, SearchBTActivity.class);
                         intent.putExtra("printInfo", strContent); //传递需要打印的数据
-                        intent.putExtra("type","BaseSMRecycleViewActivity");//从何处跳转
+                        intent.putExtra("type", "BaseSMRecycleViewActivity");//从何处跳转
                         startActivity(intent);
                         BaseSMRecycleViewActivity.this.finish();
                     }
