@@ -7,13 +7,18 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -53,6 +58,8 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
     protected List<String> mDataList;//自动测量
     private String strType = "";
     private String strContent = "";
+    private String strSearch="";
+    private String strSearchCon="";
 
     private Intent intent = new Intent();
     //    private Tb_data tb_data;
@@ -82,7 +89,51 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
         fabSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CustomToast.showToast(BaseSMRecycleViewActivity.this,"FloatActionButton");
+//                CustomToast.showToast(BaseSMRecycleViewActivity.this,"FloatActionButton");
+                AlertDialog.Builder setDeBugDialog = new AlertDialog.Builder(BaseSMRecycleViewActivity.this);
+                //获取界面
+                View dialogView = LayoutInflater.from(BaseSMRecycleViewActivity.this).inflate(R.layout.input_search_data_dialoglayout, null);
+                //将界面填充到AlertDiaLog容器
+                setDeBugDialog.setView(dialogView);
+                setDeBugDialog.create();
+                final EditText etSearch = dialogView.findViewById(R.id.et_search);
+                final Spinner spSearch= dialogView.findViewById(R.id.sp_search);
+                final AlertDialog customAlert = setDeBugDialog.show();
+                dialogView.findViewById(R.id.btn_search).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        strSearch=etSearch.getText().toString();
+                        strSearchCon = (String) spSearch.getSelectedItem();
+                        spSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view,
+                                                       int position, long id) {
+                                strSearchCon =spSearch.getSelectedItem().toString();
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+                                // TODO Auto-generated method stub
+
+                            }
+                        });
+                        Log.i("BSMRActivity","searchData:"+strSearch+","+strSearchCon);
+                        intent.setClass(BaseSMRecycleViewActivity.this, SearchDataActivity.class);
+                        intent.putExtra("searchContent", strContent); //传递搜索内容
+                        intent.putExtra("searchConditions",strSearchCon);//传递搜索条件
+                        intent.putExtra("type", "BaseSMRecycleViewActivity");//从何处跳转
+                        startActivity(intent);
+                        BaseSMRecycleViewActivity.this.finish();
+                        customAlert.dismiss();
+
+                    }
+                });
+                dialogView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        customAlert.dismiss();
+                    }
+                });
             }
         });
 
