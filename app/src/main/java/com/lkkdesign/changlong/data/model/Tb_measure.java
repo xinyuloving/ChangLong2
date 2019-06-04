@@ -7,7 +7,7 @@ public class Tb_measure {
      * 此类根据客户第二版UI中的数据进行定义
      */
     private int _id;// integer primary key
-    private String classic;// classic varchar(10) 测量类别：手动、自动、定时
+    private String classic;// classic varchar(10) 测量类别：手动、自动、定时（执法检测、应急监测、自行监测）
     private String item;// item varchar(20) 曲线列表
     private String name;// name varchar(20) 曲线名称
     private int wavelength;//wavelength integer 波长
@@ -21,8 +21,16 @@ public class Tb_measure {
     private String time;//time varchar(20) 时间
     private String mark;//mark varchar(200) 备注
 
+    private String measure_name;//measure_name varchar(100) 测点名称
+    private String entity_name;//entity_name varchar(100) 单位名称
+    private String sampling_time;//sampling_time varchar(20) 取样时间
+    private String sampler;//sampler varchar(10) 采样员
+    private String inspector;//inspector varchar(10) 检测员
+
+
     public Tb_measure(int _id, String classic, String item, String name, int wavelength, float density, float tranatre, float absorbance,
-                      String userId, String type, String result, String temperature, String time, String mark) {
+                      String userId, String type, String result, String temperature, String time, String mark,String measure_name,String entity_name,
+                      String sampling_time,String sampler,String inspector) {
         this._id = _id;
         this.classic = classic;
         this.item = item;
@@ -37,6 +45,11 @@ public class Tb_measure {
         this.temperature = temperature;
         this.time = time;
         this.mark = mark;
+        this.measure_name=measure_name;
+        this.entity_name=entity_name;
+        this.sampling_time=sampling_time;
+        this.sampler=sampler;
+        this.inspector=inspector;
     }
 
     @Override
@@ -56,6 +69,11 @@ public class Tb_measure {
                 ", temperature='" + temperature + '\'' +
                 ", time='" + time + '\'' +
                 ", mark='" + mark + '\'' +
+                ", measure_name='" + measure_name + '\'' +
+                ", entity_name='" + entity_name + '\'' +
+                ", sampling_time='" + sampling_time + '\'' +
+                ", sampler='" + sampler + '\'' +
+                ", inspector='" + inspector + '\'' +
                 '}';
     }
 
@@ -169,5 +187,45 @@ public class Tb_measure {
 
     public void setMark(String mark) {
         this.mark = mark;
+    }
+
+    public String getMeasure_name() {
+        return measure_name;
+    }
+
+    public void setMeasure_name(String measure_name) {
+        this.measure_name = measure_name;
+    }
+
+    public String getEntity_name() {
+        return entity_name;
+    }
+
+    public void setEntity_name(String entity_name) {
+        this.entity_name = entity_name;
+    }
+
+    public String getSampling_time() {
+        return sampling_time;
+    }
+
+    public void setSampling_time(String sampling_time) {
+        this.sampling_time = sampling_time;
+    }
+
+    public String getSampler() {
+        return sampler;
+    }
+
+    public void setSampler(String sampler) {
+        this.sampler = sampler;
+    }
+
+    public String getInspector() {
+        return inspector;
+    }
+
+    public void setInspector(String inspector) {
+        this.inspector = inspector;
     }
 }

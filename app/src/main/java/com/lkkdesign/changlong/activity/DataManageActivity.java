@@ -173,7 +173,13 @@ public class DataManageActivity extends AppCompatActivity {
                         "C=15.000 mg/L",//测量结果
                         "温度℃",//温度
                         DateUtil.getNowDateTime(),//时间
-                        etmark.getText().toString().trim());
+                        etmark.getText().toString().trim(),//备注
+                        "",//测点名称
+                        "",//单位名称
+                        "",//采样时间
+                        "",//采样员
+                        ""//监测员
+                        );
                 Log.i("DMActivity","tb_measure="+tb_measure.toString());
                 measureDao.update(tb_measure);
 

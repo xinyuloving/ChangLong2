@@ -113,6 +113,12 @@
         <item>C3=20mg/L\nA3=0.400</item>
 
     </string-array>
+
+    <string-array name="data_classic">
+        <item>自行监测</item>
+        <item>执法监测</item>
+        <item>应急监测</item>
+    </string-array>
     <string-array name="list_quxian">
         <item>高浓度COD-比色管	(20-10000)mg/L\t\n排放标准\nA：20mg/L\t\nB：30mg/L</item>
         <item>高浓度COD-比色皿	(20-10000)mg/L\t\n排放标准\nA：20mg/L\t\nB：30mg/L</item>

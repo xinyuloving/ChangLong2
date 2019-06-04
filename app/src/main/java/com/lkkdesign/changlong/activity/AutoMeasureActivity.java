@@ -1,22 +1,29 @@
 package com.lkkdesign.changlong.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.allen.library.SuperTextView;
 import com.lkkdesign.changlong.R;
 import com.lkkdesign.changlong.baidutts.util.MixSpeakUtil;
 import com.lkkdesign.changlong.config.Constants;
@@ -26,6 +33,8 @@ import com.lkkdesign.changlong.printer.SearchBTActivity;
 import com.lkkdesign.changlong.utils.CustomToast;
 import com.lkkdesign.changlong.utils.DateUtil;
 import com.lkkdesign.changlong.utils.RandomUntil;
+
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,6 +111,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
     private int intResult;//测量结果
     private int inttemp;//测量结果
 
+
     private boolean booIsMeasure = false;
     private CountDownTimer timer;
     private long second = 0;
@@ -109,6 +119,19 @@ public class AutoMeasureActivity extends AppCompatActivity {
     private Tb_measure tb_measure;
     MeasureDao measureDao = new MeasureDao(this);
     private String strContent = "";
+    private boolean booIsSave=false;
+
+    //保存自定义字段
+    private String strMeasureName="";//测点名称
+    private String strEntityName="";//单位名称
+    private String strSamplingTime="";//取样时间
+    private String strClassic="";//测量类型
+    private String strSampler="";//采样人
+    private String strInspector="";//检测人
+    Calendar calendar = Calendar.getInstance();
+
+
+
 
 
     @Override
@@ -163,9 +186,11 @@ public class AutoMeasureActivity extends AppCompatActivity {
                 this.finish();
                 break;
             case R.id.fab_print:
-                saveData();
-                showData("曲线：", "");
-
+                if (true == booIsSave){
+                    printData(strContent);
+                }else{
+                    CustomToast.showToast(AutoMeasureActivity.this, "没有可打印的数据，请先保存");
+                }
 
                 break;
             case R.id.btn_measure:
@@ -197,7 +222,61 @@ public class AutoMeasureActivity extends AppCompatActivity {
                 break;
             case R.id.btn_save:
                 if (true == booIsMeasure) {//判断是否已有测量的数据
-                    saveData();
+                    AlertDialog.Builder setDeBugDialog = new AlertDialog.Builder(this);
+                    //获取界面
+                    View dialogView = LayoutInflater.from(this).inflate(R.layout.input_save_data_dialoglayout, null);
+                    //将界面填充到AlertDiaLog容器
+                    setDeBugDialog.setView(dialogView);
+                    setDeBugDialog.create();
+                    final EditText measureName = dialogView.findViewById(R.id.et_measure_name);
+                    final EditText entityName = dialogView.findViewById(R.id.et_entity_name);
+                    final SuperTextView samplingTime = dialogView.findViewById(R.id.et_sampling_time);
+                    final Spinner classic=dialogView.findViewById(R.id.sp_classic);
+                    final EditText sampler = dialogView.findViewById(R.id.et_sampler);
+                    final EditText inspector = dialogView.findViewById(R.id.et_inspector);
+                    samplingTime.setLeftString(DateUtil.getNowDateTime());
+
+                    samplingTime.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            DateUtil.showTimePickerDialog(AutoMeasureActivity.this, samplingTime, calendar);
+                            DateUtil.showDatePickerDialog(AutoMeasureActivity.this, 0, samplingTime, calendar);
+                        }
+                    });
+
+                    final AlertDialog customAlert = setDeBugDialog.show();
+                    dialogView.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            strMeasureName =measureName.getText().toString();
+                            strEntityName=entityName.getText().toString();
+                            strSamplingTime=samplingTime.getLeftString()+" "+samplingTime.getCenterString()+"";
+                            strClassic = (String) classic.getSelectedItem();
+                            classic.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view,
+                                                           int position, long id) {
+                                    strClassic =classic.getSelectedItem().toString();
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+                                    // TODO Auto-generated method stub
+
+                                }
+                            });
+                            strSampler=sampler.getText().toString();
+                            strInspector=inspector.getText().toString();
+                            saveData();
+                            customAlert.dismiss();
+                        }
+                    });
+                    dialogView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            customAlert.dismiss();
+                        }
+                    });
                 } else {
                     CustomToast.showToast(AutoMeasureActivity.this, "没有可保存的数据，请先测量");
                 }
@@ -209,7 +288,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
     private void saveData() {
         MeasureDao measureDao = new MeasureDao(this);
         Tb_measure tb_measure = new Tb_measure(measureDao.getMaxId() + 1,
-                "自动测量",//测量类别
+                strClassic,//测量类别
                 Constants.strLoginName + DateUtil.getNowDateTime2() + "自动测量",
                 "自动测量" + Constants.strLoginName + DateUtil.getNowDateTime2(),//曲线名称
                 intWavelength,//曲线波长
@@ -221,75 +300,68 @@ public class AutoMeasureActivity extends AppCompatActivity {
                 intResult + ".000 mg/L",//测量结果
                 inttemp + "℃",//温度
                 DateUtil.getNowDateTime(),//时间
-                "备注"
+                "备注",
+                strMeasureName,
+                strEntityName,
+                strSamplingTime,
+                strSampler,
+                strInspector
         );
+
+        strContent ="\n分类：" + strClassic
+                + "\n条目：" + Constants.strLoginName + DateUtil.getNowDateTime2() + "自动测量"
+                + "\n名称：" + "自动测量" + Constants.strLoginName + DateUtil.getNowDateTime2()
+                + "\n波长：" + intWavelength
+                + "\n浓度：" +  floDensity
+                + "\n透过率：" + floTranrate
+                + "\n吸光度：" + floAbsorbance
+                + "\n操作员：" + Constants.strLoginName
+                + "\n温度：" + inttemp + "℃"
+                + "\n测量结果：" + intResult + ".000 mg/L"
+                + "\n类型：" + strShow
+                + "\n时间：" + DateUtil.getNowDateTime()
+                + "\n备注：" + "备注"
+                + "\n测点名称：" + strMeasureName
+                + "\n单位名称：" + strEntityName
+                + "\n取样时间：" + strSamplingTime
+                + "\n采样人：" + strSampler
+                + "\n监测人：" + strInspector;
         Log.i(TAG, "保存数据=" + tb_measure.toString());
         measureDao.add(tb_measure);
         // 信息提示
         CustomToast.showToast(getApplicationContext(), "数据保存成功");
         booIsMeasure = false;//保存数据之后改变状态，防止多次提交保存同一条数据
+        booIsSave=true;
     }
 
-    private void showData(String strTitle, final String strinfo) {
-//        Tb_data tb_data = dataDAO.findByItem(strinfo.replaceAll("曲线：", ""));
-        try {
-            tb_measure = measureDao.findByItem(strinfo.replaceAll("曲线：", ""));
-//            Log.i(TAG, "tb_measure=" + tb_measure.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Log.i("BSMRVActivity", "tb_measure=" + tb_measure.toString());
-        strContent ="\n分类：" + tb_measure.getClassic()
-                + "\n条目：" + tb_measure.getItem()
-                + "\n名称：" + tb_measure.getName()
-                + "\n波长：" + tb_measure.getWavelength()
-                + "\n浓度：" + tb_measure.getDensity()
-                + "\n透过率：" + tb_measure.getTranatre()
-                + "\n吸光度：" + tb_measure.getAbsorbance()
-                + "\n操作员：" + tb_measure.getUserId()
-                + "\n温度：" + tb_measure.getTemperature()
-                + "\n测量结果：" + tb_measure.getResult()
-                + "\n类型：" + tb_measure.getType()
-                + "\n时间：" + tb_measure.getTime()
-                + "\n备注：" + tb_measure.getMark();
-        Log.i("BSMRVActivity", "strContent=" + strContent);
-        //当接收到Click事件之后触发
-        new MaterialDialog.Builder(AutoMeasureActivity.this)// 初始化建造者
+    private void printData(String strContent){
+            new MaterialDialog.Builder(AutoMeasureActivity.this)// 初始化建造者
 //                        .icon(R.mipmap.icon_exit)
-                .title(strTitle)// 标题
-                .content(strContent)// 内容
-//                .positiveText(R.string.edit)
-                .negativeText(R.string.cancel)
-                .neutralText(R.string.print)
-//                .onPositive(new MaterialDialog.SingleButtonCallback() {
-//                    @Override
-//                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-//                        intent.setClass(BaseSMRecycleViewActivity.this, DataManageActivity.class);
-//                        intent.putExtra("curve", strinfo); //将计算的值回传回去
-//                        startActivity(intent);
-//                        BaseSMRecycleViewActivity.this.finish();
-//                    }
-//                })
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    .title("打印内容：")// 标题
+                    .content(strContent)// 内容
+                    .negativeText(R.string.cancel)
+                    .neutralText(R.string.print)
+                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
-                    }
-                })
-                .onNeutral(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        intent.setClass(AutoMeasureActivity.this, SearchBTActivity.class);
-                        intent.putExtra("printInfo", strContent); //传递需要打印的数据
-                        intent.putExtra("type","BaseSMRecycleViewActivity");//从何处跳转
-                        startActivity(intent);
-                        AutoMeasureActivity.this.finish();
-                    }
-                })
+                        }
+                    })
+                    .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            intent.setClass(AutoMeasureActivity.this, SearchBTActivity.class);
+                            intent.putExtra("printInfo", strContent); //传递需要打印的数据
+                            intent.putExtra("type","AutoMeasureActivity");//从何处跳转
+                            startActivity(intent);
+                            AutoMeasureActivity.this.finish();
+                        }
+                    })
 
-                .show();// 显示对话框
+                    .show();// 显示对话框
 
     }
+
 
     @Override
     public void onBackPressed() {

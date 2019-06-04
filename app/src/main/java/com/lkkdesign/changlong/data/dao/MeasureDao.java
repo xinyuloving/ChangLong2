@@ -28,11 +28,12 @@ public class MeasureDao {
     public void add(Tb_measure tb_measure) {
         db = helper.getWritableDatabase();// 初始化SQLiteDatabase对象
         db.execSQL(
-                "insert into tb_measure (_id, classic, item, name, wavelength, density, tranatre, absorbance, userId, type, result, temperature, time, mark) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                "insert into tb_measure (_id, classic, item, name, wavelength, density, tranatre, absorbance, userId, type, result, temperature, time, mark,measure_name,entity_name,sampling_time,sampler,inspector) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                 new Object[]{tb_measure.get_id(), tb_measure.getClassic(), tb_measure.getItem(), tb_measure.getName(),
                         tb_measure.getWavelength(), tb_measure.getDensity(), tb_measure.getTranatre(), tb_measure.getAbsorbance(),
                         tb_measure.getUserId(), tb_measure.getType(), tb_measure.getResult(), tb_measure.getTemperature(),
-                        tb_measure.getTime(), tb_measure.getMark()});
+                        tb_measure.getTime(), tb_measure.getMark(),tb_measure.getMeasure_name(),tb_measure.getEntity_name(),tb_measure.getSampling_time(),
+                        tb_measure.getSampler(),tb_measure.getInspector()});
     }
 
     /**
@@ -91,7 +92,15 @@ public class MeasureDao {
                     cursor.getString(cursor.getColumnIndex("result")),
                     cursor.getString(cursor.getColumnIndex("temperature")),
                     cursor.getString(cursor.getColumnIndex("time")),
-                    cursor.getString(cursor.getColumnIndex("mark"))));
+                    cursor.getString(cursor.getColumnIndex("mark")),
+                    cursor.getString(cursor.getColumnIndex("measure_name")),
+                    cursor.getString(cursor.getColumnIndex("entity_name")),
+                    cursor.getString(cursor.getColumnIndex("sampling_time")),
+                    cursor.getString(cursor.getColumnIndex("sampler")),
+                    cursor.getString(cursor.getColumnIndex("inspector"))));
+
+
+
         }
         return tb_measure;// 返回集合
     }
@@ -124,7 +133,12 @@ public class MeasureDao {
                     cursor.getString(cursor.getColumnIndex("result")),
                     cursor.getString(cursor.getColumnIndex("temperature")),
                     cursor.getString(cursor.getColumnIndex("time")),
-                    cursor.getString(cursor.getColumnIndex("mark"))));
+                    cursor.getString(cursor.getColumnIndex("mark")),
+                    cursor.getString(cursor.getColumnIndex("measure_name")),
+                    cursor.getString(cursor.getColumnIndex("entity_name")),
+                    cursor.getString(cursor.getColumnIndex("sampling_time")),
+                    cursor.getString(cursor.getColumnIndex("sampler")),
+                    cursor.getString(cursor.getColumnIndex("inspector"))));
         }
         return tb_measure;// 返回集合
     }
@@ -203,7 +217,12 @@ public class MeasureDao {
                     cursor.getString(cursor.getColumnIndex("result")),
                     cursor.getString(cursor.getColumnIndex("temperature")),
                     cursor.getString(cursor.getColumnIndex("time")),
-                    cursor.getString(cursor.getColumnIndex("mark"))));
+                    cursor.getString(cursor.getColumnIndex("mark")),
+                    cursor.getString(cursor.getColumnIndex("measure_name")),
+                    cursor.getString(cursor.getColumnIndex("entity_name")),
+                    cursor.getString(cursor.getColumnIndex("sampling_time")),
+                    cursor.getString(cursor.getColumnIndex("sampler")),
+                    cursor.getString(cursor.getColumnIndex("inspector"))));
         }
         return tb_measure;// 返回集合
     }
@@ -282,7 +301,12 @@ public class MeasureDao {
                     cursor.getString(cursor.getColumnIndex("result")),
                     cursor.getString(cursor.getColumnIndex("temperature")),
                     cursor.getString(cursor.getColumnIndex("time")),
-                    cursor.getString(cursor.getColumnIndex("mark")));
+                    cursor.getString(cursor.getColumnIndex("mark")),
+                    cursor.getString(cursor.getColumnIndex("measure_name")),
+                    cursor.getString(cursor.getColumnIndex("entity_name")),
+                    cursor.getString(cursor.getColumnIndex("sampling_time")),
+                    cursor.getString(cursor.getColumnIndex("sampler")),
+                    cursor.getString(cursor.getColumnIndex("inspector")));
         }
         return null;// 如果没有曲线信息，则返回null
     }
@@ -312,7 +336,12 @@ public class MeasureDao {
                     cursor.getString(cursor.getColumnIndex("result")),
                     cursor.getString(cursor.getColumnIndex("temperature")),
                     cursor.getString(cursor.getColumnIndex("time")),
-                    cursor.getString(cursor.getColumnIndex("mark")));
+                    cursor.getString(cursor.getColumnIndex("mark")),
+                    cursor.getString(cursor.getColumnIndex("measure_name")),
+                    cursor.getString(cursor.getColumnIndex("entity_name")),
+                    cursor.getString(cursor.getColumnIndex("sampling_time")),
+                    cursor.getString(cursor.getColumnIndex("sampler")),
+                    cursor.getString(cursor.getColumnIndex("inspector")));
         }
         return null;// 如果没有曲线信息，则返回null
     }
