@@ -131,6 +131,7 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
         }
         Log.i("BSMRVActivity", "tb_measure=" + tb_measure.toString());
         strContent = "\n分类：" + tb_measure.getClassic()
+                +"\n测量类别："+ tb_measure.getStyle()
                 + "\n条目：" + tb_measure.getItem()
                 + "\n名称：" + tb_measure.getName()
                 + "\n波长：" + tb_measure.getWavelength()

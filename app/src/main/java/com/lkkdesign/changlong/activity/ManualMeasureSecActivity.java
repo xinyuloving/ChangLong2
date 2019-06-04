@@ -93,6 +93,7 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
     FloatingActionButton fabPrint;
     private String strInfo = "";
     private String strfrom = "";
+    private String strStyle="";
     private MixSpeakUtil mixSpeakUtil;
     private String strWavelength = "";
     private boolean booIsMeasure = false;
@@ -264,12 +265,12 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
                             strMeasureName =measureName.getText().toString();
                             strEntityName=entityName.getText().toString();
                             strSamplingTime=samplingTime.getLeftString()+" "+samplingTime.getCenterString()+"";
-                            strClassic = (String) classic.getSelectedItem();
+                            strStyle = (String) classic.getSelectedItem();
                             classic.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                 @Override
                                 public void onItemSelected(AdapterView<?> parent, View view,
                                                            int position, long id) {
-                                    strClassic =classic.getSelectedItem().toString();
+                                    strStyle =classic.getSelectedItem().toString();
                                 }
 
                                 @Override
@@ -302,8 +303,8 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
 
         MeasureDao measureDao = new MeasureDao(this);
         Tb_measure tb_measure = new Tb_measure(measureDao.getMaxId() + 1,
-                strClassic,//测量类别
-                "",//测量类别
+                "手动测量",//测量类别
+                strStyle,//测量类别
                 Constants.strLoginName + DateUtil.getNowDateTime2() + "手动测量",
                 "手动测量" + Constants.strLoginName + DateUtil.getNowDateTime2(),//曲线名称
                 intWavelength,//曲线波长
@@ -323,7 +324,8 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
                 strInspector
         );
         Log.i(TAG, "保存数据=" + tb_measure.toString());
-        strContent ="\n分类：" + strClassic
+        strContent ="\n分类：" + "手动测量"
+                + "\n测量类别：" + strStyle
                 + "\n条目：" + Constants.strLoginName + DateUtil.getNowDateTime2() + "手动测量"
                 + "\n名称：" + "手动测量" + Constants.strLoginName + DateUtil.getNowDateTime2()
                 + "\n波长：" + intWavelength
