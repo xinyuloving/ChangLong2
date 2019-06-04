@@ -221,7 +221,12 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
                 + "\n测量结果：" + tb_measure.getResult()
                 + "\n类型：" + tb_measure.getType()
                 + "\n时间：" + tb_measure.getTime()
-                + "\n备注：" + tb_measure.getMark();
+                + "\n备注：" + tb_measure.getMark()
+                + "\n测点名称：" + tb_measure.getMeasure_name()
+                + "\n单位名称：" + tb_measure.getEntity_name()
+                + "\n取样时间：" + tb_measure.getSampling_time()
+                + "\n采样人：" + tb_measure.getSampler()
+                + "\n检测人：" + tb_measure.getInspector();
         Log.i("BSMRVActivity", "strContent=" + strContent);
         //当接收到Click事件之后触发
         new MaterialDialog.Builder(BaseSMRecycleViewActivity.this)// 初始化建造者
