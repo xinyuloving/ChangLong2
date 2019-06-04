@@ -54,11 +54,16 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void initView(){
+    private void initView() {
         SharedPreferences settings = getSharedPreferences("UserInfo", 0);
         etName.setText(settings.getString("Username", "").toString());
         etPwd.setText(settings.getString("Password", "").toString());
 
+        if (etName.length() > 0 && etPwd.length() > 0) {
+            intent.setClass(LoginActivity.this, Main2Activity.class);
+            //intent.putExtra("userName", strName);
+            startActivity(intent);
+        }
     }
 
     @OnClick({R.id.btn_login, R.id.stv_registe})
@@ -78,8 +83,8 @@ public class LoginActivity extends AppCompatActivity {
 
                         SharedPreferences settings = getSharedPreferences("UserInfo", 0);
                         SharedPreferences.Editor editor = settings.edit();
-                        editor.putString("Username",strName);
-                        editor.putString("Password",strPassword);
+                        editor.putString("Username", strName);
+                        editor.putString("Password", strPassword);
                         editor.commit();
 
                         // 信息提示
