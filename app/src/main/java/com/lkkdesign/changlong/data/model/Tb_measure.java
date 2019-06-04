@@ -3,11 +3,11 @@ package com.lkkdesign.changlong.data.model;
 public class Tb_measure {
 
     /**
-     *
      * 此类根据客户第二版UI中的数据进行定义
      */
     private int _id;// integer primary key
-    private String classic;// classic varchar(10) 测量类别：手动、自动、定时（执法检测、应急监测、自行监测）
+    private String classic;// classic varchar(10) 测量类别：手动、自动、定时
+    private String style;//执法检测、应急监测、自行监测
     private String item;// item varchar(20) 曲线列表
     private String name;// name varchar(20) 曲线名称
     private int wavelength;//wavelength integer 波长
@@ -27,12 +27,10 @@ public class Tb_measure {
     private String sampler;//sampler varchar(10) 采样员
     private String inspector;//inspector varchar(10) 检测员
 
-
-    public Tb_measure(int _id, String classic, String item, String name, int wavelength, float density, float tranatre, float absorbance,
-                      String userId, String type, String result, String temperature, String time, String mark,String measure_name,String entity_name,
-                      String sampling_time,String sampler,String inspector) {
+    public Tb_measure(int _id, String classic, String style, String item, String name, int wavelength, float density, float tranatre, float absorbance, String userId, String type, String result, String temperature, String time, String mark, String measure_name, String entity_name, String sampling_time, String sampler, String inspector) {
         this._id = _id;
         this.classic = classic;
+        this.style = style;
         this.item = item;
         this.name = name;
         this.wavelength = wavelength;
@@ -45,11 +43,11 @@ public class Tb_measure {
         this.temperature = temperature;
         this.time = time;
         this.mark = mark;
-        this.measure_name=measure_name;
-        this.entity_name=entity_name;
-        this.sampling_time=sampling_time;
-        this.sampler=sampler;
-        this.inspector=inspector;
+        this.measure_name = measure_name;
+        this.entity_name = entity_name;
+        this.sampling_time = sampling_time;
+        this.sampler = sampler;
+        this.inspector = inspector;
     }
 
     @Override
@@ -57,9 +55,10 @@ public class Tb_measure {
         return "Tb_measure{" +
                 "_id=" + _id +
                 ", classic='" + classic + '\'' +
+                ", style='" + style + '\'' +
                 ", item='" + item + '\'' +
                 ", name='" + name + '\'' +
-                ", wavelength='" + wavelength + '\'' +
+                ", wavelength=" + wavelength +
                 ", density=" + density +
                 ", tranatre=" + tranatre +
                 ", absorbance=" + absorbance +
@@ -91,6 +90,14 @@ public class Tb_measure {
 
     public void setClassic(String classic) {
         this.classic = classic;
+    }
+
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
     }
 
     public String getItem() {

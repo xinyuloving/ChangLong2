@@ -162,6 +162,7 @@ public class DataManageActivity extends AppCompatActivity {
 
                 Tb_measure tb_measure = new Tb_measure(measureDao.getMaxId()+1,
                         strType,//测量类别
+                        "",//测量类别
                         "曲线"+DateUtil.getNowDateTime(),
                         etName.getText().toString().trim(),//曲线名称
                         Integer.parseInt(etWavelength.getText().toString().trim()),//曲线波长

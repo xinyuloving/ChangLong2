@@ -226,6 +226,7 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
         }
         Log.i("BSMRVActivity", "tb_measure=" + tb_measure.toString());
         strContent ="\n分类：" + tb_measure.getClassic()
+                +"\n测量类型："+tb_measure.getStyle()
                 + "\n条目：" + tb_measure.getItem()
                 + "\n名称：" + tb_measure.getName()
                 + "\n波长：" + tb_measure.getWavelength()

@@ -303,6 +303,7 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
         MeasureDao measureDao = new MeasureDao(this);
         Tb_measure tb_measure = new Tb_measure(measureDao.getMaxId() + 1,
                 strClassic,//测量类别
+                "",//测量类别
                 Constants.strLoginName + DateUtil.getNowDateTime2() + "手动测量",
                 "手动测量" + Constants.strLoginName + DateUtil.getNowDateTime2(),//曲线名称
                 intWavelength,//曲线波长

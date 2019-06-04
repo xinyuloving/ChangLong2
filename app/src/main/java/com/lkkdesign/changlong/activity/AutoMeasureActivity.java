@@ -115,23 +115,21 @@ public class AutoMeasureActivity extends AppCompatActivity {
     private boolean booIsMeasure = false;
     private CountDownTimer timer;
     private long second = 0;
-   //打印内容
+    //打印内容
     private Tb_measure tb_measure;
     MeasureDao measureDao = new MeasureDao(this);
     private String strContent = "";
-    private boolean booIsSave=false;
+    private boolean booIsSave = false;
 
     //保存自定义字段
-    private String strMeasureName="";//测点名称
-    private String strEntityName="";//单位名称
-    private String strSamplingTime="";//取样时间
-    private String strClassic="";//测量类型
-    private String strSampler="";//采样人
-    private String strInspector="";//检测人
+    private String strMeasureName = "";//测点名称
+    private String strEntityName = "";//单位名称
+    private String strSamplingTime = "";//取样时间
+    private String strClassic = "自动测量";//测量类型
+    private String strStyle = "";//测量类型？
+    private String strSampler = "";//采样人
+    private String strInspector = "";//检测人
     Calendar calendar = Calendar.getInstance();
-
-
-
 
 
     @Override
@@ -176,7 +174,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.iv_return, R.id.tv_return, R.id.btn_measure, R.id.btn_save,R.id.fab_print})
+    @OnClick({R.id.iv_return, R.id.tv_return, R.id.btn_measure, R.id.btn_save, R.id.fab_print})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_return:
@@ -186,9 +184,9 @@ public class AutoMeasureActivity extends AppCompatActivity {
                 this.finish();
                 break;
             case R.id.fab_print:
-                if (true == booIsSave){
+                if (true == booIsSave) {
                     printData(strContent);
-                }else{
+                } else {
                     CustomToast.showToast(AutoMeasureActivity.this, "没有可打印的数据，请先保存");
                 }
 
@@ -231,7 +229,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
                     final EditText measureName = dialogView.findViewById(R.id.et_measure_name);
                     final EditText entityName = dialogView.findViewById(R.id.et_entity_name);
                     final SuperTextView samplingTime = dialogView.findViewById(R.id.et_sampling_time);
-                    final Spinner classic=dialogView.findViewById(R.id.sp_classic);
+                    final Spinner classic = dialogView.findViewById(R.id.sp_classic);
                     final EditText sampler = dialogView.findViewById(R.id.et_sampler);
                     final EditText inspector = dialogView.findViewById(R.id.et_inspector);
                     samplingTime.setLeftString(DateUtil.getNowDateTime());
@@ -248,15 +246,15 @@ public class AutoMeasureActivity extends AppCompatActivity {
                     dialogView.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            strMeasureName =measureName.getText().toString();
-                            strEntityName=entityName.getText().toString();
-                            strSamplingTime=samplingTime.getLeftString()+" "+samplingTime.getCenterString()+"";
-                            strClassic = (String) classic.getSelectedItem();
+                            strMeasureName = measureName.getText().toString();
+                            strEntityName = entityName.getText().toString();
+                            strSamplingTime = samplingTime.getLeftString() + " " + samplingTime.getCenterString() + "";
+                            strStyle = (String) classic.getSelectedItem();
                             classic.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                 @Override
                                 public void onItemSelected(AdapterView<?> parent, View view,
                                                            int position, long id) {
-                                    strClassic =classic.getSelectedItem().toString();
+                                    strStyle = classic.getSelectedItem().toString();
                                 }
 
                                 @Override
@@ -265,8 +263,8 @@ public class AutoMeasureActivity extends AppCompatActivity {
 
                                 }
                             });
-                            strSampler=sampler.getText().toString();
-                            strInspector=inspector.getText().toString();
+                            strSampler = sampler.getText().toString();
+                            strInspector = inspector.getText().toString();
                             saveData();
                             customAlert.dismiss();
                         }
@@ -289,7 +287,8 @@ public class AutoMeasureActivity extends AppCompatActivity {
         MeasureDao measureDao = new MeasureDao(this);
         Tb_measure tb_measure = new Tb_measure(measureDao.getMaxId() + 1,
                 strClassic,//测量类别
-                Constants.strLoginName + DateUtil.getNowDateTime2() + "自动测量",
+                strStyle,
+                Constants.strLoginName + DateUtil.getNowDateTime2() + strClassic,
                 "自动测量" + Constants.strLoginName + DateUtil.getNowDateTime2(),//曲线名称
                 intWavelength,//曲线波长
                 floDensity,//密度
@@ -308,11 +307,11 @@ public class AutoMeasureActivity extends AppCompatActivity {
                 strInspector
         );
 
-        strContent ="\n分类：" + strClassic
+        strContent = "\n分类：" + strClassic
                 + "\n条目：" + Constants.strLoginName + DateUtil.getNowDateTime2() + "自动测量"
                 + "\n名称：" + "自动测量" + Constants.strLoginName + DateUtil.getNowDateTime2()
                 + "\n波长：" + intWavelength
-                + "\n浓度：" +  floDensity
+                + "\n浓度：" + floDensity
                 + "\n透过率：" + floTranrate
                 + "\n吸光度：" + floAbsorbance
                 + "\n操作员：" + Constants.strLoginName
@@ -331,34 +330,34 @@ public class AutoMeasureActivity extends AppCompatActivity {
         // 信息提示
         CustomToast.showToast(getApplicationContext(), "数据保存成功");
         booIsMeasure = false;//保存数据之后改变状态，防止多次提交保存同一条数据
-        booIsSave=true;
+        booIsSave = true;
     }
 
-    private void printData(String strContent){
-            new MaterialDialog.Builder(AutoMeasureActivity.this)// 初始化建造者
+    private void printData(String strContent) {
+        new MaterialDialog.Builder(AutoMeasureActivity.this)// 初始化建造者
 //                        .icon(R.mipmap.icon_exit)
-                    .title("打印内容：")// 标题
-                    .content(strContent)// 内容
-                    .negativeText(R.string.cancel)
-                    .neutralText(R.string.print)
-                    .onNegative(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                .title("打印内容：")// 标题
+                .content(strContent)// 内容
+                .negativeText(R.string.cancel)
+                .neutralText(R.string.print)
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
-                        }
-                    })
-                    .onNeutral(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            intent.setClass(AutoMeasureActivity.this, SearchBTActivity.class);
-                            intent.putExtra("printInfo", strContent); //传递需要打印的数据
-                            intent.putExtra("type","AutoMeasureActivity");//从何处跳转
-                            startActivity(intent);
-                            AutoMeasureActivity.this.finish();
-                        }
-                    })
+                    }
+                })
+                .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        intent.setClass(AutoMeasureActivity.this, SearchBTActivity.class);
+                        intent.putExtra("printInfo", strContent); //传递需要打印的数据
+                        intent.putExtra("type", "AutoMeasureActivity");//从何处跳转
+                        startActivity(intent);
+                        AutoMeasureActivity.this.finish();
+                    }
+                })
 
-                    .show();// 显示对话框
+                .show();// 显示对话框
 
     }
 

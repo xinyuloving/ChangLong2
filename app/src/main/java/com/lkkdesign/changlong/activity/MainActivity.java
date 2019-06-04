@@ -335,7 +335,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void addMeasureData(){
         MeasureDao measureDao = new MeasureDao(this);
-        Tb_measure tb_measure = new Tb_measure(measureDao.getMaxId() + 1,"自动测量", "String item", "String name", 140, 10.4f,
+        Tb_measure tb_measure = new Tb_measure(measureDao.getMaxId() + 1,"自动测量", "","String item", "String name", 140, 10.4f,
                 1.20f, 100.6f, "String userId", "COD（0-100 mg/L）", "C=15.000 mg/L",
                 "25.20℃", DateUtil.getNowDateTime(), "备注","","","","","");
         measureDao.add(tb_measure);

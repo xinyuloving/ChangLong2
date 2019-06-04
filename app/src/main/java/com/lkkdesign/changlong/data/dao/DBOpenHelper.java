@@ -22,7 +22,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                 "entity_name varchar(100),sampling_time varchar(20),sampler varchar(10),inspector varchar(10))");// 创建曲线信息表（根据第1次UI提供的数据确定表结构）
 
 
-        db.execSQL("create table tb_measure (_id integer primary key,classic varchar(10),item varchar(20),name varchar(20),"
+        db.execSQL("create table tb_measure (_id integer primary key,classic varchar(10),style varchar(10),item varchar(20),name varchar(20),"
                 + "wavelength integer,density float(9),tranatre float(9),absorbance float(9),userId varchar(10),type varchar(20)," +
                 "result varchar(20),temperature varchar(10),time varchar(20),mark varchar(200),measure_name varchar(100)," +
                 "entity_name varchar(100),sampling_time varchar(20),sampler varchar(10),inspector varchar(10))");// 创建测量结果表（根据第二次UI提供的数据确定表结构）

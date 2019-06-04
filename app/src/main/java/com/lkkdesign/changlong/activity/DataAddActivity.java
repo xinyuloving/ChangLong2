@@ -182,6 +182,7 @@ public class DataAddActivity extends AppCompatActivity {
         MeasureDao measureDao = new MeasureDao(DataAddActivity.this);
         Tb_measure tb_measure = new Tb_measure(measureDao.getMaxId()+1,
                 strType,//测量类别
+                strType,//测量类别
                 "曲线"+DateUtil.getNowDateTime2(),
                 etName.getText().toString().trim(),//曲线名称
                 Integer.parseInt(etWavelength.getText().toString().trim()),//曲线波长
