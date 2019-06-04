@@ -144,6 +144,39 @@ public class MeasureDao {
         return tb_measure;// 返回集合
     }
 
+    public List<Tb_measure> findBySearchCondition(String searchContent,String searchCondition) {
+        db = helper.getWritableDatabase();// 初始化SQLiteDatabase对象
+        List<Tb_measure> tb_measure = new ArrayList<Tb_measure>();// 创建集合对象
+        Cursor cursor = db.rawQuery("select * from tb_measure ",null);// 根据编号查找曲线信息，并存储到Cursor类中
+        // 遍历所有的曲线信息
+        while (cursor.moveToNext()) {
+            // 将遍历到的曲线信息添加到集合中
+            tb_measure.add(new Tb_measure(cursor.getInt(cursor.getColumnIndex("_id")),
+                    cursor.getString(cursor.getColumnIndex("classic")),
+                    cursor.getString(cursor.getColumnIndex("item")),
+                    cursor.getString(cursor.getColumnIndex("name")),
+                    cursor.getInt(cursor.getColumnIndex("wavelength")),
+                    cursor.getFloat(cursor.getColumnIndex("density")),
+                    cursor.getFloat(cursor.getColumnIndex("tranatre")),
+                    cursor.getFloat(cursor.getColumnIndex("absorbance")),
+                    cursor.getString(cursor.getColumnIndex("userId")),
+                    cursor.getString(cursor.getColumnIndex("type")),
+                    cursor.getString(cursor.getColumnIndex("result")),
+                    cursor.getString(cursor.getColumnIndex("temperature")),
+                    cursor.getString(cursor.getColumnIndex("time")),
+                    cursor.getString(cursor.getColumnIndex("mark")),
+                    cursor.getString(cursor.getColumnIndex("measure_name")),
+                    cursor.getString(cursor.getColumnIndex("entity_name")),
+                    cursor.getString(cursor.getColumnIndex("sampling_time")),
+                    cursor.getString(cursor.getColumnIndex("sampler")),
+                    cursor.getString(cursor.getColumnIndex("inspector"))));
+
+
+
+        }
+        return tb_measure;// 返回集合
+    }
+
     /**
      * 获取测量结果信息
      *

@@ -36,6 +36,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:replace="android:appComponentFactory">
+        <activity android:name=".activity.SearchDataActivity"></activity>
         <activity android:name=".activity.ManualMeasureTipActivity" />
         <activity android:name=".activity.SendEmailActivity" />
         <activity android:name=".activity.TBSActivity" />
