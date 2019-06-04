@@ -2,19 +2,24 @@ package com.lkkdesign.changlong.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.lkkdesign.changlong.R;
 import com.lkkdesign.changlong.adapter.BaseAdapter;
 import com.lkkdesign.changlong.adapter.MainAdapter;
+import com.lkkdesign.changlong.config.Constants;
 import com.lkkdesign.changlong.data.dao.MeasureDao;
 import com.lkkdesign.changlong.data.model.Tb_measure;
 import com.lkkdesign.changlong.printer.SearchBTActivity;
@@ -27,10 +32,21 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SearchDataActivity extends AppCompatActivity implements SwipeItemClickListener {
     @BindView(R.id.recycler_view)
     SwipeMenuRecyclerView mRecyclerView;
+    @BindView(R.id.iv_return)
+    ImageView ivReturn;
+    @BindView(R.id.tv_return)
+    TextView tvReturn;
+    @BindView(R.id.tv_ll_title)
+    TextView tvLlTitle;
+    @BindView(R.id.tv_user)
+    TextView tvUser;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     private Intent intent = new Intent();
     private String strSearchContent = "";
     private String strSearchCondition = "";
@@ -52,6 +68,7 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
     }
 
     public void initView() {
+        tvUser.setText(Constants.strLoginName);
         Intent intent = getIntent();
         strSearchContent = intent.getStringExtra("searchContent");
         strSearchCondition = intent.getStringExtra("searchConditions");
@@ -131,7 +148,7 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
         }
         Log.i("BSMRVActivity", "tb_measure=" + tb_measure.toString());
         strContent = "\n分类：" + tb_measure.getClassic()
-                +"\n测量类别："+ tb_measure.getStyle()
+                + "\n测量类别：" + tb_measure.getStyle()
                 + "\n条目：" + tb_measure.getItem()
                 + "\n名称：" + tb_measure.getName()
                 + "\n波长：" + tb_measure.getWavelength()
@@ -186,5 +203,12 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
 
                 .show();// 显示对话框
 
+    }
+
+    @OnClick(R.id.tv_return)
+    public void onViewClicked() {
+        intent.setClass(SearchDataActivity.this, BaseSMRecycleViewActivity.class);
+        startActivity(intent);
+        SearchDataActivity.this.finish();
     }
 }
