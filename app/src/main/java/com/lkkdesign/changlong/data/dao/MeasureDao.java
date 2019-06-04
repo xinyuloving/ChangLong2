@@ -153,6 +153,7 @@ public class MeasureDao {
             // 将遍历到的曲线信息添加到集合中
             tb_measure.add(new Tb_measure(cursor.getInt(cursor.getColumnIndex("_id")),
                     cursor.getString(cursor.getColumnIndex("classic")),
+                    cursor.getString(cursor.getColumnIndex("style")),
                     cursor.getString(cursor.getColumnIndex("item")),
                     cursor.getString(cursor.getColumnIndex("name")),
                     cursor.getInt(cursor.getColumnIndex("wavelength")),

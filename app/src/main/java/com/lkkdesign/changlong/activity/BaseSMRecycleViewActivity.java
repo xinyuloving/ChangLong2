@@ -278,9 +278,7 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
                         BaseSMRecycleViewActivity.this.finish();
                     }
                 })
-
                 .show();// 显示对话框
-
     }
 
 
