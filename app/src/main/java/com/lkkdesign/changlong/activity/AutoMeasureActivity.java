@@ -308,6 +308,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
         );
 
         strContent = "\n分类：" + strClassic
+                + "\n测量类别：" + strStyle
                 + "\n条目：" + Constants.strLoginName + DateUtil.getNowDateTime2() + "自动测量"
                 + "\n名称：" + "自动测量" + Constants.strLoginName + DateUtil.getNowDateTime2()
                 + "\n波长：" + intWavelength
