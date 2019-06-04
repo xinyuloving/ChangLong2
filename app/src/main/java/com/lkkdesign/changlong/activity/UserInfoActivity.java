@@ -43,7 +43,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class UserInfoActivity extends AppCompatActivity implements SwipeItemClickListener {
-
+//
     @BindView(R.id.iv_return)
     ImageView ivReturn;
     @BindView(R.id.title)
