@@ -37,8 +37,6 @@
                 app:tabMode="fixed"
                 app:tabSelectedTextColor="@color/black"
                 app:tabTextColor="@color/white" />
-
-
             <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
@@ -46,5 +44,15 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </LinearLayout>
     </com.yanzhenjie.recyclerview.swipe.widget.StickyNestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_search"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="end|bottom"
+        android:src="@android:drawable/ic_menu_search"
+        app:fabSize="mini"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_8"/>
 
 </android.support.design.widget.CoordinatorLayout>

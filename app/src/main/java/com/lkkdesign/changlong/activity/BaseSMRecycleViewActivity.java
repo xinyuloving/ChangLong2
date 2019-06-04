@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import com.lkkdesign.changlong.R;
 import com.lkkdesign.changlong.data.dao.MeasureDao;
 import com.lkkdesign.changlong.data.model.Tb_measure;
 import com.lkkdesign.changlong.printer.SearchBTActivity;
+import com.lkkdesign.changlong.utils.CustomToast;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
@@ -45,6 +47,8 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
     protected RecyclerView.LayoutManager mLayoutManager;
     protected RecyclerView.ItemDecoration mItemDecoration;
 
+    private FloatingActionButton fabSearch;
+
     protected BaseAdapter mAdapter;
     protected List<String> mDataList;//自动测量
     private String strType = "";
@@ -61,11 +65,26 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
 
+        initView();
+
+        initTabLayout();
+
+    }
+
+    private void initView(){
         int i = measureDao.getCount();
         Log.i(TAG, "数据表中记录总数 getCount()=" + i);
 
 //        mToolbar = findViewById(R.id.toolbar);
         mRecyclerView = findViewById(R.id.recycler_view);
+        fabSearch =(FloatingActionButton)findViewById(R.id.fab_search);
+
+        fabSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomToast.showToast(BaseSMRecycleViewActivity.this,"FloatActionButton");
+            }
+        });
 
         mLayoutManager = createLayoutManager();
         mItemDecoration = createItemDecoration();
@@ -84,9 +103,6 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
 
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged(mDataList);
-
-        initTabLayout();
-
     }
 
     private void initTabLayout() {
