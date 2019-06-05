@@ -59,6 +59,7 @@ public class TimingSetupActivity extends AppCompatActivity {
     private String strStartTime = "";
     private String strEndTime = "";
     private String strJianGe = "";
+    private String inputJiange = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,60 +96,38 @@ public class TimingSetupActivity extends AppCompatActivity {
                 strStartTime = tvStartTime.getLeftString().replaceAll("已选时间:", "") + " " + tvStartTime.getCenterString();
                 strEndTime = tvEndTime.getLeftString().replaceAll("已选时间:", "") + " " + tvEndTime.getCenterString();
                 strJianGe = tvTimeInterval.getLeftString().replaceAll("时间间隔：", "");
-//                Log.i(TAG, "strStartTime=" + strStartTime);
-//                Log.i(TAG, "strEndTime=" + strEndTime);
-//                Log.i(TAG, "strJianGe=" + strJianGe);
                 Long lonCalculate = calculate(strStartTime, strEndTime);
+                /*Log.i(TAG, "strStartTime=" + strStartTime);
+                Log.i(TAG, "strEndTime=" + strEndTime);
+                Log.i(TAG, "strJianGe=" + strJianGe);
                 Log.i(TAG, "calculate=" + lonCalculate);
+                Log.i(TAG,"strJianGe*60000="+Long.valueOf(strJianGe)*60000);
+                Log.i(TAG,"test="+(lonCalculate<Long.valueOf(strJianGe)*60000));*/
                 //1、先判断开始时间的合法性
-                if (0 == lonCalculate ) {
+                if (lonCalculate <= 0 || lonCalculate < Long.valueOf(strJianGe) * 60000) {
                     CustomToast.showToast(this, "请设置正确的时间");
                     return;
-                }else if(lonCalculate > 0){
-//                    CustomToast.showToast(this, "请设置正确的开始时间");
-//                    return;
-                    intent.setClass(this, CurveSelectActivity.class);
-                    intent.putExtra("type", "time");
-                    intent.putExtra("startTime", strStartTime);
-                    intent.putExtra("endTime", strEndTime);
-                    intent.putExtra("jiange", strJianGe);
-                    startActivity(intent);
-                }else{
-                    intent.setClass(this, CurveSelectActivity.class);
-                    intent.putExtra("type", "time");
-                    intent.putExtra("startTime", strStartTime);
-                    intent.putExtra("jiange", strJianGe);
-                    startActivity(intent);
+                } else {
+                    if (strEndTime.length() > 2) {
+                        intent.setClass(this, CurveSelectActivity.class);
+                        intent.putExtra("type", "time");
+                        intent.putExtra("startTime", strStartTime);
+                        intent.putExtra("endTime", strEndTime);
+                        intent.putExtra("jiange", strJianGe);
+                        startActivity(intent);
+                    } else {
+                        intent.setClass(this, CurveSelectActivity.class);
+                        intent.putExtra("type", "time");
+                        intent.putExtra("startTime", strStartTime);
+                        intent.putExtra("jiange", strJianGe);
+                        startActivity(intent);
+                    }
+
                 }
-
-//                Long longDiff = DateUtil.getDateTime(strStartTime, strEndTime);
-                /*strStartTime.length() > 0 && strEndTime.length() > 0 && strJianGe.length() > 0*/
-//                if (strStartTime.length() > 0 && strEndTime.length() >= 0 && strJianGe.length() > 0) {
-//                    Long longDiff = DateUtil.getDateTime(strStartTime, strEndTime);
-//                    if (longDiff > 0) {
-//                        intent.setClass(this, CurveSelectActivity.class);
-//                        intent.putExtra("type", "time");
-//                        intent.putExtra("startTime", strStartTime);
-//                        intent.putExtra("endTime", strEndTime);
-//                        intent.putExtra("jiange", strJianGe);
-//                        //startActivity(intent);
-//                    } else {
-////                        CustomToast.showToast(this, "请选择正确的日期和时间");
-//                        //CustomToast.showToast(this, "时间间隔：" + longDiff);
-//
-//                        intent.setClass(this, CurveSelectActivity.class);
-//                        intent.putExtra("type", "time");
-//                        intent.putExtra("startTime", strStartTime);
-//                        intent.putExtra("jiange", strJianGe);
-//                        //startActivity(intent);
-//                    }
-//                } else {
-//                    CustomToast.showToast(this, "请设置正确的日期、时间或者时间间隔");
-//                }
-
                 break;
 
         }
+
     }
 
     private void setTimeInterval() {
@@ -163,8 +142,9 @@ public class TimingSetupActivity extends AppCompatActivity {
 
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        tvTimeInterval.setLeftString("时间间隔：" + input);
+                        tvTimeInterval.setLeftString(input);
                         timeInterval.setCenterString(input);
+                        inputJiange = timeInterval.getCenterString();
                     }
                 })
 
@@ -199,19 +179,20 @@ public class TimingSetupActivity extends AppCompatActivity {
         } else {//有开始时间
             Log.i(TAG, "strStartTime=" + strStartTime);
             //先判断开始时间是否小于当前时间,时间不合法
-            if(DateUtil.getDateTime(strStartTime, strDateTime) > 0){
+            if (DateUtil.getDateTime(strStartTime, strDateTime) > 0) {
                 longDiff = 0L;
                 return longDiff;
             }
             if (" ".equals(strEndTime)) {//（1）没有结束时间
                 Log.i(TAG, "没有结束时间！");
-                longDiff = DateUtil.getDateTime(strStartTime, strDateTime);
+                longDiff = DateUtil.getDateTime(strStartTime, "2050-12-12 23:59");
+                strEndTime = "2050-12-12 23:59";
                 return longDiff;
-            }else{//有结束时间，先与当前时间做比较
+            } else {//有结束时间，先与当前时间做比较
                 if (DateUtil.getDateTime(strEndTime, strDateTime) > 0) {
                     longDiff = 0L;
                     return longDiff;
-                }else {//结束时间合法，开始时间与结束时间做比较
+                } else {//结束时间合法，开始时间与结束时间做比较
                     longDiff = DateUtil.getDateTime(strStartTime, strEndTime);
                     return longDiff;
                 }
