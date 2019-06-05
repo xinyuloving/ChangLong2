@@ -174,7 +174,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.iv_return, R.id.tv_return, R.id.btn_measure, R.id.btn_save, R.id.fab_print})
+    @OnClick({R.id.tv_cod,R.id.cardview3,R.id.tc_time,R.id.iv_return, R.id.tv_return, R.id.btn_measure, R.id.btn_save, R.id.fab_print})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_return:
