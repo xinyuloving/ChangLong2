@@ -104,7 +104,7 @@ public class TimingSetupActivity extends AppCompatActivity {
                 Log.i(TAG,"strJianGe*60000="+Long.valueOf(strJianGe)*60000);
                 Log.i(TAG,"test="+(lonCalculate<Long.valueOf(strJianGe)*60000));*/
                 //1、先判断开始时间的合法性
-                if (strJianGe.length()==0||lonCalculate <= 0 || lonCalculate < Long.valueOf(strJianGe) * 60000) {
+                if (strJianGe.length() == 0 || lonCalculate <= 0 || lonCalculate < Long.valueOf(strJianGe) * 60000) {
                     CustomToast.showToast(this, "请设置正确的时间");
                     return;
                 } else {
