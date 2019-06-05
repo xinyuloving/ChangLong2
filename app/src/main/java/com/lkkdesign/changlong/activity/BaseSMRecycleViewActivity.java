@@ -19,11 +19,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.lkkdesign.changlong.R;
+import com.lkkdesign.changlong.config.Constants;
 import com.lkkdesign.changlong.data.dao.MeasureDao;
 import com.lkkdesign.changlong.data.model.Tb_measure;
 import com.lkkdesign.changlong.printer.SearchBTActivity;
@@ -53,6 +55,7 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
     protected RecyclerView.ItemDecoration mItemDecoration;
 
     private FloatingActionButton fabSearch;
+    private TextView tvReturn,tvUser;
 
     protected BaseAdapter mAdapter;
     protected List<String> mDataList;//自动测量
@@ -83,8 +86,18 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
         Log.i(TAG, "数据表中记录总数 getCount()=" + i);
 
 //        mToolbar = findViewById(R.id.toolbar);
+        tvReturn = (TextView)findViewById(R.id.tv_return);
+        tvUser = (TextView)findViewById(R.id.tv_user);
+        tvUser.setText(Constants.strLoginName);
         mRecyclerView = findViewById(R.id.recycler_view);
         fabSearch =(FloatingActionButton)findViewById(R.id.fab_search);
+
+        tvReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                returnActivity();
+            }
+        });
 
         fabSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -411,15 +424,19 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
         return true;
     }
 
+    private void returnActivity(){
+        intent.setClass(BaseSMRecycleViewActivity.this, Main2Activity.class);
+        startActivity(intent);
+        BaseSMRecycleViewActivity.this.finish();
+    }
+
     /**
      * 监听返回键
      */
     @Override
     public void onBackPressed() {
         // super.onBackPressed();//注释掉这行,back键不退出activity
-        intent.setClass(BaseSMRecycleViewActivity.this, Main2Activity.class);
-        startActivity(intent);
-        BaseSMRecycleViewActivity.this.finish();
+        returnActivity();
     }
 
     @Override

@@ -14,6 +14,7 @@ import android.preference.SwitchPreference;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -36,7 +37,6 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
     Context mContext = null;
     private ListPreference preference_countdown;
     private Intent intent = new Intent();
-
 
     //此处在其他手机上运行出现Bug，需要调试。
 //    SharedPreferences settings = getSharedPreferences("setTime", 0);
@@ -238,6 +238,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         preExitapp.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
+                CustomToast.showToast(SettingsActivity.this,"退出程序事件");
                 //当接收到Click事件之后触发
                 new MaterialDialog.Builder(SettingsActivity.this)// 初始化建造者
 //                        .icon(R.mipmap.icon_exit)
