@@ -1,17 +1,26 @@
 package com.lkkdesign.changlong.activity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -23,10 +32,12 @@ import com.lkkdesign.changlong.config.Constants;
 import com.lkkdesign.changlong.data.dao.MeasureDao;
 import com.lkkdesign.changlong.data.model.Tb_measure;
 import com.lkkdesign.changlong.printer.SearchBTActivity;
+import com.lkkdesign.changlong.utils.CustomToast;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,16 +48,7 @@ import butterknife.OnClick;
 public class SearchDataActivity extends AppCompatActivity implements SwipeItemClickListener {
     @BindView(R.id.recycler_view)
     SwipeMenuRecyclerView mRecyclerView;
-    @BindView(R.id.iv_return)
-    ImageView ivReturn;
-    @BindView(R.id.tv_return)
-    TextView tvReturn;
-    @BindView(R.id.tv_ll_title)
-    TextView tvLlTitle;
-    @BindView(R.id.tv_user)
-    TextView tvUser;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+
     private Intent intent = new Intent();
     private String strSearchContent = "";
     private String strSearchCondition = "";
@@ -59,6 +61,9 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
     protected BaseAdapter mAdapter;
     private String strContent = "";
 
+    private SearchView mSearchView;
+    private SearchView.SearchAutoComplete mSearchAutoComplete;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +73,26 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
     }
 
     public void initView() {
-        tvUser.setText(Constants.strLoginName);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mSearchAutoComplete.isShown()) {
+                    try {
+                        mSearchAutoComplete.setText("");
+                        Method method = mSearchView.getClass().getDeclaredMethod("onCloseClicked");
+                        method.setAccessible(true);
+                        method.invoke(mSearchView);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    finish();
+                }
+            }
+        });
+
         Intent intent = getIntent();
         strSearchContent = intent.getStringExtra("searchContent");
         strSearchCondition = intent.getStringExtra("searchConditions");
@@ -91,6 +115,86 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_view, menu);
+        MenuItem searchItem = menu.findItem(R.id.menu_search);
+
+        //通过MenuItem得到SearchView
+        mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        mSearchAutoComplete = (SearchView.SearchAutoComplete) mSearchView.findViewById(R.id.search_src_text);
+        mSearchView.setQueryHint("搜索本地数据");
+
+        //设置输入框提示文字样式
+        mSearchAutoComplete.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
+        mSearchAutoComplete.setTextColor(getResources().getColor(android.R.color.background_light));
+        mSearchAutoComplete.setTextSize(14);
+        //设置触发查询的最少字符数（默认2个字符才会触发查询）
+        mSearchAutoComplete.setThreshold(1);
+
+        //设置搜索框有字时显示叉叉，无字时隐藏叉叉
+        mSearchView.onActionViewExpanded();
+        mSearchView.setIconified(true);
+
+        //修改搜索框控件间的间隔
+        LinearLayout search_edit_frame = (LinearLayout) mSearchView.findViewById(R.id.search_edit_frame);
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) search_edit_frame.getLayoutParams();
+        params.leftMargin = 0;
+        params.rightMargin = 0;
+        search_edit_frame.setLayoutParams(params);
+
+        //监听SearchView的内容
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                CustomToast.showToast(SearchDataActivity.this, s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                //Cursor cursor = TextUtils.isEmpty(s) ? null : queryData(s);
+
+//                if (mSearchView.getSuggestionsAdapter() == null) {
+//                    mSearchView.setSuggestionsAdapter(new SimpleCursorAdapter(SearchViewActivity2.this, R.layout.item_layout, cursor, new String[]{"name"}, new int[]{R.id.text1}));
+//                } else {
+//                    mSearchView.getSuggestionsAdapter().changeCursor(cursor);
+//                }
+                //setAdapter(cursor);
+
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    // 让菜单同时显示图标和文字
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+        if (menu != null) {
+            if (menu.getClass().getSimpleName().equalsIgnoreCase("MenuBuilder")) {
+                try {
+                    Method method = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+                    method.setAccessible(true);
+                    method.invoke(menu, true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return super.onMenuOpened(featureId, menu);
+    }
+
+//    private void setAdapter(Cursor cursor) {
+//        if (mLv.getAdapter() == null) {
+//            SimpleCursorAdapter adapter = new SimpleCursorAdapter(SearchDataActivity.this, R.layout.item_layout, cursor, new String[]{"name"}, new int[]{R.id.text1});
+//            mLv.setAdapter(adapter);
+//        } else {
+//            ((SimpleCursorAdapter) mLv.getAdapter()).changeCursor(cursor);
+//        }
+//    }
 
     protected BaseAdapter createAdapter() {
         return new MainAdapter(this);
@@ -205,10 +309,10 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
 
     }
 
-    @OnClick(R.id.tv_return)
-    public void onViewClicked() {
-        intent.setClass(SearchDataActivity.this, BaseSMRecycleViewActivity.class);
-        startActivity(intent);
-        SearchDataActivity.this.finish();
-    }
+//    @OnClick(R.id.tv_return)
+//    public void onViewClicked() {
+//        intent.setClass(SearchDataActivity.this, BaseSMRecycleViewActivity.class);
+//        startActivity(intent);
+//        SearchDataActivity.this.finish();
+//    }
 }

@@ -147,12 +147,14 @@ public class Main2Activity extends AppCompatActivity implements OnItemClickListe
                         startActivity(intent);
                         break;
                     case 2://定时测量
-                        intent.setClass(Main2Activity.this, TimingSetupActivity.class);
-                        startActivity(intent);
+//                        intent.setClass(Main2Activity.this, TimingSetupActivity.class);
+//                        startActivity(intent);
+                        jumpToActivity(TimingSetupActivity.class);
                         break;
                     case 3://光度计
-                        intent.setClass(Main2Activity.this, PhotometerFristActivity.class);
-                        startActivity(intent);
+//                        intent.setClass(Main2Activity.this, PhotometerFristActivity.class);
+//                        startActivity(intent);
+                        jumpToActivity(PhotometerFristActivity.class);
                         break;
                     case 4: //曲线校准
                         intent.setClass(Main2Activity.this, CurveSelectActivity.class);
@@ -160,17 +162,20 @@ public class Main2Activity extends AppCompatActivity implements OnItemClickListe
                         startActivity(intent);
                         break;
                     case 5: //查看数据
-                        intent.setClass(Main2Activity.this, BaseSMRecycleViewActivity.class);
-                        startActivity(intent);
+//                        intent.setClass(Main2Activity.this, BaseSMRecycleViewActivity.class);
+//                        startActivity(intent);
+                        jumpToActivity(BaseSMRecycleViewActivity.class);
                         break;
                     case 6: //应急报告
 //                        intent.setClass(Main2Activity.this, TBSActivity.class);
-                        intent.setClass(Main2Activity.this, ListEmReportActivity.class);
-                        startActivity(intent);
+//                        intent.setClass(Main2Activity.this, ListEmReportActivity.class);
+//                        startActivity(intent);
+                        jumpToActivity(ListEmReportActivity.class);
                         break;
                     case 7: //设置
-                        intent.setClass(Main2Activity.this, SettingsActivity.class);
-                        startActivity(intent);
+//                        intent.setClass(Main2Activity.this, SettingsActivity.class);
+//                        startActivity(intent);
+                        jumpToActivity(SettingsActivity.class);
                         break;
                     case 8: //帮助说明
                         intent.setClass(Main2Activity.this, com.lkkdesign.changlong.printer.AppStart.class);
@@ -347,6 +352,10 @@ public class Main2Activity extends AppCompatActivity implements OnItemClickListe
 //        transformerList.add(ZoomOutTranformer.class.getSimpleName());
 
 //        transformerArrayAdapter.notifyDataSetChanged();
+    }
+
+    private void jumpToActivity(Class activityClass) {
+        startActivity(new Intent(this, activityClass));
     }
 
     /**

@@ -70,5 +70,23 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
+    <style name="Widget.SearchView" parent="Widget.AppCompat.SearchView">
+        <item name="defaultQueryHint">搜索本地歌曲</item>
+        <item name="searchIcon">@android:drawable/ic_menu_search</item>
+        <item name="searchHintIcon">@null</item>
+    </style>
+
+
+    <!--标题与NavigationIcon的距离-->
+    <style name="Toolbar.MyStyle" parent="Base.Widget.AppCompat.Toolbar">
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+    </style>
+
+    <!--Toolbar标题文字大小-->
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">15sp</item>
+    </style>
+
 
 </resources>
