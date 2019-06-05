@@ -294,10 +294,10 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                         public void onClick(View view) {
                             strCValue = "C=" + cValue.getText().toString().replace("", "") + "mg/L";
                             strAValue = "A=" + aValue.getText().toString().replace("", "");
-                            if (strCValue.isEmpty() || strAValue.isEmpty()) {
+                            if (cValue.getText().toString().isEmpty() || aValue.getText().toString().isEmpty()) {
                                 CustomToast.showToast(getApplicationContext(), "A、C值不可为空！");
                             }
-                            if (strCValue.length() > 0 && strCValue.length() > 0) {
+                            if (cValue.getText().toString().length() > 0 && aValue.getText().toString().length() > 0) {
                                 dataList.add(strCValue + "\n" + strAValue);
                                 customAlert.dismiss();
                             }
@@ -320,17 +320,22 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                             .setNegativeButton("Cancel", null);
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            tvLine1.setVisibility(View.GONE);
-                            tvLine2.setVisibility(View.GONE);
-                            tvLine3.setVisibility(View.GONE);
-                            tvLine4.setVisibility(View.VISIBLE);
-                            tvLine5.setVisibility(View.GONE);
-                            lineState=4;
-                            strCValue = inputServer.getText().toString();
-                            mRecyclerView.setVisibility(View.GONE);
-                            btnBlank.setVisibility(View.GONE);
-                            btnSave.setText(R.string.next);
-                            booAddBtn = true;
+                            if(inputServer.getText().toString().isEmpty()){
+                                CustomToast.showToast(getApplicationContext(), "不可输入空值！");
+                            }else{
+                                tvLine1.setVisibility(View.GONE);
+                                tvLine2.setVisibility(View.GONE);
+                                tvLine3.setVisibility(View.GONE);
+                                tvLine4.setVisibility(View.VISIBLE);
+                                tvLine5.setVisibility(View.GONE);
+                                lineState=4;
+                                strCValue = inputServer.getText().toString();
+                                mRecyclerView.setVisibility(View.GONE);
+                                btnBlank.setVisibility(View.GONE);
+                                btnSave.setText(R.string.next);
+                                booAddBtn = true;
+                            }
+
                         }
                     });
                     builder.show();

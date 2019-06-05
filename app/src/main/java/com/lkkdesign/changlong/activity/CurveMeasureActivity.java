@@ -130,7 +130,12 @@ public class CurveMeasureActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //按下确定键后的事件
                         //view2.setVisibility(View.VISIBLE);
-                        tvResult2.setText("输入的公式：\n" + et.getText().toString());
+                        if(et.getText().toString().isEmpty()){
+                            CustomToast.showToast(getApplicationContext(), "不可输入空值！");
+                        }else{
+                            tvResult2.setText("输入的公式：\n" + et.getText().toString());
+                        }
+
                         //Toast.makeText(getApplicationContext(), et.getText().toString(), Toast.LENGTH_LONG).show();
                     }
                 }).setNegativeButton("取消", null).show();
