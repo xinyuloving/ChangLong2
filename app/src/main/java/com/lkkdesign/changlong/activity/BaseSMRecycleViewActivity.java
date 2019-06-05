@@ -109,6 +109,7 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
                 //将界面填充到AlertDiaLog容器
                 setDeBugDialog.setView(dialogView);
                 setDeBugDialog.create();
+                //
                 final EditText etSearch = dialogView.findViewById(R.id.et_search);
                 final Spinner spSearch= dialogView.findViewById(R.id.sp_search);
                 final AlertDialog customAlert = setDeBugDialog.show();
