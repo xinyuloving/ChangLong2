@@ -1,15 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:orientation="horizontal"
+        android:background="@color/statusBarColor"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/iv_return"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_24"
+            android:layout_weight="2"
+            android:layout_gravity="start|center"
+            android:src="@mipmap/iv_return"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/tv_return"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_48"
+            android:layout_weight="3"
+            android:text="＜返回"
+            android:textSize="@dimen/textsize_20"
+            android:textColor="@color/white"
+            android:gravity="start|center" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="@dimen/dp_48"
+            android:text="@string/search_data"
+            android:textSize="@dimen/textsize_30"
+            android:textColor="#ffffff"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tv_user"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="@dimen/dp_48"
+            android:text="用户名"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:textColor="#ffffff"/>
+    </LinearLayout>
 
     <com.yanzhenjie.recyclerview.swipe.widget.StickyNestedScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_marginTop="1dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,7 +69,7 @@
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
-                android:background="@color/colorBluePrimary"
+                android:background="@color/blue_a"
                 android:tag="sticky-nonconstant"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -37,6 +84,7 @@
                 app:tabMode="fixed"
                 app:tabSelectedTextColor="@color/black"
                 app:tabTextColor="@color/white" />
+
             <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
@@ -50,9 +98,14 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="end|bottom"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
         android:src="@android:drawable/ic_menu_search"
         app:fabSize="mini"
-        android:layout_marginBottom="@dimen/dp_8"
-        android:layout_marginEnd="@dimen/dp_8"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</android.support.design.widget.CoordinatorLayout>
+</android.support.constraint.ConstraintLayout>

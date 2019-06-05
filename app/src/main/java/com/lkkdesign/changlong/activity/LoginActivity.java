@@ -62,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         if (etName.length() > 0 && etPwd.length() > 0) {
             intent.setClass(LoginActivity.this, Main2Activity.class);
             //intent.putExtra("userName", strName);
+            Constants.strLoginName = etName.getText().toString();
             startActivity(intent);
         }
     }
