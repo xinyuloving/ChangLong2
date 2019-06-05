@@ -162,7 +162,21 @@
         android:textSize="@dimen/textsize_24"
         app:layout_constraintEnd_toEndOf="@+id/tv_result2"
         app:layout_constraintStart_toStartOf="@+id/tv_result2"
-        app:layout_constraintTop_toBottomOf="@+id/tv_result2" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_result2"
+        android:visibility="gone"/>
+    <TextClock
+        android:id="@+id/tc_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="#6E6F6F"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:layout_margin="@dimen/dp_16"
+        android:format24Hour="yyyy年MM月dd日 HH:mm"
+        app:layout_constraintEnd_toEndOf="@+id/tv_result2"
+        app:layout_constraintStart_toStartOf="@+id/tv_result2"
+        app:layout_constraintTop_toBottomOf="@+id/tv_result2"/>
 
 
     <Button
@@ -179,10 +193,10 @@
         android:textSize="@dimen/textsize_24"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/tv_timer"
+        app:layout_constraintEnd_toEndOf="@+id/tc_time"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="@+id/tv_timer"
-        app:layout_constraintTop_toBottomOf="@+id/tv_timer"
+        app:layout_constraintStart_toStartOf="@+id/tc_time"
+        app:layout_constraintTop_toBottomOf="@+id/tc_time"
         app:layout_constraintVertical_bias="0.101"/>
 
 
