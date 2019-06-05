@@ -22,6 +22,7 @@ import com.lkkdesign.changlong.R;
 import com.lkkdesign.changlong.config.Constants;
 import com.lkkdesign.changlong.utils.AppSharePreferenceMgr;
 import com.lkkdesign.changlong.utils.CustomToast;
+import com.lkkdesign.changlong.utils.DateUtil;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -62,6 +63,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         final EditTextPreference serverip = (EditTextPreference) findPreference("machineId");
         final EditTextPreference epCT = (EditTextPreference) findPreference("ep_CT");
         final EditTextPreference epCF = (EditTextPreference) findPreference("ep_CF");
+        final EditTextPreference accountTime=(EditTextPreference)findPreference("accountTime");
         SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(this);
 
         serverip.setSummary(shp.getString("machineId", ""));
@@ -77,6 +79,16 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
                 serverip.setSummary(newValue.toString());
                 serverip.setDefaultValue(newValue);
                 AppSharePreferenceMgr.put(getApplication(), "machineId", "" + newValue);
+                return true;
+            }
+        });
+        accountTime.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                accountTime.setSummary(newValue.toString());
+                accountTime.setDefaultValue("120");
+                AppSharePreferenceMgr.put(getApplication(),"accountTime",""+newValue);
+                DateUtil.intCountDwonTime=Long.valueOf(String.valueOf(newValue))*1000;
                 return true;
             }
         });

@@ -26,6 +26,10 @@
             android:summaryOff="关闭"
             android:summaryOn="打开"
             android:title="语音播报" />
+        <EditTextPreference
+            android:key="accountTime"
+            android:numeric="integer"
+            android:title="倒计时设置(单位：秒)" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="采集设置">
