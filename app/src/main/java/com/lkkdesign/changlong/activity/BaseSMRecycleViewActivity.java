@@ -55,14 +55,14 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
     protected RecyclerView.ItemDecoration mItemDecoration;
 
     private FloatingActionButton fabSearch;
-    private TextView tvReturn,tvUser;
+    private TextView tvReturn, tvUser;
 
     protected BaseAdapter mAdapter;
     protected List<String> mDataList;//自动测量
     private String strType = "";
     private String strContent = "";
-    private String strSearch="";
-    private String strSearchCon="";
+    private String strSearch = "";
+    private String strSearchCon = "";
 
     private Intent intent = new Intent();
     //    private Tb_data tb_data;
@@ -81,16 +81,16 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
 
     }
 
-    private void initView(){
+    private void initView() {
         int i = measureDao.getCount();
         Log.i(TAG, "数据表中记录总数 getCount()=" + i);
 
 //        mToolbar = findViewById(R.id.toolbar);
-        tvReturn = (TextView)findViewById(R.id.tv_return);
-        tvUser = (TextView)findViewById(R.id.tv_user);
+        tvReturn = (TextView) findViewById(R.id.tv_return);
+        tvUser = (TextView) findViewById(R.id.tv_user);
         tvUser.setText(Constants.strLoginName);
         mRecyclerView = findViewById(R.id.recycler_view);
-        fabSearch =(FloatingActionButton)findViewById(R.id.fab_search);
+        fabSearch = (FloatingActionButton) findViewById(R.id.fab_search);
 
         tvReturn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,18 +111,18 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
                 setDeBugDialog.create();
                 //
                 final EditText etSearch = dialogView.findViewById(R.id.et_search);
-                final Spinner spSearch= dialogView.findViewById(R.id.sp_search);
+                final Spinner spSearch = dialogView.findViewById(R.id.sp_search);
                 final AlertDialog customAlert = setDeBugDialog.show();
                 dialogView.findViewById(R.id.btn_search).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        strSearch=etSearch.getText().toString();
+                        strSearch = etSearch.getText().toString();
                         strSearchCon = (String) spSearch.getSelectedItem();
                         spSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view,
                                                        int position, long id) {
-                                strSearchCon =spSearch.getSelectedItem().toString();
+                                strSearchCon = spSearch.getSelectedItem().toString();
                             }
 
                             @Override
@@ -131,15 +131,14 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
 
                             }
                         });
-                        Log.i("BSMRActivity","searchData:"+strSearch+","+strSearchCon);
+                        Log.i("BSMRActivity", "searchData:" + strSearch + "," + strSearchCon);
                         intent.setClass(BaseSMRecycleViewActivity.this, SearchDataActivity.class);
                         intent.putExtra("searchContent", strContent); //传递搜索内容
-                        intent.putExtra("searchConditions",strSearchCon);//传递搜索条件
+                        intent.putExtra("searchConditions", strSearchCon);//传递搜索条件
                         intent.putExtra("type", "BaseSMRecycleViewActivity");//从何处跳转
                         startActivity(intent);
                         BaseSMRecycleViewActivity.this.finish();
                         customAlert.dismiss();
-
                     }
                 });
                 dialogView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
@@ -278,6 +277,7 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
     /**
      * 弹窗显示曲线数据
      * 点击
+     *
      * @param strTitle
      * @param strinfo
      */
@@ -290,8 +290,8 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
             e.printStackTrace();
         }
         Log.i("BSMRVActivity", "tb_measure=" + tb_measure.toString());
-        strContent ="\n分类：" + tb_measure.getClassic()
-                +"\n测量类型："+tb_measure.getStyle()
+        strContent = "\n分类：" + tb_measure.getClassic()
+                + "\n测量类型：" + tb_measure.getStyle()
                 + "\n条目：" + tb_measure.getItem()
                 + "\n名称：" + tb_measure.getName()
                 + "\n波长：" + tb_measure.getWavelength()
@@ -338,7 +338,7 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         intent.setClass(BaseSMRecycleViewActivity.this, SearchBTActivity.class);
                         intent.putExtra("printInfo", strContent); //传递需要打印的数据
-                        intent.putExtra("type","BaseSMRecycleViewActivity");//从何处跳转
+                        intent.putExtra("type", "BaseSMRecycleViewActivity");//从何处跳转
                         startActivity(intent);
                         BaseSMRecycleViewActivity.this.finish();
                     }
@@ -424,7 +424,7 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
         return true;
     }
 
-    private void returnActivity(){
+    private void returnActivity() {
         intent.setClass(BaseSMRecycleViewActivity.this, Main2Activity.class);
         startActivity(intent);
         BaseSMRecycleViewActivity.this.finish();
