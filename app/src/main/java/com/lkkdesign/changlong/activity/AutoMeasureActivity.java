@@ -184,19 +184,19 @@ public class AutoMeasureActivity extends AppCompatActivity {
                 this.finish();
                 break;
             case R.id.tv_cod:
-                intent.setClass(this, ManualMeasureFristActivity.class);
+                /*intent.setClass(this, ManualMeasureFristActivity.class);
                 startActivity(intent);
-                this.finish();
+                this.finish();*/
                 break;
             case R.id.cardview3:
-                intent.setClass(this, PhotometerFristActivity.class);
+                /*intent.setClass(this, PhotometerFristActivity.class);
                 startActivity(intent);
-                this.finish();
+                this.finish();*/
                 break;
             case R.id.tc_time:
-                intent.setClass(this, TimingSetupActivity.class);
+                /*intent.setClass(this, TimingSetupActivity.class);
                 startActivity(intent);
-                this.finish();
+                this.finish();*/
                 break;
             case R.id.fab_print:
                 if (true == booIsSave) {
