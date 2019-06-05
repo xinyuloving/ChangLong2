@@ -82,8 +82,8 @@
                 app:tabIndicatorColor="@color/colorAccent"
                 app:tabIndicatorHeight="@dimen/dp_2"
                 app:tabMode="fixed"
-                app:tabSelectedTextColor="@color/white"
-                app:tabTextColor="@color/black" />
+                app:tabSelectedTextColor="@color/black"
+                app:tabTextColor="@color/white" />
 
             <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
                 android:id="@+id/recycler_view"
