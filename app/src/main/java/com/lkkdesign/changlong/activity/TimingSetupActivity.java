@@ -101,53 +101,31 @@ public class TimingSetupActivity extends AppCompatActivity {
                 Long lonCalculate = calculate(strStartTime, strEndTime);
                 Log.i(TAG, "calculate=" + lonCalculate);
                 //1、先判断开始时间的合法性
-                if (0 == lonCalculate ) {
+                if (0 > lonCalculate) {
                     CustomToast.showToast(this, "请设置正确的时间");
                     return;
-                }else if(lonCalculate > 0){
+                } else if(0 == lonCalculate){
+                    CustomToast.showToast(this, "请设置正确开始、结束时间");
+                    return;
+                } else {
 //                    CustomToast.showToast(this, "请设置正确的开始时间");
 //                    return;
-                    intent.setClass(this, CurveSelectActivity.class);
-                    intent.putExtra("type", "time");
-                    intent.putExtra("startTime", strStartTime);
-                    intent.putExtra("endTime", strEndTime);
-                    intent.putExtra("jiange", strJianGe);
-                    startActivity(intent);
-                }else{
-                    intent.setClass(this, CurveSelectActivity.class);
-                    intent.putExtra("type", "time");
-                    intent.putExtra("startTime", strStartTime);
-                    intent.putExtra("jiange", strJianGe);
-                    startActivity(intent);
+                    if (strEndTime.length() > 2) {
+                        intent.setClass(this, CurveSelectActivity.class);
+                        intent.putExtra("type", "time");
+                        intent.putExtra("startTime", strStartTime);
+                        intent.putExtra("endTime", strEndTime);
+                        intent.putExtra("jiange", strJianGe);
+                        startActivity(intent);
+                    } else {
+                        intent.setClass(this, CurveSelectActivity.class);
+                        intent.putExtra("type", "time");
+                        intent.putExtra("startTime", strStartTime);
+                        intent.putExtra("jiange", strJianGe);
+                        startActivity(intent);
+                    }
                 }
-
-//                Long longDiff = DateUtil.getDateTime(strStartTime, strEndTime);
-                /*strStartTime.length() > 0 && strEndTime.length() > 0 && strJianGe.length() > 0*/
-//                if (strStartTime.length() > 0 && strEndTime.length() >= 0 && strJianGe.length() > 0) {
-//                    Long longDiff = DateUtil.getDateTime(strStartTime, strEndTime);
-//                    if (longDiff > 0) {
-//                        intent.setClass(this, CurveSelectActivity.class);
-//                        intent.putExtra("type", "time");
-//                        intent.putExtra("startTime", strStartTime);
-//                        intent.putExtra("endTime", strEndTime);
-//                        intent.putExtra("jiange", strJianGe);
-//                        //startActivity(intent);
-//                    } else {
-////                        CustomToast.showToast(this, "请选择正确的日期和时间");
-//                        //CustomToast.showToast(this, "时间间隔：" + longDiff);
-//
-//                        intent.setClass(this, CurveSelectActivity.class);
-//                        intent.putExtra("type", "time");
-//                        intent.putExtra("startTime", strStartTime);
-//                        intent.putExtra("jiange", strJianGe);
-//                        //startActivity(intent);
-//                    }
-//                } else {
-//                    CustomToast.showToast(this, "请设置正确的日期、时间或者时间间隔");
-//                }
-
                 break;
-
         }
     }
 
@@ -192,6 +170,8 @@ public class TimingSetupActivity extends AppCompatActivity {
     private long calculate(String strStartTime, String strEndTime) {
         Long longDiff = 0L;
         String strDateTime = DateUtil.getNowDateTime4();//获取系统时间
+        Log.i(TAG, "strStartTime=" + strStartTime);
+        Log.i(TAG, "strEndTime=" + strEndTime);
         Log.i(TAG, "strDateTime=" + strDateTime);
         if (" ".equals(strStartTime)) {//没有开始时间,直接提示
             Log.i(TAG, "没有开始时间！");
@@ -199,7 +179,7 @@ public class TimingSetupActivity extends AppCompatActivity {
         } else {//有开始时间
             Log.i(TAG, "strStartTime=" + strStartTime);
             //先判断开始时间是否小于当前时间,时间不合法
-            if(DateUtil.getDateTime(strStartTime, strDateTime) > 0){
+            if (DateUtil.getDateTime(strStartTime, strDateTime) > 0) {
                 longDiff = 0L;
                 return longDiff;
             }
@@ -207,11 +187,11 @@ public class TimingSetupActivity extends AppCompatActivity {
                 Log.i(TAG, "没有结束时间！");
                 longDiff = DateUtil.getDateTime(strStartTime, strDateTime);
                 return longDiff;
-            }else{//有结束时间，先与当前时间做比较
+            } else {//有结束时间，先与当前时间做比较
                 if (DateUtil.getDateTime(strEndTime, strDateTime) > 0) {
                     longDiff = 0L;
                     return longDiff;
-                }else {//结束时间合法，开始时间与结束时间做比较
+                } else {//结束时间合法，开始时间与结束时间做比较
                     longDiff = DateUtil.getDateTime(strStartTime, strEndTime);
                     return longDiff;
                 }
