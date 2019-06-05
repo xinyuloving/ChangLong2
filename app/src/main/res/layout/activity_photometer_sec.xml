@@ -238,7 +238,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/card_marginLeft_60"
             android:layout_marginTop="@dimen/card_marginTop_40"
-            android:text="10%"
             android:textColor="@color/statusBarColor"
             android:textSize="20dp" />
 
@@ -255,7 +254,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/card_marginLeft_200"
             android:layout_marginTop="@dimen/card_marginTop_40"
-            android:text="1.000"
             android:textColor="@color/statusBarColor"
             android:textSize="20dp" />
 
@@ -272,7 +270,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/card_marginLeft_60"
             android:layout_marginTop="@dimen/card_marginTop_105"
-            android:text="10mV"
             android:textColor="@color/statusBarColor"
             android:textSize="20dp" />
 
@@ -289,7 +286,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/card_marginLeft_200"
             android:layout_marginTop="@dimen/card_marginTop_105"
-            android:text="25℃"
             android:textColor="@color/statusBarColor"
             android:textSize="20dp" />
 
