@@ -26,6 +26,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.lkkdesign.changlong.utils.DateUtil.calculate;
+
 public class TimingSetupActivity extends AppCompatActivity {
 
 
@@ -161,45 +163,6 @@ public class TimingSetupActivity extends AppCompatActivity {
                 .show();
     }
 
-    /**
-     * 没有开始时间，直接返回0
-     * 有开始时间，先判断开始时间是否小于当前时间，小于当前时间返回0.大于零表示开始时间正确。
-     *
-     * @param strStartTime
-     * @param strEndTime
-     * @return long数值，0表示没有开始时间，大于零表示开始时间小于当前时间
-     */
-    private long calculate(String strStartTime, String strEndTime) {
-        Long longDiff = 0L;
-        String strDateTime = DateUtil.getNowDateTime4();//获取系统时间
-        Log.i(TAG, "strDateTime=" + strDateTime);
-        if (" ".equals(strStartTime)) {//没有开始时间,直接提示
-            Log.i(TAG, "没有开始时间！");
-            longDiff = 0L;
-        } else {//有开始时间
-            Log.i(TAG, "strStartTime=" + strStartTime);
-            //先判断开始时间是否小于当前时间,时间不合法
-            if (DateUtil.getDateTime(strStartTime, strDateTime) > 0) {
-                longDiff = 0L;
-                return longDiff;
-            }
-            if (" ".equals(strEndTime)) {//（1）没有结束时间
-                Log.i(TAG, "没有结束时间！");
-                longDiff = DateUtil.getDateTime(strStartTime, "2050-12-12 23:59");
-                strEndTime = "2050-12-12 23:59";
-                return longDiff;
-            } else {//有结束时间，先与当前时间做比较
-                if (DateUtil.getDateTime(strEndTime, strDateTime) > 0) {
-                    longDiff = 0L;
-                    return longDiff;
-                } else {//结束时间合法，开始时间与结束时间做比较
-                    longDiff = DateUtil.getDateTime(strStartTime, strEndTime);
-                    return longDiff;
-                }
-            }
-        }
-        return longDiff;
-    }
 
     @Override
     public void onBackPressed() {

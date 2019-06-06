@@ -113,10 +113,10 @@ public class UserAddActivity extends AppCompatActivity {
             case R.id.addbtn:
 //                if(etJobNo.getText().toString().length() > 0 || etName.getText().toString().length() > 0
 //                        || etPWD.getText().toString().length() > 0) {
-                    if( etName.getText().toString().length() > 0 || etPWD.getText().toString().length() > 0) {
-                        saveData();
-                    }else{
+                    if( etName.getText().toString().isEmpty() || etPWD.getText().toString().isEmpty()) {
                         CustomToast.showToast(this,"请输入完整的用户信息");
+                    }else{
+                        saveData();
                     }
 //                }
                 break;

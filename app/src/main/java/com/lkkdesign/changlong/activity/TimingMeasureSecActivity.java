@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.allen.library.SuperTextView;
 import com.lkkdesign.changlong.R;
 import com.lkkdesign.changlong.config.Constants;
+import com.lkkdesign.changlong.utils.CustomToast;
 import com.lkkdesign.changlong.utils.DateUtil;
 import com.lkkdesign.changlong.utils.RandomUntil;
 
@@ -27,6 +29,8 @@ import java.util.Calendar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.lkkdesign.changlong.utils.DateUtil.calculate;
 
 public class TimingMeasureSecActivity extends AppCompatActivity {
 
@@ -69,6 +73,10 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
     private String strStartTime = "";
     private String strEndTime = "";
     private String strJiange = "";
+    private String strSetStartTime = "";
+    private String strSetEndTime = "";
+    private String strSetJiange = "";
+    private String strDateTime=DateUtil.getNowDateTime();
     private String strTime = "";
     private String strInfo = "";
     private String strType = "";
@@ -193,6 +201,8 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
             case R.id.tv_startTime:
                 DateUtil.showTimePickerDialog(this, tvStartTime, calendar);
                 DateUtil.showDatePickerDialog(this, 0, tvStartTime, calendar);
+                strStartTime=tvStartTime.getLeftString()+" "+tvStartTime.getCenterString();
+
                 break;
             case R.id.tv_jgTime:
                 setTimeInterval();
@@ -200,6 +210,7 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
             case R.id.tv_endTime:
                 DateUtil.showTimePickerDialog(this, tvEndTime, calendar);
                 DateUtil.showDatePickerDialog(this, 0, tvEndTime, calendar);
+                strEndTime=tvEndTime.getLeftString()+" "+tvEndTime.getCenterString();
                 break;
 
         }
@@ -231,7 +242,13 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
 
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        tvJgTime.setLeftString(input + "分钟");
+                        if(Long.valueOf(input.toString())>(calculate(strStartTime, strEndTime)/60000)){
+                            tvJgTime.setLeftString(strJiange + "分钟");
+                            Log.i("TimingMeasureSec","error");
+                        }else{
+                            tvJgTime.setLeftString(input + "分钟");
+                        }
+
                     }
                 })
 

@@ -248,6 +248,10 @@ public class AutoMeasureActivity extends AppCompatActivity {
                     final EditText sampler = dialogView.findViewById(R.id.et_sampler);
                     final EditText inspector = dialogView.findViewById(R.id.et_inspector);
                     samplingTime.setLeftString(DateUtil.getNowDateTime());
+                    measureName.setHint("请输入测点名称");
+                    entityName.setHint("请输入单位名称");
+                    sampler.setText(Constants.strLoginName);
+                    inspector.setText(Constants.strLoginName);
 
                     samplingTime.setOnClickListener(new View.OnClickListener() {
                         @Override

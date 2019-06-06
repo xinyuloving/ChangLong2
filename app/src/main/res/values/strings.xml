@@ -65,12 +65,12 @@
     <string name="tv_exit">退出</string>
     <string name="addUser">用户注册</string>
     <string name="editUser">编辑用户信息</string>
-    <string name="user_name">姓名&#32;</string>
-    <string name="user_gh">工号&#32;</string>
-    <string name="user_pwd">密码&#32;</string>
-    <string name="user_dw">单位&#32;</string>
+    <string name="user_name">姓    名&#32;</string>
+    <string name="user_gh">工    号&#32;</string>
+    <string name="user_pwd">密    码&#32;</string>
+    <string name="user_dw">单    位&#32;</string>
     <string name="user_con">联系方式&#32;</string>
-    <string name="user_address">地址&#32;</string>
+    <string name="user_address">地    址&#32;</string>
     <string name="user_time">登记时间&#32;</string>
     <string name="et_inputName">输入名称</string>
     <string name="et_inputPWD">输入密码</string>

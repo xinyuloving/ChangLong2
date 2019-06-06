@@ -83,6 +83,10 @@ public class ManualMeasureTipActivity extends AppCompatActivity {
         tvLine5.setVisibility(GONE);
         if("ManualMeasureFristActivity".equals(Constants.strFormActivity)){
             tvTitle.setText(R.string.tv_manual);
+        }else if("InputDataActivity_qxjz".equals(Constants.strFormActivity)){
+            lineState=4;
+            tvLine1.setVisibility(GONE);
+            tvLine4.setVisibility(View.VISIBLE);
         }else {
             tvTitle.setText(R.string.tv_cure_adjust);
         }

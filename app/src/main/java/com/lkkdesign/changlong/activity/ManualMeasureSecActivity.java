@@ -28,6 +28,7 @@ import com.lkkdesign.changlong.baidutts.util.MixSpeakUtil;
 import com.lkkdesign.changlong.config.Constants;
 import com.lkkdesign.changlong.data.dao.MeasureDao;
 import com.lkkdesign.changlong.data.model.Tb_measure;
+import com.lkkdesign.changlong.excel.Const;
 import com.lkkdesign.changlong.printer.SearchBTActivity;
 import com.lkkdesign.changlong.utils.CustomToast;
 import com.lkkdesign.changlong.utils.DateUtil;
@@ -248,6 +249,10 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
                     final Spinner classic=dialogView.findViewById(R.id.sp_classic);
                     final EditText sampler = dialogView.findViewById(R.id.et_sampler);
                     final EditText inspector = dialogView.findViewById(R.id.et_inspector);
+                    measureName.setHint("请输入测点名称");
+                    entityName.setHint("请输入单位名称");
+                    sampler.setText(Constants.strLoginName);
+                    inspector.setText(Constants.strLoginName);
                     samplingTime.setCenterString(DateUtil.getNowDateTime());
 
                     samplingTime.setOnClickListener(new View.OnClickListener() {

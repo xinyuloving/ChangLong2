@@ -260,8 +260,8 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                             .setPositiveButton("是", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    intent.setClass(InputDataActivity.this, ManualMeasureSecActivity.class);
-                                    intent.putExtra("from", "InputDataActivity");
+                                    intent.setClass(InputDataActivity.this, ManualMeasureTipActivity.class);
+                                    intent.putExtra("from", "InputDataActivity_qxjz");
                                     intent.putExtra("wavelength", strTitle);
                                     intent.putExtra("type", Constants.strFormActivity);
                                     intent.putExtra("strInfo", strInfo);
@@ -323,12 +323,12 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                             if(inputServer.getText().toString().isEmpty()){
                                 CustomToast.showToast(getApplicationContext(), "不可输入空值！");
                             }else{
-                                tvLine1.setVisibility(View.GONE);
+                                tvLine1.setVisibility(View.VISIBLE);
                                 tvLine2.setVisibility(View.GONE);
                                 tvLine3.setVisibility(View.GONE);
-                                tvLine4.setVisibility(View.VISIBLE);
+                                tvLine4.setVisibility(View.GONE);
                                 tvLine5.setVisibility(View.GONE);
-                                lineState=4;
+                                lineState=1;
                                 strCValue = inputServer.getText().toString();
                                 mRecyclerView.setVisibility(View.GONE);
                                 btnBlank.setVisibility(View.GONE);
