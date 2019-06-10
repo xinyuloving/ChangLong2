@@ -111,18 +111,22 @@ public class ManualMeasureTipActivity extends AppCompatActivity {
                     case 1:
                         tvLine2.setVisibility(View.VISIBLE);
                         tvLine1.setVisibility(View.GONE);
-                        btnEmpty.setVisibility(View.VISIBLE);
+                        btnMeasure.setText("空 白");
                         lineState++;
                         break;
                     case 2:
-                        if (booIsEmpty == false) {
+                        /*if (booIsEmpty == false) {
                             CustomToast.showToast(getApplicationContext(), "请按照步骤执行");
                         } else {
                             tvLine3.setVisibility(View.VISIBLE);
                             tvLine2.setVisibility(View.GONE);
                             btnEmpty.setVisibility(View.GONE);
                             lineState++;
-                        }
+                        }*/
+                        tvLine3.setVisibility(View.VISIBLE);
+                        tvLine2.setVisibility(View.GONE);
+                        btnMeasure.setText(R.string.next);
+                        lineState++;
                         break;
                     case 3:
                         tvLine4.setVisibility(View.VISIBLE);
