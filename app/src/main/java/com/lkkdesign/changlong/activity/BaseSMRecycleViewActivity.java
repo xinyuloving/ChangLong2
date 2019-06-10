@@ -95,7 +95,8 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
         tvReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                returnActivity();
+//                returnActivity();
+                jumpToActivity(Main2Activity.class);
             }
         });
 
@@ -103,50 +104,52 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
             @Override
             public void onClick(View v) {
 //                CustomToast.showToast(BaseSMRecycleViewActivity.this,"FloatActionButton");
-                AlertDialog.Builder setDeBugDialog = new AlertDialog.Builder(BaseSMRecycleViewActivity.this);
-                //获取界面
-                View dialogView = LayoutInflater.from(BaseSMRecycleViewActivity.this).inflate(R.layout.input_search_data_dialoglayout, null);
-                //将界面填充到AlertDiaLog容器
-                setDeBugDialog.setView(dialogView);
-                setDeBugDialog.create();
-                //
-                final EditText etSearch = dialogView.findViewById(R.id.et_search);
-                final Spinner spSearch = dialogView.findViewById(R.id.sp_search);
-                final AlertDialog customAlert = setDeBugDialog.show();
-                dialogView.findViewById(R.id.btn_search).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        strSearch = etSearch.getText().toString();
-                        strSearchCon = (String) spSearch.getSelectedItem();
-                        spSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view,
-                                                       int position, long id) {
-                                strSearchCon = spSearch.getSelectedItem().toString();
-                            }
-
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-                                // TODO Auto-generated method stub
-
-                            }
-                        });
-                        Log.i("BSMRActivity", "searchData:" + strSearch + "," + strSearchCon);
-                        intent.setClass(BaseSMRecycleViewActivity.this, SearchDataActivity.class);
-                        intent.putExtra("searchContent", strContent); //传递搜索内容
-                        intent.putExtra("searchConditions", strSearchCon);//传递搜索条件
-                        intent.putExtra("type", "BaseSMRecycleViewActivity");//从何处跳转
-                        startActivity(intent);
-                        BaseSMRecycleViewActivity.this.finish();
-                        customAlert.dismiss();
-                    }
-                });
-                dialogView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        customAlert.dismiss();
-                    }
-                });
+//                AlertDialog.Builder setDeBugDialog = new AlertDialog.Builder(BaseSMRecycleViewActivity.this);
+//                //获取界面
+//                View dialogView = LayoutInflater.from(BaseSMRecycleViewActivity.this).inflate(R.layout.input_search_data_dialoglayout, null);
+//                //将界面填充到AlertDiaLog容器
+//                setDeBugDialog.setView(dialogView);
+//                setDeBugDialog.create();
+//                //
+//                final EditText etSearch = dialogView.findViewById(R.id.et_search);
+//                final Spinner spSearch = dialogView.findViewById(R.id.sp_search);
+//                final AlertDialog customAlert = setDeBugDialog.show();
+//                dialogView.findViewById(R.id.btn_search).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        strSearch = etSearch.getText().toString();
+//                        strSearchCon = (String) spSearch.getSelectedItem();
+//                        spSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                            @Override
+//                            public void onItemSelected(AdapterView<?> parent, View view,
+//                                                       int position, long id) {
+//                                strSearchCon = spSearch.getSelectedItem().toString();
+//                                CustomToast.showToast(BaseSMRecycleViewActivity.this,strSearchCon);
+//                            }
+//
+//                            @Override
+//                            public void onNothingSelected(AdapterView<?> parent) {
+//                                // TODO Auto-generated method stub
+//
+//                            }
+//                        });
+//                        Log.i("BSMRActivity", "searchData:" + strSearch + "," + strSearchCon);
+//                        intent.setClass(BaseSMRecycleViewActivity.this, SearchDataActivity.class);
+//                        intent.putExtra("searchContent", strContent); //传递搜索内容
+//                        intent.putExtra("searchConditions", strSearchCon);//传递搜索条件
+//                        intent.putExtra("type", "BaseSMRecycleViewActivity");//从何处跳转
+//                        startActivity(intent);
+//                        BaseSMRecycleViewActivity.this.finish();
+//                        customAlert.dismiss();
+//                    }
+//                });
+//                dialogView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        customAlert.dismiss();
+//                    }
+//                });
+                jumpToActivity(SearchDataActivity.class);
             }
         });
 
@@ -161,6 +164,8 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
 
         mRecyclerView.setLongPressDragEnabled(false); // 长按拖拽，默认关闭。
         mRecyclerView.setItemViewSwipeEnabled(false); // 滑动删除，默认关闭。
+
+        mRecyclerView.setNestedScrollingEnabled(false);//设置是否允许嵌套滑动
 
         mRecyclerView.setSwipeMenuItemClickListener(mMenuItemClickListener); // Item的Menu点击。
         mRecyclerView.setSwipeMenuCreator(mSwipeMenuCreator); // 菜单创建器。
@@ -424,8 +429,15 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
         return true;
     }
 
-    private void returnActivity() {
-        intent.setClass(BaseSMRecycleViewActivity.this, Main2Activity.class);
+//    private void returnActivity() {
+//        intent.setClass(BaseSMRecycleViewActivity.this, Main2Activity.class);
+//        startActivity(intent);
+//        BaseSMRecycleViewActivity.this.finish();
+//    }
+
+    private void jumpToActivity(Class activityClass) {
+//        startActivity(new Intent(this, activityClass));
+        intent.setClass(BaseSMRecycleViewActivity.this, activityClass);
         startActivity(intent);
         BaseSMRecycleViewActivity.this.finish();
     }
@@ -436,7 +448,8 @@ public class BaseSMRecycleViewActivity extends AppCompatActivity implements Swip
     @Override
     public void onBackPressed() {
         // super.onBackPressed();//注释掉这行,back键不退出activity
-        returnActivity();
+//        returnActivity();
+        jumpToActivity(Main2Activity.class);
     }
 
     @Override

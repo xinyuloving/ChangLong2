@@ -121,10 +121,26 @@
     </string-array>
 
     <string-array name="data_search">
-        <item>全部</item>
-        <item>按ID</item>
-        <item>检测时间</item>
-        <item>检测项目</item>
+        <item>查询条件</item>
+        <item>执法检测</item>
+        <item>应急监测</item>
+        <item>自行监测</item>
+        <item>条目</item>
+        <item>名称</item>
+        <item>波长</item>
+        <item>密度</item>
+        <item>透过率</item>
+        <item>吸光度</item>
+        <item>操作员ID</item>
+        <item>曲线方程</item>
+        <item>测量结果</item>
+        <item>温度</item>
+        <item>备注</item>
+        <item>测点名称</item>
+        <item>单位名称</item>
+        <item>取样时间</item>
+        <item>采样员</item>
+        <item>检测员</item>
     </string-array>
     <string-array name="list_quxian">
         <item>高浓度COD-比色管	(20-10000)mg/L\t\n排放标准\nA：20mg/L\t\nB：30mg/L</item>

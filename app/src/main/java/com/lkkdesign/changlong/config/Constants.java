@@ -120,10 +120,78 @@ public final class Constants {
                 break;
             case "06":
                 strCardState = "电机故障或开门卡顿";
+                break;
             default:
                 break;
         }
         return strCardState;
+    }
+
+   public static String convertSearch(String strItem) {
+        String strSearch = null;
+        switch (strItem) {
+            case "执法检测":
+                strSearch = "style";
+                break;
+            case "应急监测":
+                strSearch = "style";
+                break;
+            case "自行监测":
+                strSearch = "style";
+                break;
+            case "条目":
+                strSearch = "item";
+                break;
+            case "名称":
+                strSearch = "name";
+                break;
+            case "波长":
+                strSearch = "wavelength";
+                break;
+            case "密度":
+                strSearch = "density";
+                break;
+            case "透过率":
+                strSearch = "tranatre";
+                break;
+            case "吸光度":
+                strSearch = "absorbance";
+                break;
+            case "操作员ID":
+                strSearch = "userId";
+                break;
+            case "曲线方程":
+                strSearch = "type";
+                break;
+            case "测量结果":
+                strSearch = "result";
+                break;
+            case "温度":
+                strSearch = "temperature";
+                break;
+            case "测点名称":
+                strSearch = "measure_name";
+                break;
+            case "单位名称":
+                strSearch = "entity_name";
+                break;
+            case "取样时间":
+                strSearch = "sampling_time";
+                break;
+            case "采样员":
+                strSearch = "sampler";
+                break;
+            case "检测员":
+                strSearch = "inspector";
+                break;
+            case "备注":
+                strSearch = "mark";
+                break;
+            default:
+                strSearch = "noColumn";
+                break;
+        }
+        return strSearch;
     }
 
     public static String[] chars = new String[]{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r",

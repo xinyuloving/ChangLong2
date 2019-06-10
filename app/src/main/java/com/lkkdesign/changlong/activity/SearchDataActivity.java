@@ -19,9 +19,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -46,20 +51,28 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SearchDataActivity extends AppCompatActivity implements SwipeItemClickListener {
+
+    @BindView(R.id.btn_search)
+    Button btnSrarch;
+    @BindView(R.id.et_search)
+    EditText etSearch;
+    @BindView(R.id.sp_search)
+    Spinner spSearch;
     @BindView(R.id.recycler_view)
     SwipeMenuRecyclerView mRecyclerView;
 
     private Intent intent = new Intent();
     private String strSearchContent = "";
     private String strSearchCondition = "";
-    protected List<String> mDataList;
+    protected List<String> mDataList = new ArrayList<>();
     private Tb_measure tb_measure;
     MeasureDao measureDao = new MeasureDao(this);
-    private final String TAG = "BSMRVActivity";
+    private final String TAG = "SearchDataActivity";
     protected RecyclerView.LayoutManager mLayoutManager;
     protected RecyclerView.ItemDecoration mItemDecoration;
     protected BaseAdapter mAdapter;
     private String strContent = "";
+    private String strSearchColumn = "";
 
     private SearchView mSearchView;
     private SearchView.SearchAutoComplete mSearchAutoComplete;
@@ -73,33 +86,30 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
     }
 
     public void initView() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+
+        spSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                if (mSearchAutoComplete.isShown()) {
-                    try {
-                        mSearchAutoComplete.setText("");
-                        Method method = mSearchView.getClass().getDeclaredMethod("onCloseClicked");
-                        method.setAccessible(true);
-                        method.invoke(mSearchView);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    finish();
-                }
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                String str = parent.getItemAtPosition(position).toString();
+                strSearchColumn = Constants.convertSearch(str);
+                CustomToast.showToast(SearchDataActivity.this, "查询列:" + strSearchColumn);
+                Log.i(TAG,"strSearchColumn="+strSearchColumn);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
             }
         });
 
-        Intent intent = getIntent();
-        strSearchContent = intent.getStringExtra("searchContent");
-        strSearchCondition = intent.getStringExtra("searchConditions");
+//        Intent intent = getIntent();
+//        strSearchContent = intent.getStringExtra("searchContent");
+//        strSearchCondition = intent.getStringExtra("searchConditions");
 
         mLayoutManager = createLayoutManager();
         mItemDecoration = createItemDecoration();
-        mDataList = createDataList(strSearchContent, strSearchCondition);
+//        mDataList = createDataList(strSearchContent, strSearchCondition);
         mAdapter = createAdapter();
 
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -109,92 +119,10 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
         mRecyclerView.setLongPressDragEnabled(false); // 长按拖拽，默认关闭。
         mRecyclerView.setItemViewSwipeEnabled(false); // 滑动删除，默认关闭。
 
-
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged(mDataList);
 
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_view, menu);
-        MenuItem searchItem = menu.findItem(R.id.menu_search);
-
-        //通过MenuItem得到SearchView
-        mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        mSearchAutoComplete = (SearchView.SearchAutoComplete) mSearchView.findViewById(R.id.search_src_text);
-        mSearchView.setQueryHint("搜索本地数据");
-
-        //设置输入框提示文字样式
-        mSearchAutoComplete.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
-        mSearchAutoComplete.setTextColor(getResources().getColor(android.R.color.background_light));
-        mSearchAutoComplete.setTextSize(14);
-        //设置触发查询的最少字符数（默认2个字符才会触发查询）
-        mSearchAutoComplete.setThreshold(1);
-
-        //设置搜索框有字时显示叉叉，无字时隐藏叉叉
-        mSearchView.onActionViewExpanded();
-        mSearchView.setIconified(true);
-
-        //修改搜索框控件间的间隔
-        LinearLayout search_edit_frame = (LinearLayout) mSearchView.findViewById(R.id.search_edit_frame);
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) search_edit_frame.getLayoutParams();
-        params.leftMargin = 0;
-        params.rightMargin = 0;
-        search_edit_frame.setLayoutParams(params);
-
-        //监听SearchView的内容
-        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                CustomToast.showToast(SearchDataActivity.this, s);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-
-                //Cursor cursor = TextUtils.isEmpty(s) ? null : queryData(s);
-
-//                if (mSearchView.getSuggestionsAdapter() == null) {
-//                    mSearchView.setSuggestionsAdapter(new SimpleCursorAdapter(SearchViewActivity2.this, R.layout.item_layout, cursor, new String[]{"name"}, new int[]{R.id.text1}));
-//                } else {
-//                    mSearchView.getSuggestionsAdapter().changeCursor(cursor);
-//                }
-                //setAdapter(cursor);
-
-                return false;
-            }
-        });
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    // 让菜单同时显示图标和文字
-    @Override
-    public boolean onMenuOpened(int featureId, Menu menu) {
-        if (menu != null) {
-            if (menu.getClass().getSimpleName().equalsIgnoreCase("MenuBuilder")) {
-                try {
-                    Method method = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
-                    method.setAccessible(true);
-                    method.invoke(menu, true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return super.onMenuOpened(featureId, menu);
-    }
-
-//    private void setAdapter(Cursor cursor) {
-//        if (mLv.getAdapter() == null) {
-//            SimpleCursorAdapter adapter = new SimpleCursorAdapter(SearchDataActivity.this, R.layout.item_layout, cursor, new String[]{"name"}, new int[]{R.id.text1});
-//            mLv.setAdapter(adapter);
-//        } else {
-//            ((SimpleCursorAdapter) mLv.getAdapter()).changeCursor(cursor);
-//        }
-//    }
 
     protected BaseAdapter createAdapter() {
         return new MainAdapter(this);
@@ -211,7 +139,7 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
     protected List<String> createDataList(String strSearchContent, String strSearchCondition) {
         //查询数据库
 //        List<Tb_data> listinfos = dataDAO.getScrollData(0, dataDAO.getCount());
-        Log.i("SearchDataActivity", "查询条件：" + strSearchContent + "" + strSearchCondition);
+        Log.i("SearchDataActivity", "查询条件：" + strSearchContent + "\t\t" + strSearchCondition);
         List<Tb_measure> listinfos = measureDao.findBySearchCondition(strSearchContent, strSearchCondition);
         List<String> dataList = new ArrayList<>();
         for (Tb_measure tb_measure : listinfos) {
@@ -309,10 +237,29 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
 
     }
 
-//    @OnClick(R.id.tv_return)
-//    public void onViewClicked() {
+    @OnClick(R.id.btn_search)
+    public void onViewClicked() {
+        if(strSearchColumn.equals("noColumn")){
+            CustomToast.showToast(this,"查询条件不能为空");
+        }else{
+            mDataList.clear();
+            mAdapter.notifyDataSetChanged();
+            //mDataList = createDataList(strClassic);
+            mDataList.addAll(createDataList(strSearchColumn, etSearch.getText().toString()));
+            Log.i(TAG, "mDataList_zd：" + mDataList.toString());
+            Log.i(TAG, "mDataList_length：" + mDataList.toString().length());
+            if("[]".equals(mDataList.toString())){
+                CustomToast.showToast(this,"没有查询到相应的数据");
+                return;
+            }
+            mAdapter.notifyDataSetChanged(mDataList);
+//
+//            mDataList = createDataList(strSearchContent, etSearch.getText().toString());
+//            mAdapter.notifyDataSetChanged(mDataList);
+        }
+        //mDataList = createDataList(strSearchContent, etSearch.getText().toString());
 //        intent.setClass(SearchDataActivity.this, BaseSMRecycleViewActivity.class);
 //        startActivity(intent);
 //        SearchDataActivity.this.finish();
-//    }
+    }
 }

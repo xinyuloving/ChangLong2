@@ -3,6 +3,7 @@ package com.lkkdesign.changlong.data.dao;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.lkkdesign.changlong.data.model.Tb_measure;
 
@@ -145,9 +146,14 @@ public class MeasureDao {
     }
 
     public List<Tb_measure> findBySearchCondition(String searchContent,String searchCondition) {
+        Log.i("MeasureDao","searchContent="+searchContent);
+        Log.i("MeasureDao","searchCondition="+searchCondition);
         db = helper.getWritableDatabase();// 初始化SQLiteDatabase对象
         List<Tb_measure> tb_measure = new ArrayList<Tb_measure>();// 创建集合对象
-        Cursor cursor = db.rawQuery("select * from tb_measure ",null);// 根据编号查找曲线信息，并存储到Cursor类中
+        String strSql = "select * from tb_measure where "+ searchContent +" like '%"+searchCondition+"%'";
+        Log.i("MeasureDao","strSql="+strSql);
+
+        Cursor cursor = db.rawQuery(strSql,null);// 根据条件查找曲线信息，并存储到Cursor类中
         // 遍历所有的曲线信息
         while (cursor.moveToNext()) {
             // 将遍历到的曲线信息添加到集合中
