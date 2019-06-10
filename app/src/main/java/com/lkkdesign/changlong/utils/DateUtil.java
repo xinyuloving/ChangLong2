@@ -121,7 +121,7 @@ public class DateUtil {
                 view.setMinDate(Calendar.getInstance().getTime().getTime()-10000);
                 monthOfYear += 1;
                 // 此处得到选择的时间，可以进行你想要的操作
-                tv.setLeftString( year + "-" + monthOfYear + "-" + dayOfMonth);
+                tv.setLeftString( year + "-" + monthOfYear + "-" + dayOfMonth+" ");
             }
         }
                 // 设置初始日期

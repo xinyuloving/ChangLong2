@@ -242,11 +242,12 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
 
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        if(Long.valueOf(input.toString())>(calculate(strStartTime, strEndTime)/60000)){
+                        if(input.length()==0||Long.valueOf(input.toString())>(calculate(strStartTime, strEndTime)/60000)){
                             tvJgTime.setLeftString(strJiange + "分钟");
                             Log.i("TimingMeasureSec","error");
                         }else{
                             tvJgTime.setLeftString(input + "分钟");
+                            /*strJiange=input.toString();*/
                         }
 
                     }
