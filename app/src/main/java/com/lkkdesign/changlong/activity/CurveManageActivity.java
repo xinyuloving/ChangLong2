@@ -56,6 +56,7 @@ public class CurveManageActivity extends AppCompatActivity {
 
     private Intent intent = new Intent();
     private String strType="";
+    private String strCurve="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,7 @@ public class CurveManageActivity extends AppCompatActivity {
     private void initView(){
         Intent intent = getIntent();
         strType = intent.getStringExtra("type");
+        strCurve=intent.getStringExtra("curve");
         Constants.strFormActivity = strType;
         String[] strName = getResources().getStringArray(R.array.resolution_ratio);
         final List<String> dataset = new LinkedList<>(Arrays.asList(strName));
@@ -80,6 +82,8 @@ public class CurveManageActivity extends AppCompatActivity {
 //        } else {
 //            niceSpinner.setSelectedIndex(2);
 //        }
+        etName.setText(strCurve);
+        etXishi.setText("1*1=1mg/L");
 
         nsFbl.addOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

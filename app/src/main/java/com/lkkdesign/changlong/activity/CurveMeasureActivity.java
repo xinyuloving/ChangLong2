@@ -67,6 +67,8 @@ public class CurveMeasureActivity extends AppCompatActivity {
     private String strType="";
     private Intent intent = new Intent();
 
+    private Boolean booformula=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +90,7 @@ public class CurveMeasureActivity extends AppCompatActivity {
         tvUser.setText(Constants.strLoginName);
         tvTimer.setText(DateUtil.getDate());
         tvResult2.setText(strInfo);
+
 //        tvCod.setText(strTitle);
 //        tvTitle.setText(strTitle);
 //        tvShow.setText(R.string.tv_show);
@@ -132,8 +135,10 @@ public class CurveMeasureActivity extends AppCompatActivity {
                         //view2.setVisibility(View.VISIBLE);
                         if(et.getText().toString().isEmpty()){
                             CustomToast.showToast(getApplicationContext(), "不可输入空值！");
+                            booformula=true;
                         }else{
                             tvResult2.setText("输入的公式：\n" + et.getText().toString());
+                            booformula=false;
                         }
 
                         //Toast.makeText(getApplicationContext(), et.getText().toString(), Toast.LENGTH_LONG).show();
@@ -163,12 +168,18 @@ public class CurveMeasureActivity extends AppCompatActivity {
                         intent.putExtra("wavelength", strTitle);
                         startActivity(intent);
                     } else if (2 == intSelectFun) {
-                        intent.setClass(this,ManualMeasureTipActivity.class);
-                        intent.putExtra("type",Constants.strFormActivity);
-                        intent.putExtra("from", "InputDataActivity");
-                        intent.putExtra("strInfo", strInfo);
-                        intent.putExtra("wavelength", strInfo);
-                        startActivity(intent);
+                        if(booformula){
+                            CustomToast.showToast(getApplicationContext(), "当前公式为空！");
+
+                        }else{
+                            intent.setClass(this,ManualMeasureTipActivity.class);
+                            intent.putExtra("type",Constants.strFormActivity);
+                            intent.putExtra("from", "InputDataActivity");
+                            intent.putExtra("strInfo", strInfo);
+                            intent.putExtra("wavelength", strInfo);
+                            startActivity(intent);
+                        }
+
                     } else {
                         intent.setClass(this, InputDataActivity.class);
                         intent.putExtra("type",Constants.strFormActivity);
