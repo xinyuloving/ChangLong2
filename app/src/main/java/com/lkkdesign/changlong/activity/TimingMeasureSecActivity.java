@@ -76,7 +76,7 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
     private String strSetStartTime = "";
     private String strSetEndTime = "";
     private String strSetJiange = "";
-    private String strDateTime=DateUtil.getNowDateTime();
+    private String strDateTime = DateUtil.getNowDateTime();
     private String strTime = "";
     private String strInfo = "";
     private String strType = "";
@@ -201,7 +201,7 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
             case R.id.tv_startTime:
                 DateUtil.showTimePickerDialog(this, tvStartTime, calendar);
                 DateUtil.showDatePickerDialog(this, 0, tvStartTime, calendar);
-                strStartTime=tvStartTime.getLeftString()+" "+tvStartTime.getCenterString();
+                strStartTime = tvStartTime.getLeftString() + " " + tvStartTime.getCenterString();
 
                 break;
             case R.id.tv_jgTime:
@@ -210,7 +210,7 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
             case R.id.tv_endTime:
                 DateUtil.showTimePickerDialog(this, tvEndTime, calendar);
                 DateUtil.showDatePickerDialog(this, 0, tvEndTime, calendar);
-                strEndTime=tvEndTime.getLeftString()+" "+tvEndTime.getCenterString();
+                strEndTime = tvEndTime.getLeftString() + " " + tvEndTime.getCenterString();
                 break;
 
         }
@@ -242,14 +242,10 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
 
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        if(input.length()==0){
-                            tvJgTime.setLeftString(strJiange + "分钟");
-                        }else if(Long.valueOf(input.toString())>(calculate(strStartTime, strEndTime)/60000)){
-                            tvJgTime.setLeftString(strJiange + "分钟");
-                            Log.i("TimingMeasureSec","error");
-                        }else{
+                        if (input.length() > 0 && Long.valueOf(input.toString()) <= (calculate(strStartTime, strEndTime) / 60000)) {
                             tvJgTime.setLeftString(input + "分钟");
-                            /*strJiange=input.toString();*/
+                        } else {
+                            tvJgTime.setLeftString(strJiange + "分钟");
                         }
 
                     }
