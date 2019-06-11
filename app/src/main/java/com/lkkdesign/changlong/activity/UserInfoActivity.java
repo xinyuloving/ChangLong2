@@ -113,7 +113,7 @@ public class UserInfoActivity extends AppCompatActivity implements SwipeItemClic
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_return:
-                intent.setClass(UserInfoActivity.this,Main2Activity.class);
+                intent.setClass(UserInfoActivity.this,AccountActivity.class);
                 startActivity(intent);
                 UserInfoActivity.this.finish();
                 break;
@@ -296,7 +296,7 @@ public class UserInfoActivity extends AppCompatActivity implements SwipeItemClic
 
     @Override
     public void onBackPressed() {
-        intent.setClass(this, Main2Activity.class);
+        intent.setClass(this, SettingsActivity.class);
         startActivity(intent);
         this.finish();
     }
