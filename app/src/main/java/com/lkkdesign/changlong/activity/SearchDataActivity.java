@@ -1,24 +1,16 @@
 package com.lkkdesign.changlong.activity;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -42,7 +33,6 @@ import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,15 +42,27 @@ import butterknife.OnClick;
 
 public class SearchDataActivity extends AppCompatActivity implements SwipeItemClickListener {
 
-    @BindView(R.id.btn_search)
-    Button btnSrarch;
+
+    @BindView(R.id.iv_return)
+    ImageView ivReturn;
+    @BindView(R.id.tv_return)
+    TextView tvReturn;
+    @BindView(R.id.tv_user)
+    TextView tvUser;
+    @BindView(R.id.ll_title)
+    LinearLayout llTitle;
     @BindView(R.id.et_search)
     EditText etSearch;
     @BindView(R.id.sp_search)
     Spinner spSearch;
+    @BindView(R.id.ll_search)
+    LinearLayout llSearch;
+    @BindView(R.id.btn_search)
+    Button btnSearch;
+    @BindView(R.id.cardview1)
+    CardView cardview1;
     @BindView(R.id.recycler_view)
     SwipeMenuRecyclerView mRecyclerView;
-
     private Intent intent = new Intent();
     private String strSearchContent = "";
     private String strSearchCondition = "";
@@ -86,7 +88,7 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
     }
 
     public void initView() {
-
+        tvUser.setText(Constants.strLoginName);
         spSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
@@ -94,7 +96,7 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
                 String str = parent.getItemAtPosition(position).toString();
                 strSearchColumn = Constants.convertSearch(str);
                 CustomToast.showToast(SearchDataActivity.this, "查询列:" + strSearchColumn);
-                Log.i(TAG,"strSearchColumn="+strSearchColumn);
+                Log.i(TAG, "strSearchColumn=" + strSearchColumn);
             }
 
             @Override
@@ -153,7 +155,7 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
 
     public void onBackPressed() {
         // super.onBackPressed();//注释掉这行,back键不退出activity
-        intent.setClass(SearchDataActivity.this, Main2Activity.class);
+        intent.setClass(SearchDataActivity.this, BaseSMRecycleViewActivity.class);
         startActivity(intent);
         SearchDataActivity.this.finish();
     }
@@ -237,19 +239,46 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
 
     }
 
-    @OnClick(R.id.btn_search)
+    @OnClick({R.id.tv_return, R.id.btn_search})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_return:
+                intent.setClass(SearchDataActivity.this, BaseSMRecycleViewActivity.class);
+                startActivity(intent);
+                SearchDataActivity.this.finish();
+                break;
+            case R.id.btn_search:
+                if (strSearchColumn.equals("noColumn")) {
+                    CustomToast.showToast(this, "查询条件不能为空");
+                } else {
+                    mDataList.clear();
+                    mAdapter.notifyDataSetChanged();
+                    mDataList.addAll(createDataList(strSearchColumn, etSearch.getText().toString()));
+                    Log.i(TAG, "mDataList_zd：" + mDataList.toString());
+                    Log.i(TAG, "mDataList_length：" + mDataList.toString().length());
+                    if ("[]".equals(mDataList.toString())) {
+                        CustomToast.showToast(this, "没有查询到相应的数据");
+                        return;
+                    }
+                    mAdapter.notifyDataSetChanged(mDataList);
+                }
+                break;
+        }
+    }
+
+   /* @OnClick(R.id.btn_search)
     public void onViewClicked() {
-        if(strSearchColumn.equals("noColumn")){
-            CustomToast.showToast(this,"查询条件不能为空");
-        }else{
+        if (strSearchColumn.equals("noColumn")) {
+            CustomToast.showToast(this, "查询条件不能为空");
+        } else {
             mDataList.clear();
             mAdapter.notifyDataSetChanged();
             //mDataList = createDataList(strClassic);
             mDataList.addAll(createDataList(strSearchColumn, etSearch.getText().toString()));
             Log.i(TAG, "mDataList_zd：" + mDataList.toString());
             Log.i(TAG, "mDataList_length：" + mDataList.toString().length());
-            if("[]".equals(mDataList.toString())){
-                CustomToast.showToast(this,"没有查询到相应的数据");
+            if ("[]".equals(mDataList.toString())) {
+                CustomToast.showToast(this, "没有查询到相应的数据");
                 return;
             }
             mAdapter.notifyDataSetChanged(mDataList);
@@ -261,5 +290,7 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
 //        intent.setClass(SearchDataActivity.this, BaseSMRecycleViewActivity.class);
 //        startActivity(intent);
 //        SearchDataActivity.this.finish();
-    }
+    }*/
+
+
 }
