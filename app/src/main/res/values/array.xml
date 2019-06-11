@@ -21,11 +21,16 @@
     </string-array>
 
     <string-array name="countdown_time_value">
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
         <item>60</item>
+        <item>70</item>
+        <item>80</item>
         <item>90</item>
-        <item>120</item>
-        <item>150</item>
-        <item>180</item>
+        <item>100</item>
     </string-array>
     <string-array name="ad_time_value">
         <item>60</item>
@@ -237,5 +242,12 @@
         <item>硒-比色皿	(0.25-1)mg/L\t\n排放标准\nA：0.02mg/L\t\nB：0.02mg/L</item>
         <item>浊度	(0-2500NTU)mg/L\t\n排放标准\nA：400mg/L\t\nB：400mg/L</item>
         <item>色度	(0-5000Hazen)mg/L\t\n排放标准\nA：50mg/L\t\nB：50mg/L</item>
+    </string-array>
+
+    <string-array name="list_range_type">
+        <item>污水综合排放标准</item>
+        <item>污水城镇排放标准</item>
+        <item>污水地表排放标准</item>
+        <item>污水行业排放标准</item>
     </string-array>
 </resources>

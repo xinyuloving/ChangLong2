@@ -1,6 +1,5 @@
 package com.lkkdesign.changlong.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -96,6 +95,8 @@ public class AutoMeasureActivity extends AppCompatActivity {
     TextView timeCount;
     @BindView(R.id.fab_print)
     FloatingActionButton fabPrint;
+    @BindView(R.id.standard_type)
+    Spinner standardType;
     private String strInfo = "";
     private String strShow = "COD（0-100 mg/L）";
     private MixSpeakUtil mixSpeakUtil;
@@ -129,6 +130,8 @@ public class AutoMeasureActivity extends AppCompatActivity {
     private String strStyle = "";//测量类型？
     private String strSampler = "";//采样人
     private String strInspector = "";//检测人
+
+    private String strStandardType="";
     Calendar calendar = Calendar.getInstance();
 
 
@@ -171,10 +174,24 @@ public class AutoMeasureActivity extends AppCompatActivity {
 
         timer.start();
 
+        strStandardType=(String) standardType.getSelectedItem();
+        standardType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                strStandardType=(String) standardType.getSelectedItem();
+                CustomToast.showToast(AutoMeasureActivity.this, strStandardType);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 
 
-    @OnClick({R.id.tv_cod,R.id.cardview3,R.id.tc_time,R.id.iv_return, R.id.tv_return, R.id.btn_measure, R.id.btn_save, R.id.fab_print})
+    @OnClick({R.id.tv_cod, R.id.cardview3, R.id.tc_time, R.id.iv_return, R.id.tv_return, R.id.btn_measure, R.id.btn_save, R.id.fab_print})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_return:

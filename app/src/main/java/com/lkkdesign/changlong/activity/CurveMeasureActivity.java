@@ -7,7 +7,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -124,26 +126,39 @@ public class CurveMeasureActivity extends AppCompatActivity {
 
     //当接收到Click事件之后触发
     public void alert_edit() {
-        final EditText et = new EditText(this);
-        new AlertDialog.Builder(this).setTitle("请输入公式：C=kA+b\n或 A=Kc+b")
-                .setIcon(android.R.drawable.sym_def_app_icon)
-                .setView(et)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //按下确定键后的事件
-                        //view2.setVisibility(View.VISIBLE);
-                        if(et.getText().toString().isEmpty()){
-                            CustomToast.showToast(getApplicationContext(), "不可输入空值！");
-                            booformula=true;
-                        }else{
-                            tvResult2.setText("输入的公式：\n" + et.getText().toString());
-                            booformula=false;
-                        }
-
-                        //Toast.makeText(getApplicationContext(), et.getText().toString(), Toast.LENGTH_LONG).show();
-                    }
-                }).setNegativeButton("取消", null).show();
+        AlertDialog.Builder setDeBugDialog = new AlertDialog.Builder(this);
+        //获取界面
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.inputdata_dialog_layout, null);
+        //将界面填充到AlertDiaLog容器
+        setDeBugDialog.setView(dialogView);
+        setDeBugDialog.create();
+        final EditText aValue = dialogView.findViewById(R.id.et_aValue);
+        final EditText cValue = dialogView.findViewById(R.id.et_cValue);
+        final TextView para1=dialogView.findViewById(R.id.dialog_pama1);
+        final TextView para2=dialogView.findViewById(R.id.dialog_pama2);
+        final TextView title=dialogView.findViewById(R.id.dialog_title);
+        final AlertDialog customAlert = setDeBugDialog.show();
+        title.setText("请输入公式:C=kA+b或A=Kc+b\n");
+        para1.setText("请输入K值：");
+        para2.setText("请输入b值：");
+        dialogView.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (cValue.getText().toString().isEmpty() || aValue.getText().toString().isEmpty()) {
+                    CustomToast.showToast(getApplicationContext(), "k、b值不可为空！");
+                }
+                if (cValue.getText().toString().length() > 0 && aValue.getText().toString().length() > 0) {
+                    tvResult2.setText("输入公式为："+"C="+cValue.getText().toString()+"A+"+aValue.getText().toString());
+                    customAlert.dismiss();
+                }
+            }
+        });
+        dialogView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customAlert.dismiss();
+            }
+        });
     }
 
 
