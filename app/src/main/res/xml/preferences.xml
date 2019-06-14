@@ -13,11 +13,11 @@
             android:key="machineId"
             android:numeric="integer"
             android:title="水质检测仪编号" />
-        <CheckBoxPreference
+        <!--CheckBoxPreference
             android:key="checkbox_boot"
             android:summaryOff="不启动"
             android:summaryOn="启动"
-            android:title="开机启动水质检测APP"></CheckBoxPreference>
+            android:title="开机启动水质检测APP"></CheckBoxPreference -->
         <SwitchPreference
             android:key="sp_playAuto"
             android:defaultValue="false"
@@ -26,10 +26,10 @@
             android:summaryOff="关闭"
             android:summaryOn="打开"
             android:title="语音播报" />
-        <EditTextPreference
+        <!--EditTextPreference
             android:key="accountTime"
             android:numeric="integer"
-            android:title="倒计时设置(单位：秒)" />
+            android:title="倒计时设置(单位：秒)" /-->
     </PreferenceCategory>
 
     <PreferenceCategory android:title="采集设置">
@@ -51,10 +51,15 @@
             android:key="list_CountDown"
             android:title="曝光次数"></ListPreference>
     </PreferenceCategory>
+    <PreferenceCategory android:title="空白校准">
+        <EditTextPreference
+            android:key="ep_kbjz"
+            android:numeric="integer"
+            android:title="自动测量空白校准" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="还原">
         <Preference
-            android:icon="@mipmap/icon_app"
-            android:key="exhibitgoods"
+            android:key="reduction"
             android:title="还原测量设置"></Preference>
     </PreferenceCategory>
     <PreferenceCategory android:title="标签打印机设置">

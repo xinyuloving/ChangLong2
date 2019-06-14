@@ -3,10 +3,7 @@
     android:useLevel="false"
     >
     <solid android:color="@color/colorOrangePrimary"/>
-    <corners android:topLeftRadius="30dip"
-        android:topRightRadius="30dip"
-        android:bottomRightRadius="30dip"
-        android:bottomLeftRadius="30dip" />
+    <corners android:radius="@dimen/dp_32" />
 
     <padding android:left="1dip"
         android:right="1dip"

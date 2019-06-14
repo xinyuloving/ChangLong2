@@ -138,12 +138,12 @@ public class Main2Activity extends AppCompatActivity implements OnItemClickListe
                 switch (position) {
                     case 0://自动测量
                         intent.setClass(Main2Activity.this, AutoMeasureActivity.class);
-                        intent.putExtra("type", "Auto");
+                        intent.putExtra("from", "Auto");
                         startActivity(intent);
                         break;
                     case 1://手动测量
                         intent.setClass(Main2Activity.this, ManualMeasureFristActivity.class);
-                        intent.putExtra("type", "manual");
+                        intent.putExtra("from", "manual");
                         startActivity(intent);
                         break;
                     case 2://定时测量
@@ -158,7 +158,7 @@ public class Main2Activity extends AppCompatActivity implements OnItemClickListe
                         break;
                     case 4: //曲线校准
                         intent.setClass(Main2Activity.this, CurveSelectActivity.class);
-                        intent.putExtra("type", "xiaozhun");
+                        intent.putExtra("from", "xiaozhun");
                         startActivity(intent);
                         break;
                     case 5: //查看数据
@@ -356,6 +356,7 @@ public class Main2Activity extends AppCompatActivity implements OnItemClickListe
 
     private void jumpToActivity(Class activityClass) {
         startActivity(new Intent(this, activityClass));
+        this.finish();
     }
 
     /**

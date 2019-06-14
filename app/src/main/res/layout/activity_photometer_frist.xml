@@ -71,7 +71,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="请选择曲波长"
+        android:text="请选择波长"
         android:textSize="@dimen/textsize_38"
         app:colorSpace="150dp"
         app:colorSpeed="4dp"

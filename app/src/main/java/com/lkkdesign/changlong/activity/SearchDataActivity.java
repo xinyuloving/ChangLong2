@@ -155,9 +155,10 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
 
     public void onBackPressed() {
         // super.onBackPressed();//注释掉这行,back键不退出activity
-        intent.setClass(SearchDataActivity.this, BaseSMRecycleViewActivity.class);
-        startActivity(intent);
-        SearchDataActivity.this.finish();
+//        intent.setClass(SearchDataActivity.this, BaseSMRecycleViewActivity.class);
+//        startActivity(intent);
+//        SearchDataActivity.this.finish();
+        jumpToActivity(BaseSMRecycleViewActivity.class);
     }
 
     @Override
@@ -243,9 +244,10 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_return:
-                intent.setClass(SearchDataActivity.this, BaseSMRecycleViewActivity.class);
-                startActivity(intent);
-                SearchDataActivity.this.finish();
+//                intent.setClass(SearchDataActivity.this, BaseSMRecycleViewActivity.class);
+//                startActivity(intent);
+//                SearchDataActivity.this.finish();
+                jumpToActivity(BaseSMRecycleViewActivity.class);
                 break;
             case R.id.btn_search:
                 if (strSearchColumn.equals("noColumn")) {
@@ -264,6 +266,11 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
                 }
                 break;
         }
+    }
+
+    private void jumpToActivity(Class activityClass) {
+        startActivity(new Intent(this, activityClass));
+        this.finish();
     }
 
    /* @OnClick(R.id.btn_search)
@@ -294,3 +301,4 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
 
 
 }
+

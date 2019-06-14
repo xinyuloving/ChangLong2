@@ -32,8 +32,8 @@ public class AboutActivity extends AppCompatActivity {
                 .addGroup("与我们联系")
                 .addEmail("huangyaoyu@lkkdesign.com")//邮箱
                 .addWebsite("http://www.changlongkeji.cn")//网站
-                .addPlayStore("http://www.liusuanyatie.cn")//应用商店
-                .addGitHub("http://www.cl39.com/")//github
+//                .addPlayStore("http://www.liusuanyatie.cn")//应用商店
+//                .addGitHub("http://www.cl39.com/")//github
                 .create();
 
         setContentView(aboutPage);

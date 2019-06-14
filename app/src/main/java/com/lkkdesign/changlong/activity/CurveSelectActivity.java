@@ -46,15 +46,15 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
     protected BaseAdapter mAdapter;
     protected List<String> mDataList;//自动测量
     private ImageView iv_return;
-    private TextView tvTime,tvReturn,tvUser;
+    private TextView tvReturn, tvUser;
     private Button btnCalculate;
     private Intent intent = new Intent();
 
-    private String strType = "";
+    private String strFrom = "";
     private String strStratTime = "";
     private String strEndTime = "";
     private String strJiange = "";
-    private String strInfo="";
+    private String strInfo = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,23 +68,23 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
     private void initView() {
 
         Intent getIntent = getIntent();
-        strType = getIntent.getStringExtra("type");
-        Constants.strFormActivity = strType;
-        Log.i("CurveSelectActivity","strType = "+strType);
+        strFrom = getIntent.getStringExtra("from");
+        Constants.strFormActivity = strFrom;
+        Log.i("CurveSelectActivity", "strType = " + strFrom);
         strStratTime = getIntent.getStringExtra("startTime");
         strEndTime = getIntent.getStringExtra("endTime");
         strJiange = getIntent.getStringExtra("jiange");
-        Log.i("CurveSelectActivity","strJiange = "+strJiange);
+        Log.i("CurveSelectActivity", "strJiange = " + strJiange);
 
         mRecyclerView = findViewById(R.id.rv_curve);
         iv_return = findViewById(R.id.iv_return);
         tvReturn = findViewById(R.id.tv_return);
-        tvTime = findViewById(R.id.tv_timer);
-        btnCalculate=findViewById(R.id.btn_calculate);
+//        tvTime = findViewById(R.id.tv_timer);
+        btnCalculate = findViewById(R.id.btn_calculate);
 
-        tvTime.setText(DateUtil.getDate());
+//        tvTime.setText(DateUtil.getDate());
 
-        tvUser=findViewById(R.id.tv_user);
+        tvUser = findViewById(R.id.tv_user);
         tvUser.setText(Constants.strLoginName);
 
         mLayoutManager = createLayoutManager();
@@ -113,12 +113,12 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
     /**
      * RecyclerView的Item的Menu长按点击监听。
      */
-    private SwipeItemLongClickListener swipeItemLongClickListener=new SwipeItemLongClickListener() {
+    private SwipeItemLongClickListener swipeItemLongClickListener = new SwipeItemLongClickListener() {
         @Override
         public void onItemLongClick(View view, int i) {
             intent.setClass(CurveSelectActivity.this, CurveManageActivity.class);
             intent.putExtra("curve", mDataList.get(i)); //将计算的值回传回去
-            intent.putExtra("type",Constants.strFormActivity);
+            intent.putExtra("type", Constants.strFormActivity);
             startActivity(intent);
             CurveSelectActivity.this.finish();
         }
@@ -232,33 +232,34 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
         //嫑忘记刷新适配器
         mAdapter.notifyDataSetChanged();
         CustomToast.showToast(this, mDataList.get(position));
-        strInfo=mDataList.get(position);
+        strInfo = mDataList.get(position);
+        jumpToFromActivity(Constants.strFormActivity);
     }
 
     protected List<String> createDataList() {
         List<String> dataList = new ArrayList<>();
         String[] listItem = getResources().getStringArray(R.array.list_quxian);//曲线列表
         for (int i = 0; i < listItem.length; i++) {
-                dataList.add(listItem[i]);
+            dataList.add(listItem[i]);
         }
 //        dataList.add("== 你已经看到我的底线啦 ==");
         return dataList;
     }
 
-    public void BtnCalculate(View view){
-        if(strInfo.equals("")){
+    public void BtnCalculate(View view) {
+        if (strInfo.equals("")) {
             CustomToast.showToast(this, "请选择对应的曲线！");
-        }else {
+        } else {
 
-            if ("xiaozhun".equals(Constants.strFormActivity)){
+            if ("xiaozhun".equals(Constants.strFormActivity)) {
                 intent.setClass(this, CurveMeasureActivity.class);
-                intent.putExtra("type", Constants.strFormActivity);
+                intent.putExtra("from", Constants.strFormActivity);
                 intent.putExtra("strInfo", strInfo);
                 startActivity(intent);
                 this.finish();
-            }else if("time".equals(Constants.strFormActivity)){
+            } else if ("time".equals(Constants.strFormActivity)) {
                 intent.setClass(this, TimingMeasureTipActivity.class);
-                intent.putExtra("type", Constants.strFormActivity);
+                intent.putExtra("from", Constants.strFormActivity);
                 intent.putExtra("strStartTime", strStratTime);
                 intent.putExtra("strEndTime", strEndTime);
                 intent.putExtra("jiange", strJiange);
@@ -271,7 +272,7 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
 
     }
 
-    public void onBackTvReturn(View view){
+    public void onBackTvReturn(View view) {
         onBackPressed();
     }
 
@@ -280,33 +281,72 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
 
         if ("curve".equals(Constants.strFormActivity)) {
             intent.setClass(CurveSelectActivity.this, Main2Activity.class);
-            intent.putExtra("type",Constants.strFormActivity);
+            intent.putExtra("type", Constants.strFormActivity);
             startActivity(intent);
             this.finish();
         } else if ("time".equals(Constants.strFormActivity)) {//定时测量
             intent.setClass(CurveSelectActivity.this, TimingSetupActivity.class);
-            intent.putExtra("type",Constants.strFormActivity);
+            intent.putExtra("type", Constants.strFormActivity);
             startActivity(intent);
             this.finish();
         } else if ("xiaozhun".equals(Constants.strFormActivity)) {//返回主页面
             intent.setClass(CurveSelectActivity.this, Main2Activity.class);
-            intent.putExtra("type",Constants.strFormActivity);
+            intent.putExtra("type", Constants.strFormActivity);
             startActivity(intent);
             this.finish();
-        } else if("manual".equals(Constants.strFormActivity)){//手动测量
+        } else if ("manual".equals(Constants.strFormActivity)) {//手动测量
             intent.setClass(CurveSelectActivity.this, ManualMeasureFristActivity.class);
-            intent.putExtra("type",Constants.strFormActivity);
+            intent.putExtra("type", Constants.strFormActivity);
             startActivity(intent);
             this.finish();
-        }else{
+        } else {
             intent.setClass(CurveSelectActivity.this, Main2Activity.class);
-            intent.putExtra("type",Constants.strFormActivity);
+            intent.putExtra("type", Constants.strFormActivity);
             startActivity(intent);
             this.finish();
         }
     }
 
+    private void jumpToFromActivity(String strFromActivity) {
 
+        switch (strFromActivity) {
+            case "xiaozhun":
+                intent.setClass(this, CurveMeasureActivity.class);
+                intent.putExtra("from", Constants.strFormActivity);
+                intent.putExtra("strInfo", strInfo);
+                startActivity(intent);
+                this.finish();
+//                jumpToActivity(CurveMeasureActivity.class);
+                break;
+            case "time":
+                intent.setClass(this, TimingMeasureTipActivity.class);
+                intent.putExtra("from", Constants.strFormActivity);
+                intent.putExtra("strStartTime", strStratTime);
+                intent.putExtra("strEndTime", strEndTime);
+                intent.putExtra("jiange", strJiange);
+                intent.putExtra("strInfo", strInfo);
+                startActivity(intent);
+                this.finish();
+//                jumpToActivity(TimingMeasureTipActivity.class);
+                break;
+            case "AutoMeasureActivity":
+                intent.setClass(this, AutoMeasureActivity.class);
+                intent.putExtra("from", Constants.strFormActivity);
+                intent.putExtra("strInfo", strInfo);
+                startActivity(intent);
+                this.finish();
+//                jumpToActivity(AutoMeasureActivity.class);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void jumpToActivity(Class activityClass){
+        intent.setClass(this, activityClass);
+        startActivity(intent);
+        this.finish();
+    }
 
     @Override
     protected void onStop() {

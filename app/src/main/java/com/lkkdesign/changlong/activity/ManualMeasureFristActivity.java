@@ -50,6 +50,8 @@ public class ManualMeasureFristActivity extends AppCompatActivity implements Swi
     ImageView ivReturn;
     @BindView(R.id.tv_user)
     TextView tvUser;
+    @BindView(R.id.tc_time)
+    TextView tcTime;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.rtv_list)
@@ -66,6 +68,7 @@ public class ManualMeasureFristActivity extends AppCompatActivity implements Swi
     Button btnCalculate;
 
     private String strInfo = "";
+    private String strFromActivity = "";
     private Intent intent = new Intent();
     private String TAG = "MMFActivity";
 
@@ -78,12 +81,11 @@ public class ManualMeasureFristActivity extends AppCompatActivity implements Swi
     }
 
     private void initView() {
+
+        Intent getIntent = getIntent();
+        strFromActivity = getIntent.getStringExtra("from");
+
         tvUser.setText(Constants.strLoginName);
-//        strInfo = "透过率（T）：" + RandomUntil.getNum(20) + ".00%\n" +
-//                "吸光度（A）：1.0\n" +
-//                "波长（λ）：610 nm\n" +
-//                "温度：" + RandomUntil.getNum(25, 37) + " ℃\n";
-//        tvResult.setText(strInfo);
         tvTimer.setText(DateUtil.getDate());
 
         //曲线部分
@@ -218,8 +220,14 @@ public class ManualMeasureFristActivity extends AppCompatActivity implements Swi
         mAdapter.setThisPosition(position);
         //嫑忘记刷新适配器
         mAdapter.notifyDataSetChanged();
-        CustomToast.showToast(this, "选择的曲线\n" + mDataList.get(position));
+        //CustomToast.showToast(this, "选择的曲线\n" + mDataList.get(position));
         strInfo = mDataList.get(position);
+        //跳转页面
+        intent.setClass(this, ManualMeasureTipActivity.class);
+        intent.putExtra("wavelength", strInfo);
+        intent.putExtra("from","ManualMeasureFristActivity");
+        startActivity(intent);
+        this.finish();
     }
 
     protected List<String> createDataList() {
@@ -232,28 +240,19 @@ public class ManualMeasureFristActivity extends AppCompatActivity implements Swi
         return dataList;
     }
 
-    @OnClick({R.id.iv_return, R.id.tv_return,R.id.rtv_list, R.id.tv_timer, R.id.btn_calculate})
+    @OnClick({R.id.iv_return, R.id.tv_return,R.id.rtv_list, R.id.tv_timer, R.id.btn_calculate,R.id.tc_time})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_return:
             case R.id.iv_return:
-                intent.setClass(this, Main2Activity.class);
-                startActivity(intent);
-                this.finish();
+                jumpToActivity(Main2Activity.class);
                 break;
 //            case R.id.title:
 //                break;
             case R.id.rtv_list:
                 break;
-//            case R.id.tv_show:
-//                intent.setClass(this, CurveSelectActivity.class);
-//                intent.putExtra("type", "manual");
-//                startActivity(intent);
-//                this.finish();
-//                break;
-//            case R.id.tv_result:
-//                break;
-            case R.id.tv_timer:
+            case R.id.tc_time:
+                jumpToActivity(TimingSetupActivity.class);
                 break;
             case R.id.btn_calculate:
                 if (strInfo.equals("")) {
@@ -271,7 +270,11 @@ public class ManualMeasureFristActivity extends AppCompatActivity implements Swi
 
     @Override
     public void onBackPressed() {
-        intent.setClass(this, Main2Activity.class);
+        jumpToActivity(Main2Activity.class);
+    }
+
+    private void jumpToActivity(Class activityClass){
+        intent.setClass(this, activityClass);
         startActivity(intent);
         this.finish();
     }

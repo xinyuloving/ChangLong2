@@ -26,7 +26,6 @@ import butterknife.OnClick;
 
 public class PhotometerFristActivity extends AppCompatActivity {
 
-
     @BindView(R.id.iv_return)
     ImageView ivReturn;
     @BindView(R.id.tv_return)
@@ -141,7 +140,7 @@ public class PhotometerFristActivity extends AppCompatActivity {
 //                    startActivity(intent);
 
                     intent.setClass(this, PhotometerSecActivity.class);
-                    intent.putExtra("strfrom","PhotometerFristActivity");
+                    intent.putExtra("from","PhotometerFristActivity");
                     intent.putExtra("wavelength", strPhotometer);
                     startActivity(intent);
                     PhotometerFristActivity.this.finish();

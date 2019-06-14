@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.lkkdesign.changlong.utils.DateUtil.intCountDwonTime;
 import static com.lkkdesign.changlong.utils.MyFunc.calculateTransmittance;
 import static com.lkkdesign.changlong.utils.MyFunc.getAbsorbance;
 
@@ -74,8 +74,8 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
     Button btnMeasure;
     @BindView(R.id.btn_save)
     Button btnSave;
-    @BindView(R.id.ll_bottom)
-    LinearLayout llBottom;
+//    @BindView(R.id.ll_bottom)
+//    LinearLayout llBottom;
     @BindView(R.id.iv_return)
     ImageView ivReturn;
     @BindView(R.id.toolbar)
@@ -92,6 +92,9 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
     TextView timeCount;
     @BindView(R.id.fab_print)
     FloatingActionButton fabPrint;
+    @BindView(R.id.fab_cdtime)
+    FloatingActionButton fabCDTime;
+
     private String strInfo = "";
     private String strfrom = "";
     private String strStyle="";
@@ -109,7 +112,9 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
 
     private final String TAG = "MMSActivity";
     private CountDownTimer timer;
-    private long second = 0;
+    private long lonSecond = 0L;
+    private int intCountDwonTime = 0;
+    private String strCDTime = "";
 
     //打印内容
     private Tb_measure tb_measure;
@@ -149,26 +154,11 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
         } else if ("ManualMeasureFristActivity".equals(strfrom)) {
             tvLlTitle.setText(R.string.tv_manual);
         }
-        timer = new CountDownTimer(intCountDwonTime, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                second = millisUntilFinished / 1000;
-                timeCount.setText("还有" + second + "秒" + "返回主页面");
-            }
-
-            @Override
-            public void onFinish() {
-                intent.setClass(ManualMeasureSecActivity.this, Main2Activity.class);
-                startActivity(intent);
-                ManualMeasureSecActivity.this.finish();
-            }
-        };
-        timer.start();
-
     }
 
     @OnClick({R.id.tv_user, R.id.tv_cod, R.id.tv_title, R.id.tv_timer,
-            R.id.btn_measure, R.id.btn_save, R.id.iv_return, R.id.tv_return,R.id.fab_print})
+            R.id.btn_measure, R.id.btn_save, R.id.iv_return, R.id.tv_return,
+            R.id.fab_print,R.id.fab_cdtime})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_user:
@@ -181,9 +171,7 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
                 break;
             case R.id.iv_return:
             case R.id.tv_return:
-                intent.setClass(this, Main2Activity.class);
-                startActivity(intent);
-                this.finish();
+                jumpToActivity(ManualMeasureFristActivity.class);
                 break;
             case R.id.fab_print:
                 if (true == booIsSave){
@@ -192,28 +180,10 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
                     CustomToast.showToast(ManualMeasureSecActivity.this, "没有可打印的数据，请先保存");
                 }
                 break;
+            case R.id.fab_cdtime:
+                inputTimeDown();
+                break;
             case R.id.btn_measure:
-
-//                intResult = RandomUntil.getNum(25, 35);
-//                intWavelength = 610;
-//                floDensity = 10.0f;
-//                floTranrate = RandomUntil.getRandomFloat(80.0f, 100.0f);
-//                floAbsorbance = RandomUntil.getRandomFloat(1.0f, 2.0f);
-//                inttemp = RandomUntil.getNum(27, 35);
-//                tvTitle.setText(intResult + ".000 mg/L");
-//                strInfo = Constants.strWavelength;
-//                //tvShow.setText(strInfo);
-//                strInfo = "透过率（T）：" + floTranrate + "%\n" +
-//                        "吸光度（A）：" + floAbsorbance + "\n" +
-//                        "波长（λ）：" + intWavelength + "nm\n" +
-//                        "温度：" + inttemp + " ℃\n";
-//
-//                textLumin.setText(Constants.df.format(floTranrate * 100) + "%");
-//                textAbsor.setText(floAbsorbance + "");
-//                textWavelengh.setText(intWavelength + "nm");
-//                textTemper.setText(inttemp + "℃");
-                // tvResult.setText(strInfo);
-//                play("计算完成");
 
                 booIsMeasure = true;
                 intResult = RandomUntil.getNum(25, 35);
@@ -232,7 +202,8 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
                 textAbsor.setText(floAbsorbance + "");
                 textWavelengh.setText(intWavelength + "nm");
                 textTemper.setText(inttemp + "℃");
-
+                btnMeasure.setVisibility(View.INVISIBLE);
+                btnSave.setVisibility(View.VISIBLE);
                 mixSpeakUtil.speak("计算完成");
                 break;
             case R.id.btn_save:
@@ -353,6 +324,8 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
         CustomToast.showToast(getApplicationContext(), "数据保存成功");
         booIsMeasure = false;
         booIsSave=true;
+        btnMeasure.setVisibility(View.VISIBLE);
+        btnSave.setVisibility(View.INVISIBLE);
     }
 
     private void printData(String strContent){
@@ -382,10 +355,87 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
                 .show();// 显示对话框
 
     }
-    @Override
-    public void onBackPressed() {
-        intent.setClass(this, Main2Activity.class);
+
+    private void inputTimeDown() {
+        new MaterialDialog.Builder(ManualMeasureSecActivity.this)
+                .title("设置自动测量倒计时")
+                .iconRes(R.mipmap.icon_bottom)
+                .content("请输入倒计时，单位：分钟")
+//                                .widgetColor(Color.BLUE)//输入框光标的颜色
+                .neutralText(R.string.cancel)
+                .inputType(InputType.TYPE_CLASS_NUMBER)//可以输入的类型-数值
+                //前2个一个是hint一个是预输入的文字
+                .input(R.string.input_timedown, R.string.input_empty, new MaterialDialog.InputCallback() {
+
+                    @Override
+                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                        String strInput = input.toString().replaceAll(" ","");
+                        if(strInput.length() == 0){
+                            CustomToast.showToast(ManualMeasureSecActivity.this,"没有输入倒计时");
+                            return;
+                        }
+                        cancleCDTime();//取消倒计时
+                        intCountDwonTime = Integer.parseInt(input.toString());
+                        Log.i(TAG, "输入的是：" + input);
+                        CountDwonTime(intCountDwonTime);
+                    }
+                })
+
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        if (dialog.getInputEditText().length() <= 10) {
+                            dialog.getActionButton(DialogAction.POSITIVE).setEnabled(false);
+                        } else {
+                            dialog.getActionButton(DialogAction.POSITIVE).setEnabled(true);
+                        }
+                    }
+                })
+                .show();// 显示对话框
+    }
+
+    /**
+     * 倒计时
+     */
+    private void CountDwonTime(int intCDTime){
+        timer = new CountDownTimer(intCDTime * 60 * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                lonSecond = millisUntilFinished / 1000;
+//                second = millisUntilFinished / 1000;
+//                minute = second / 60;
+//                timeCount.setText(minute + "分钟后开始自动测量");
+                strCDTime = Constants.secToTime(lonSecond);
+                timeCount.setText(strCDTime + " 后开始自动测量");
+
+            }
+
+            @Override
+            public void onFinish() {
+//                intent.setClass(AutoMeasureActivity.this, Main2Activity.class);
+//                startActivity(intent);
+//                AutoMeasureActivity.this.finish();
+            }
+        };
+
+        timer.start();
+    }
+
+    private void cancleCDTime(){
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+    }
+
+    private void jumpToActivity(Class activity){
+        intent.setClass(this, activity);
         startActivity(intent);
         this.finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        jumpToActivity(ManualMeasureFristActivity.class);
     }
 }

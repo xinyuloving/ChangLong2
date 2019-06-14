@@ -42,6 +42,7 @@
     <string name="tv_manual">手动测量</string>
     <string name="tv_time">定时测量</string>
     <string name="tv_search">查询数据</string>
+    <string name="historical_data">历史数据</string>
     <string name="tv_cure_adjust">曲线校准</string>
     <string name="tv_cure_adjust_shuju">数据输入</string>
     <string name="tv_cure_adjust_gongsi">公式输入</string>
@@ -81,7 +82,9 @@
     <string name="et_inputContact">输入联系方式</string>
     <string name="et_inputTime">2019-01-01</string>
     <string name="input_hint">设置时间间隔</string>
+    <string name="input_timedown">输入倒计时（单位：分钟）</string>
     <string name="input_prefill">请输入时间间隔（单位：分钟）</string>
+    <string name="input_empty"></string>
     <string name="read_xlsx">读取XLSX文档</string>
     <string name="write_xlsx">生成XLSX文档</string>
     <string name="write_docx">生成DOCX文档</string>

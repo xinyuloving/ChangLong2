@@ -30,8 +30,6 @@ import static com.lkkdesign.changlong.utils.DateUtil.calculate;
 
 public class TimingSetupActivity extends AppCompatActivity {
 
-
-    Calendar calendar = Calendar.getInstance();
     @BindView(R.id.iv_return)
     ImageView ivReturn;
     @BindView(R.id.tv_user)
@@ -56,6 +54,8 @@ public class TimingSetupActivity extends AppCompatActivity {
     TextView tvShowInfo;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    Calendar calendar = Calendar.getInstance();
     private Intent intent = new Intent();
     private String TAG = "TimingSetupActivity";
     private String strStartTime = "";
@@ -79,9 +79,10 @@ public class TimingSetupActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.iv_return:
             case R.id.tv_return:
-                intent.setClass(this, Main2Activity.class);
-                startActivity(intent);
-                this.finish();
+//                intent.setClass(this, Main2Activity.class);
+//                startActivity(intent);
+//                this.finish();
+                jumpToActivity(Main2Activity.class);
                 break;
             case R.id.startTime:
                 DateUtil.showTimePickerDialog(this, tvStartTime, calendar);
@@ -111,25 +112,24 @@ public class TimingSetupActivity extends AppCompatActivity {
                     return;
                 } else {
                     if (strEndTime.length() > 2) {
-                        intent.setClass(this, CurveSelectActivity.class);
-                        intent.putExtra("type", "time");
+//                        intent.setClass(this, CurveSelectActivity.class);
+                        intent.putExtra("from", "time");
                         intent.putExtra("startTime", strStartTime);
                         intent.putExtra("endTime", strEndTime);
                         intent.putExtra("jiange", strJianGe);
-                        startActivity(intent);
+//                        startActivity(intent);
+                        jumpToActivity(CurveSelectActivity.class);
                     } else {
-                        intent.setClass(this, CurveSelectActivity.class);
-                        intent.putExtra("type", "time");
+//                        intent.setClass(this, CurveSelectActivity.class);
+                        intent.putExtra("form", "time");
                         intent.putExtra("startTime", strStartTime);
                         intent.putExtra("jiange", strJianGe);
-                        startActivity(intent);
+//                        startActivity(intent);
+                        jumpToActivity(CurveSelectActivity.class);
                     }
-
                 }
                 break;
-
         }
-
     }
 
     private void setTimeInterval() {
@@ -137,6 +137,8 @@ public class TimingSetupActivity extends AppCompatActivity {
                 .title(R.string.input_hint)
                 .iconRes(R.mipmap.ic_warning_black_18dp)
                 .content(R.string.input_prefill)
+//                .negativeText(R.string.cancel)
+                .neutralText(R.string.cancel)
 //                                .widgetColor(Color.BLUE)//输入框光标的颜色
                 .inputType(InputType.TYPE_CLASS_NUMBER)//可以输入的类型-数字
                 //前2个一个是hint一个是预输入的文字
@@ -163,12 +165,15 @@ public class TimingSetupActivity extends AppCompatActivity {
                 .show();
     }
 
+    private void jumpToActivity(Class activityClass) {
+        intent.setClass(this, activityClass);
+        startActivity(intent);
+        this.finish();
+    }
 
     @Override
     public void onBackPressed() {
-        intent.setClass(this, Main2Activity.class);
-        startActivity(intent);
-        this.finish();
+        jumpToActivity(Main2Activity.class);
     }
 
     @Override
@@ -179,7 +184,6 @@ public class TimingSetupActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-
         super.onDestroy();
         this.finish();
     }

@@ -23,6 +23,7 @@ public class DateUtil {
 
     private SuperTextView superTextView;
 
+
     /**
      * 按 yyyy-MM-dd HH:mm:ss 格式化时间.
      */

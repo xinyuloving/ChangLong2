@@ -32,7 +32,7 @@
             android:layout_width="0dp"
             android:layout_weight="5"
             android:layout_height="@dimen/dp_48"
-            android:text="@string/search_data"
+            android:text="@string/historical_data"
             android:textSize="@dimen/textsize_30"
             android:textColor="#ffffff"
             android:gravity="center"/>
@@ -50,7 +50,7 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
+        android:layout_height="@dimen/dp_36"
         android:layout_marginTop="1dp"
         android:background="@color/blue_a"
         android:tag="sticky-nonconstant"

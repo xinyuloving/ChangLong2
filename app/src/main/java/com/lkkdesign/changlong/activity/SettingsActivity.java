@@ -2,6 +2,7 @@ package com.lkkdesign.changlong.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.CheckBoxPreference;
@@ -13,6 +14,7 @@ import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
@@ -63,7 +65,8 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         final EditTextPreference serverip = (EditTextPreference) findPreference("machineId");
         final EditTextPreference epCT = (EditTextPreference) findPreference("ep_CT");
         final EditTextPreference epCF = (EditTextPreference) findPreference("ep_CF");
-        final EditTextPreference accountTime=(EditTextPreference)findPreference("accountTime");
+        final EditTextPreference epkbjz = (EditTextPreference) findPreference("ep_kbjz");
+//        final EditTextPreference accountTime=(EditTextPreference)findPreference("accountTime");
         SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(this);
 
         serverip.setSummary(shp.getString("machineId", ""));
@@ -82,16 +85,16 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
                 return true;
             }
         });
-        accountTime.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                accountTime.setSummary(newValue.toString());
-                accountTime.setDefaultValue("120");
-                AppSharePreferenceMgr.put(getApplication(),"accountTime",""+newValue);
-                DateUtil.intCountDwonTime=Long.valueOf(String.valueOf(newValue))*1000;
-                return true;
-            }
-        });
+//        accountTime.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+//            @Override
+//            public boolean onPreferenceChange(Preference preference, Object newValue) {
+//                accountTime.setSummary(newValue.toString());
+//                accountTime.setDefaultValue("120");
+//                AppSharePreferenceMgr.put(getApplication(),"accountTime",""+newValue);
+//                DateUtil.intCountDwonTime=Long.valueOf(String.valueOf(newValue))*1000;
+//                return true;
+//            }
+//        });
 
         epCT.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 
@@ -134,30 +137,30 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
             Constants.intCountDwonTime = Integer.parseInt(preference_countdown.getEntry().toString());
         }
 
-        CheckBoxPreference mCheckboxBoot = (CheckBoxPreference) findPreference("checkbox_boot");
-        mCheckboxBoot.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                //这里可以监听到这个CheckBox 的点击事件
-                return true;
-            }
-        });
-
-        mCheckboxBoot.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-
-            @Override
-            public boolean onPreferenceChange(Preference arg0, Object newValue) {
-                //这里可以监听到checkBox中值是否改变了
-                //并且可以拿到新改变的值
-                CustomToast.showToast(mContext, "开机启动APP：" + (Boolean) newValue);
-                return true;
-            }
-        });
+//        CheckBoxPreference mCheckboxBoot = (CheckBoxPreference) findPreference("checkbox_boot");
+//        mCheckboxBoot.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+//            @Override
+//            public boolean onPreferenceClick(Preference preference) {
+//                //这里可以监听到这个CheckBox 的点击事件
+//                return true;
+//            }
+//        });
+//
+//        mCheckboxBoot.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+//
+//            @Override
+//            public boolean onPreferenceChange(Preference arg0, Object newValue) {
+//                //这里可以监听到checkBox中值是否改变了
+//                //并且可以拿到新改变的值
+//                CustomToast.showToast(mContext, "开机启动APP：" + (Boolean) newValue);
+//                return true;
+//            }
+//        });
 
         Preference preCheckUpdate = (Preference) findPreference("checkupdate");
         Preference preCopyright = (Preference) findPreference("copyright");
         Preference preExitapp = (Preference) findPreference("exitapp");
-        Preference preexhibitgoods = (Preference) findPreference("exhibitgoods");
+        Preference preReduction = (Preference) findPreference("reduction");
         Preference prebqdyj = (Preference) findPreference("bqdyj");
         Preference preBackAccount = findPreference("backaccount");
 
@@ -219,7 +222,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 //当接收到Click事件之后触发
-                //CustomToast.showToast(mContext, "Preference preCheckUpdate Clicked");
+                CustomToast.showToast(mContext, "已是最新版，无需升级");
                 //getVersion(vision);
 //                dialogUpdate();
 //                booGetRequest_stop = false;
@@ -268,14 +271,11 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
                 return true;
             }
         });
-        preexhibitgoods.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        preReduction.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 //当接收到Click事件之后触发
-                CustomToast.showLongToast(mContext, "测量设置已还原到最初状态！");
-//                Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
-//                startActivity(intent);
-//                SettingsActivity.this.finish();
+                shoeDialog();
                 return true;
             }
         });
@@ -329,6 +329,36 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         return true;
     }
 
+    private void shoeDialog(){
+        /* @setIcon 设置对话框图标
+         * @setTitle 设置对话框标题
+         * @setMessage 设置对话框消息提示
+         * setXXX方法返回Dialog对象，因此可以链式设置属性
+         */
+        final AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(SettingsActivity.this);
+        normalDialog.setIcon(R.mipmap.icon_app);
+        normalDialog.setTitle("温馨提示");
+        normalDialog.setMessage("确定还原测试设置？");
+        normalDialog.setPositiveButton("是",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+//                        android.os.Process.killProcess(android.os.Process.myPid());
+//                        System.exit(0);
+                        CustomToast.showLongToast(mContext, "测量设置已还原到最初状态！");
+                    }
+                });
+        normalDialog.setNegativeButton("否",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //...To-do
+                    }
+                });
+        // 显示
+        normalDialog.show();
+    }
 
     /**
      * 监听返回键

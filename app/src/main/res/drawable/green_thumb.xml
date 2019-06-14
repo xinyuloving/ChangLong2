@@ -5,7 +5,7 @@
     <!-- 高度40 -->
     <size android:height="20dp" android:width="20dp"/>
     <!-- 圆角弧度 20 -->
-    <corners android:radius="10dp"/>
+    <corners android:radius="@dimen/dp_10"/>
 
 
     <!-- 变化率 -->

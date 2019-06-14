@@ -85,7 +85,7 @@ public class CurveMeasureActivity extends AppCompatActivity {
     private void initView() {
 
         Intent intent = getIntent();
-        strType = intent.getStringExtra("type");
+        strType = intent.getStringExtra("from");
         Constants.strFormActivity = strType;
         strTitle = intent.getStringExtra("wavelength");
         strInfo = intent.getStringExtra("strInfo");

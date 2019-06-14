@@ -47,6 +47,8 @@
     <dimen name="textsize_30">30sp</dimen>
     <dimen name="textsize_34">34sp</dimen>
     <dimen name="textsize_38">38sp</dimen>
+    <dimen name="textsize_42">42sp</dimen>
+    <dimen name="textsize_48">48sp</dimen>
     <dimen name="textsize_large">18sp</dimen>
     <dimen name="textsize_normal">16sp</dimen>
     <dimen name="textsize_small">14sp</dimen>

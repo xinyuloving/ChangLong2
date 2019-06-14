@@ -59,7 +59,7 @@ public class TimingMeasureTipActivity extends AppCompatActivity {
     private String jiange = "";
     private String wavelength = "";
     private String strInfo = "";
-    private String strType = "";
+    private String strFrom = "";
     private boolean booIsEmpty = false;//是否已按“空白”键，默认没有
     private int lineState=1;//当前提示文字
 
@@ -73,8 +73,8 @@ public class TimingMeasureTipActivity extends AppCompatActivity {
 
     private void initView() {
         Intent getIntent = getIntent();
-        strType = getIntent.getStringExtra("type");
-        Constants.strFormActivity = strType;
+        strFrom = getIntent.getStringExtra("from");
+        Constants.strFormActivity = strFrom;
         Log.i("TimingMeasure", "strType" + Constants.strFormActivity);
         tvUser.setText(Constants.strLoginName);
         wavelength = Constants.strWavelength;
@@ -150,7 +150,7 @@ public class TimingMeasureTipActivity extends AppCompatActivity {
                         jiange = intent.getStringExtra("jiange");
                         strInfo = intent.getStringExtra("strInfo");
                         intent.setClass(this, TimingMeasureSecActivity.class);
-                        intent.putExtra("type",strType);
+                        intent.putExtra("from",strFrom);
                         intent.putExtra("strStartTime", strStartTime);
                         intent.putExtra("strEndTime", strEndTime);
                         intent.putExtra("jiange", jiange);

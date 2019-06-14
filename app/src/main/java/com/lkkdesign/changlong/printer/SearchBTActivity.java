@@ -7,6 +7,7 @@ import com.lkkdesign.changlong.activity.AutoMeasureActivity;
 import com.lkkdesign.changlong.activity.BaseSMRecycleViewActivity;
 import com.lkkdesign.changlong.activity.Main2Activity;
 import com.lkkdesign.changlong.activity.ManualMeasureSecActivity;
+import com.lkkdesign.changlong.activity.PhotometerSecActivity;
 import com.lkkdesign.changlong.config.Constants;
 import com.lkkdesign.changlong.utils.CustomToast;
 import com.lvrenyang.io.BTPrinting;
@@ -458,6 +459,10 @@ public class SearchBTActivity extends Activity implements OnClickListener, IOCal
             this.finish();
         }else if("ManualMeasureSecActivity".equals(strType)){
             intent.setClass(SearchBTActivity.this, ManualMeasureSecActivity.class);
+            startActivity(intent);
+            this.finish();
+        }else if("PhotometerSecActivity".equals(strType)){
+            intent.setClass(SearchBTActivity.this, PhotometerSecActivity.class);
             startActivity(intent);
             this.finish();
         }else {

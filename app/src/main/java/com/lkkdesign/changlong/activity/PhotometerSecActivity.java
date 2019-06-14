@@ -3,6 +3,7 @@ package com.lkkdesign.changlong.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -21,11 +22,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.lkkdesign.changlong.R;
 import com.lkkdesign.changlong.adapter.BaseAdapter;
 import com.lkkdesign.changlong.adapter.MainAdapter;
 import com.lkkdesign.changlong.baidutts.util.MixSpeakUtil;
 import com.lkkdesign.changlong.config.Constants;
+import com.lkkdesign.changlong.printer.SearchBTActivity;
 import com.lkkdesign.changlong.utils.CustomToast;
 import com.lkkdesign.changlong.utils.DateUtil;
 import com.lkkdesign.changlong.utils.RandomUntil;
@@ -43,7 +47,6 @@ import static android.view.View.GONE;
 import static com.lkkdesign.changlong.utils.MyFunc.getAbsorbance;
 
 public class PhotometerSecActivity extends AppCompatActivity {
-
 
     @BindView(R.id.iv_return)
     ImageView ivReturn;
@@ -63,6 +66,8 @@ public class PhotometerSecActivity extends AppCompatActivity {
     CardView cardview1;
     @BindView(R.id.tv_show1)
     TextView tvShow1;
+    @BindView(R.id.tv_show2)
+    TextView tvShow2;
     @BindView(R.id.cardview2)
     CardView cardview2;
     @BindView(R.id.tv_TransmissionRate)
@@ -89,20 +94,23 @@ public class PhotometerSecActivity extends AppCompatActivity {
     Button btnSave;
     @BindView(R.id.ll_bottom)
     LinearLayout llBottom;
-    @BindView(R.id.btn_add)
-    FloatingActionButton btnAdd;
+//    @BindView(R.id.btn_add)
+//    FloatingActionButton btnAdd;
     @BindView(R.id.rv_curve)
     SwipeMenuRecyclerView rvCurve;
-    @BindView(R.id.tv_line1)
-    TextView tvLine1;
-    @BindView(R.id.tv_line2)
-    TextView tvLine2;
-    @BindView(R.id.tv_line3)
-    TextView tvLine3;
-    @BindView(R.id.tv_line4)
-    TextView tvLine4;
-    @BindView(R.id.tv_line5)
-    TextView tvLine5;
+//    @BindView(R.id.tv_line1)
+//    TextView tvLine1;
+//    @BindView(R.id.tv_line2)
+//    TextView tvLine2;
+//    @BindView(R.id.tv_line3)
+//    TextView tvLine3;
+//    @BindView(R.id.tv_line4)
+//    TextView tvLine4;
+//    @BindView(R.id.tv_line5)
+//    TextView tvLine5;
+    @BindView(R.id.fab_print)
+    FloatingActionButton fabPrint;
+
     private String strTitle = "";
 
     private Intent intent = new Intent();
@@ -115,6 +123,8 @@ public class PhotometerSecActivity extends AppCompatActivity {
     private String strType = "";
     private String strAValue = "";
     private String strCValue = "";
+    private boolean booIsSave = false;
+    private String strContent = "";
 
     /*数据列表*/
     protected RecyclerView.LayoutManager mLayoutManager;
@@ -148,10 +158,10 @@ public class PhotometerSecActivity extends AppCompatActivity {
         if ("InputDataActivity".equals(strfrom)) {
             tvLlTitle.setText("数据输入");
             cardview3.setVisibility(View.GONE);
-            btnAdd.hide();
+//            btnAdd.hide();
         } else if ("CurveMeasureActivity".equals(strfrom)) {
             tvLlTitle.setText("公式输入");
-            btnAdd.hide();
+//            btnAdd.hide();
             cardview3.setVisibility(View.GONE);
 
         } else if ("CMActivity_ssjz".equals(strfrom)) {
@@ -160,12 +170,12 @@ public class PhotometerSecActivity extends AppCompatActivity {
         } else{
             tvLlTitle.setText("光度计");
             tvCod.setText("λ= " + strTitle + " nm");
-            tvLine2.setVisibility(GONE);
-            tvLine3.setVisibility(GONE);
-            tvLine4.setVisibility(GONE);
-            tvLine5.setVisibility(GONE);
-            btnAdd.hide();
-            btnSave.setText(R.string.next);
+//            tvLine2.setVisibility(GONE);
+//            tvLine3.setVisibility(GONE);
+//            tvLine4.setVisibility(GONE);
+//            tvLine5.setVisibility(GONE);
+//            btnAdd.hide();
+            btnMeasure.setText(R.string.next);
         }
 
         mLayoutManager = createLayoutManager();
@@ -185,7 +195,8 @@ public class PhotometerSecActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.tv_user, R.id.tv_return, R.id.tv_cod, R.id.tv_result, R.id.tv_timer, R.id.btn_add, R.id.btn_blank, R.id.btn_save})
+    @OnClick({R.id.tv_user, R.id.tv_return, R.id.tv_cod, R.id.tv_result, R.id.tv_timer, R.id.btn_add,
+            R.id.btn_blank, R.id.btn_save,R.id.fab_print,R.id.btn_measure})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_user:
@@ -197,7 +208,12 @@ public class PhotometerSecActivity extends AppCompatActivity {
                 break;
             case R.id.tv_result:
                 break;
-            case R.id.tv_timer:
+            case R.id.fab_print:
+                if (true == booIsSave) {
+                    printData(strContent);
+                } else {
+                    CustomToast.showToast(PhotometerSecActivity.this, "没有可打印的数据，请先保存");
+                }
                 break;
             case R.id.btn_add:
 
@@ -224,10 +240,9 @@ public class PhotometerSecActivity extends AppCompatActivity {
                     booIsEmpty=true;
                     btnBlank.setVisibility(View.GONE);
                 }
-
-
                 break;
-            case R.id.btn_save:
+
+            case R.id.btn_measure:
                 if ("InputDataActivity".equals(strfrom) || "CurveMeasureActivity".equals(strfrom)) {
                     tvTitle.setText(RandomUntil.getNum(25, 35) + ".000 mg/L");
                     strInfo = "综合排放标准 COD：\n" +
@@ -258,9 +273,9 @@ public class PhotometerSecActivity extends AppCompatActivity {
                 } else{
                     switch (lineState){
                         case 1:
-                            tvLine2.setVisibility(View.VISIBLE);
-                            tvLine1.setVisibility(View.GONE);
-                            btnSave.setText("空 白");
+//                            tvLine2.setVisibility(View.VISIBLE);
+//                            tvLine1.setVisibility(View.GONE);
+                            btnMeasure.setText("空 白");
                             lineState++;
                             break;
                         case 2:
@@ -272,25 +287,28 @@ public class PhotometerSecActivity extends AppCompatActivity {
                             btnEmpty.setVisibility(View.GONE);
                             lineState++;
                         }*/
-                            tvLine3.setVisibility(View.VISIBLE);
-                            tvLine2.setVisibility(View.GONE);
-                            btnSave.setText(R.string.next);
+//                            tvLine3.setVisibility(View.VISIBLE);
+//                            tvLine2.setVisibility(View.GONE);
+                            tvShow1.setText("请取出空白比色管");
+                            btnMeasure.setText(R.string.next);
                             lineState++;
                             break;
                         case 3:
-                            tvLine4.setVisibility(View.VISIBLE);
-                            tvLine3.setVisibility(View.GONE);
+//                            tvLine4.setVisibility(View.VISIBLE);
+//                            tvLine3.setVisibility(View.GONE);
+                            tvShow1.setText("请放入样品");
                             lineState++;
                             break;
                         case 4:
-                            tvLine5.setVisibility(View.VISIBLE);
-                            tvLine4.setVisibility(View.GONE);
-                            btnSave.setText(R.string.confirm);
+//                            tvLine5.setVisibility(View.VISIBLE);
+//                            tvLine4.setVisibility(View.GONE);
+                            tvShow1.setText("请按确认键");
+                            btnMeasure.setText(R.string.confirm);
                             lineState++;
                             break;
                         case 5:
-                            btnSave.setText(R.string.celiang);
-                            tvLine5.setVisibility(View.GONE);
+                            btnMeasure.setText(R.string.celiang);
+//                            tvLine5.setVisibility(View.GONE);
                             tvShow1.setVisibility(View.VISIBLE);
                             floTranrate = RandomUntil.getNum(10, 20);
                             Log.i("PSA", "floTranrate=" + floTranrate);
@@ -300,25 +318,19 @@ public class PhotometerSecActivity extends AppCompatActivity {
                             tvTemper.setText(RandomUntil.getNum(20, 25) + "℃\n");
                             floAbsorbance = getAbsorbance(floTranrate);
                             Log.i("PSA", "floAbsorbance=" + floAbsorbance);
-                            strInfo = "吸光度\nA=" + (-1) * floAbsorbance;
-                            tvShow1.setText(strInfo);
-                            tvShow1.setGravity(Gravity.CENTER);
-                            tvShow1.setTextSize(getResources().getDimension(R.dimen.textsize_24));
-                            tvShow1.setTextColor(getResources().getColor(R.color.statusBarColor));
+                            strInfo = "A=" + (-1) * floAbsorbance;
+                            tvShow1.setText("吸光度");
+                            tvShow2.setText(strInfo);
+                            booIsSave = true;
                             break;
                     }
-                   /* if (false == booIsPre) {
-                        CustomToast.showToast(this, "请按步骤执行");
-                        return;
-                    }*/
-
-//                    strInfo = "透过率（T）：" + RandomUntil.getNum(10, 20) + ".00%\n" +
-//                            "电流：" + RandomUntil.getNum(85, 100) + " μA\n" +
-//                            "电压：10 mV\n" +
-//                            "温度:25℃\n";
-//                    tvResult.setText(strInfo);
                 }
                 mixSpeakUtil.speak("计算完成");
+//                btnMeasure.setVisibility(View.INVISIBLE);
+                btnSave.setVisibility(View.VISIBLE);
+                break;
+            case R.id.btn_save:
+
                 break;
         }
     }
@@ -344,6 +356,32 @@ public class PhotometerSecActivity extends AppCompatActivity {
         }
 //        dataList.add("== 你已经看到我的底线啦 ==");
         return dataList;
+    }
+
+    private void printData(String strContent) {
+        new MaterialDialog.Builder(PhotometerSecActivity.this)// 初始化建造者
+//                        .icon(R.mipmap.icon_exit)
+                .title("打印内容：")// 标题
+                .content(strContent)// 内容
+                .negativeText(R.string.cancel)
+                .neutralText(R.string.print)
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                    }
+                })
+                .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        intent.setClass(PhotometerSecActivity.this, SearchBTActivity.class);
+                        intent.putExtra("printInfo", strContent); //传递需要打印的数据
+                        intent.putExtra("type", "PhotometerSecActivity");//从何处跳转
+                        startActivity(intent);
+                        PhotometerSecActivity.this.finish();
+                    }
+                })
+                .show();// 显示对话框
     }
 
     /**

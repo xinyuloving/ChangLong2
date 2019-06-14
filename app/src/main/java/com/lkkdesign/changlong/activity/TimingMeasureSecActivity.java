@@ -79,7 +79,7 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
     private String strDateTime = DateUtil.getNowDateTime();
     private String strTime = "";
     private String strInfo = "";
-    private String strType = "";
+    private String strFrom = "";
 
     private Intent intent = new Intent();
 
@@ -94,8 +94,8 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
 
     private void initView() {
         Intent intent = getIntent();
-        strType = intent.getStringExtra("type");
-        Constants.strFormActivity = strType;
+        strFrom = intent.getStringExtra("from");
+        Constants.strFormActivity = strFrom;
         strTitle = intent.getStringExtra("wavelength");
         strStartTime = intent.getStringExtra("strStartTime");
         strEndTime = intent.getStringExtra("strEndTime");
