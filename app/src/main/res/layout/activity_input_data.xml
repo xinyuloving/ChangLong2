@@ -101,72 +101,73 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cardview2"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
+        android:layout_height="320dp"
         android:layout_margin="@dimen/dp_16"
+        app:cardCornerRadius="@dimen/padding_10"
         app:layout_constraintEnd_toEndOf="@+id/cardview1"
         app:layout_constraintStart_toStartOf="@+id/cardview1"
-        app:layout_constraintTop_toBottomOf="@+id/cardview1"
-        app:cardCornerRadius="@dimen/padding_10"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/cardview1">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="280dp"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:layout_height="320dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/tv_line1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="请放入空白比色管"
                 android:textColor="@color/statusBarColor"
                 android:textSize="@dimen/textsize_38"
                 android:textStyle="bold"
-                android:gravity="center"
-                android:visibility="visible"/>
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/tv_line2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="请按空白键"
                 android:textColor="@color/statusBarColor"
                 android:textSize="@dimen/textsize_38"
                 android:textStyle="bold"
-                android:gravity="center"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_line3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="请取出空白比色管"
                 android:textColor="@color/statusBarColor"
                 android:textSize="@dimen/textsize_38"
                 android:textStyle="bold"
-                android:gravity="center"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_line4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="请放入样品"
                 android:textColor="@color/statusBarColor"
                 android:textSize="@dimen/textsize_38"
                 android:textStyle="bold"
-                android:gravity="center"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_line5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="请按确认键"
                 android:textColor="@color/statusBarColor"
                 android:textSize="@dimen/textsize_38"
                 android:textStyle="bold"
-                android:gravity="center"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
 
         <TextView
@@ -180,22 +181,22 @@
             android:text="请放入空白比色管\n请按空白键\n请取出空白比色管\n请放入样品\n请按确认键"
             android:textColor="@color/black"
             android:textSize="@dimen/textsize_28"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
 
         <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
             android:id="@+id/rv_curve"
             android:layout_width="match_parent"
             android:layout_height="240dp" />
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btn_add"
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
+            android:layout_gravity="bottom|end"
             android:clickable="true"
-            android:layout_margin="@dimen/dp_8"
             android:src="@mipmap/float_add"
-            app:fabSize="mini"
-            android:layout_gravity="bottom|end"/>
+            app:fabSize="mini" />
     </android.support.v7.widget.CardView>
 
 
@@ -208,7 +209,6 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textMultiLine"
-        android:text="C1=5mg/L，A1=0.100\nC2=10mg/L，A2=0.200\nC3=20mg/L，A3=0.400\nC4=50mg/L，A4=1.000\nC5=100mg/L，A5=2.00"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -232,7 +232,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:singleLine="false"
-        android:text="C=kA+b\n R2=99.99%"
+        android:text="C=kA+b\n R²=99.99%"
         android:textColor="@color/statusBarColor"
         android:textSize="@dimen/textsize_28"
         app:layout_constraintEnd_toEndOf="parent"

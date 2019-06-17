@@ -56,6 +56,8 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
     private String strJiange = "";
     private String strInfo = "";
 
+    private String TAG = "CurveSelectActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,12 +71,16 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
 
         Intent getIntent = getIntent();
         strFrom = getIntent.getStringExtra("from");
-        Constants.strFormActivity = strFrom;
-        Log.i("CurveSelectActivity", "strType = " + strFrom);
+        if(strFrom == null){
+            Log.i(TAG, "strFrom = null ->" + strFrom);
+        }else{
+            Constants.strFormActivity = strFrom;
+        }
+        Log.i(TAG, "strFrom = " + strFrom);
         strStratTime = getIntent.getStringExtra("startTime");
         strEndTime = getIntent.getStringExtra("endTime");
         strJiange = getIntent.getStringExtra("jiange");
-        Log.i("CurveSelectActivity", "strJiange = " + strJiange);
+        Log.i(TAG, "strJiange = " + strJiange);
 
         mRecyclerView = findViewById(R.id.rv_curve);
         iv_return = findViewById(R.id.iv_return);
@@ -139,11 +145,11 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
                 mDataList.remove(position);
                 mAdapter.notifyItemRemoved(position);
 
-                Log.i("BDActivity", "position=" + position);
-                Log.i("BDActivity", "mDataList=" + mDataList.toString());
-                Log.i("BDActivity", "Curve=" + mDataList.get(menuPosition));
-                Log.i("BDActivity", "position=" + position);
-                Log.i("BDActivity", "menuPosition=" + menuPosition);
+                Log.i(TAG, "position=" + position);
+                Log.i(TAG, "mDataList=" + mDataList.toString());
+                Log.i(TAG, "Curve=" + mDataList.get(menuPosition));
+                Log.i(TAG, "position=" + position);
+                Log.i(TAG, "menuPosition=" + menuPosition);
 
                 intent.setClass(CurveSelectActivity.this, CurveManageActivity.class);
                 intent.putExtra("curve", mDataList.get(menuPosition)); //将计算的值回传回去
@@ -233,6 +239,7 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
         mAdapter.notifyDataSetChanged();
         CustomToast.showToast(this, mDataList.get(position));
         strInfo = mDataList.get(position);
+        Log.i(TAG, "Constants.strFormActivity = " + Constants.strFormActivity);
         jumpToFromActivity(Constants.strFormActivity);
     }
 

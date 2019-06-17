@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 import okhttp3.MediaType;
 
 //import android.hardware.ChanglongManager;
+
 /**
  * ---------------------------------------------------------------------
  * Copyright © 2018-2020, 深圳洛可可设计工业有限公司, All rights reserved.
@@ -74,7 +75,7 @@ public final class Constants {
     public static Map serialMapData = new HashMap();
 
     public static DecimalFormat df = new DecimalFormat(".00");
-
+    public static DecimalFormat df_4 = new DecimalFormat("#0.0000");//格式化设置，保留四个小数
 
 
     /**
@@ -131,29 +132,20 @@ public final class Constants {
         return strCardState;
     }
 
-   public static String convertSearch(String strItem) {
+    public static String convertSearch(String strItem) {
         String strSearch = null;
         switch (strItem) {
-            case "执法检测":
-                strSearch = "style";
-                break;
-            case "应急监测":
-                strSearch = "style";
-                break;
-            case "自行监测":
-                strSearch = "style";
-                break;
-            case "条目":
+            case "检测项目":
                 strSearch = "item";
                 break;
-            case "名称":
-                strSearch = "name";
+            case "测量结果":
+                strSearch = "result";
+                break;
+            case "检测人":
+                strSearch = "inspector";
                 break;
             case "波长":
                 strSearch = "wavelength";
-                break;
-            case "密度":
-                strSearch = "density";
                 break;
             case "透过率":
                 strSearch = "tranatre";
@@ -161,17 +153,20 @@ public final class Constants {
             case "吸光度":
                 strSearch = "absorbance";
                 break;
-            case "操作员ID":
-                strSearch = "userId";
-                break;
-            case "曲线方程":
-                strSearch = "type";
-                break;
-            case "测量结果":
-                strSearch = "result";
-                break;
             case "温度":
                 strSearch = "temperature";
+                break;
+            case "检测时间":
+                strSearch = "time";
+                break;
+            case "分类":
+                strSearch = "classic";
+                break;
+            case "测量类型":
+                strSearch = "style";
+                break;
+            case "采样时间":
+                strSearch = "sampling_time";
                 break;
             case "测点名称":
                 strSearch = "measure_name";
@@ -179,20 +174,14 @@ public final class Constants {
             case "单位名称":
                 strSearch = "entity_name";
                 break;
-            case "取样时间":
-                strSearch = "sampling_time";
-                break;
-            case "采样员":
+            case "采样人":
                 strSearch = "sampler";
-                break;
-            case "检测员":
-                strSearch = "inspector";
                 break;
             case "备注":
                 strSearch = "mark";
                 break;
             default:
-                strSearch = "noColumn";
+                strSearch = "";
                 break;
         }
         return strSearch;
@@ -218,6 +207,7 @@ public final class Constants {
 
     /**
      * 整数(秒数)转换为时分秒格式(xx:xx:xx)
+     *
      * @param time
      * @return
      */
@@ -244,6 +234,7 @@ public final class Constants {
         }
         return timeStr;
     }
+
     public static String unitFormat(long i) {
         String retStr = null;
         if (i >= 0 && i < 10)

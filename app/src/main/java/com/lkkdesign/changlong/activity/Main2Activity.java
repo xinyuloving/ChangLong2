@@ -78,7 +78,7 @@ public class Main2Activity extends AppCompatActivity implements OnItemClickListe
             R.drawable.icon_main_set,
             R.drawable.icon_main_dy
     };
-    private String[] iconName = {"自动测量", "手动测量", "定时测量", "光度计", "曲线校准", "查看数据", "应急报告",
+    private String[] iconName = {"自动测量", "手动测量", "定时测量", "光度计", "曲线校准", "历史数据", "应急报告",
             "设置", "蓝牙打印"};
 
     @Override
@@ -161,7 +161,7 @@ public class Main2Activity extends AppCompatActivity implements OnItemClickListe
                         intent.putExtra("from", "xiaozhun");
                         startActivity(intent);
                         break;
-                    case 5: //查看数据
+                    case 5: //历史数据
 //                        intent.setClass(Main2Activity.this, BaseSMRecycleViewActivity.class);
 //                        startActivity(intent);
                         jumpToActivity(BaseSMRecycleViewActivity.class);

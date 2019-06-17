@@ -182,25 +182,27 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
             e.printStackTrace();
         }
         Log.i("BSMRVActivity", "tb_measure=" + tb_measure.toString());
-        strContent = "\n分类：" + tb_measure.getClassic()
-                + "\n测量类别：" + tb_measure.getStyle()
-                + "\n条目：" + tb_measure.getItem()
-                + "\n名称：" + tb_measure.getName()
+        strContent ="检测项目：" + tb_measure.getType()
+                + "\n测量结果：" + tb_measure.getResult()
+                + "\n检测人：" + tb_measure.getInspector()
                 + "\n波长：" + tb_measure.getWavelength()
-                + "\n浓度：" + tb_measure.getDensity()
                 + "\n透过率：" + tb_measure.getTranatre()
                 + "\n吸光度：" + tb_measure.getAbsorbance()
-                + "\n操作员：" + tb_measure.getUserId()
                 + "\n温度：" + tb_measure.getTemperature()
-                + "\n测量结果：" + tb_measure.getResult()
-                + "\n类型：" + tb_measure.getType()
-                + "\n时间：" + tb_measure.getTime()
-                + "\n备注：" + tb_measure.getMark()
+                + "\n检测时间：" + tb_measure.getTime()
+                + "\n分类：" + tb_measure.getClassic()
+                + "\n测量类型：" + tb_measure.getStyle()
+                + "\n取样时间：" + tb_measure.getSampling_time()
                 + "\n测点名称：" + tb_measure.getMeasure_name()
                 + "\n单位名称：" + tb_measure.getEntity_name()
-                + "\n取样时间：" + tb_measure.getSampling_time()
                 + "\n采样人：" + tb_measure.getSampler()
-                + "\n检测人：" + tb_measure.getInspector();
+                + "\n备注：" + tb_measure.getMark();
+
+//                + "\n名称：" + tb_measure.getName()
+//                + "\n浓度：" + tb_measure.getDensity()
+//                + "\n操作员：" + tb_measure.getUserId()
+//
+//                + "\n测量结果：" + tb_measure.getResult();
         Log.i("BSMRVActivity", "strContent=" + strContent);
         //当接收到Click事件之后触发
         new MaterialDialog.Builder(SearchDataActivity.this)// 初始化建造者
@@ -269,7 +271,9 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
     }
 
     private void jumpToActivity(Class activityClass) {
-        startActivity(new Intent(this, activityClass));
+//        startActivity(new Intent(this, activityClass));
+        intent.setClass(this,activityClass);
+        startActivity(intent);
         this.finish();
     }
 
@@ -299,6 +303,17 @@ public class SearchDataActivity extends AppCompatActivity implements SwipeItemCl
 //        SearchDataActivity.this.finish();
     }*/
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SearchDataActivity.this.finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SearchDataActivity.this.finish();
+    }
 
 }
 

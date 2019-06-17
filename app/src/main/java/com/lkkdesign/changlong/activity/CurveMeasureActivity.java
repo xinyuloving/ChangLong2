@@ -104,8 +104,15 @@ public class CurveMeasureActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_shuju:
-                        CustomToast.showToast(CurveMeasureActivity.this, "已选择：数据输入");
+                        CustomToast.showToast(CurveMeasureActivity.this, "数据输入");
                         intSelectFun = 1;
+                        intent.putExtra("type",Constants.strFormActivity);
+                        intent.putExtra("from","CurveMeasureInputActivity");
+                        intent.putExtra("strInfo", strInfo);
+                        intent.putExtra("wavelength", strTitle);
+//                        startActivity(intent);
+//                        jumpToActivity(InputDataActivity.class);
+                        jumpToActivity(CurveMeasureInputActivity.class);
                         break;
                     case R.id.rb_gongsi:
 //                        CustomToast.showToast(CurveMeasureActivity.this, "公式输入");
@@ -115,6 +122,12 @@ public class CurveMeasureActivity extends AppCompatActivity {
                     case R.id.rb_ssxz:
                         CustomToast.showToast(CurveMeasureActivity.this, "已选择：实时校准");
                         intSelectFun = 3;
+                        intent.putExtra("type",Constants.strFormActivity);
+                        intent.putExtra("from", "CMActivity_ssjz");
+                        intent.putExtra("strInfo", strInfo);
+                        intent.putExtra("wavelength", strTitle);
+//                        startActivity(intent);
+                        jumpToActivity(InputDataActivity.class);
                         break;
                     default:
                         Log.d("CurveMeasureActivity", "怎么监听的????");
@@ -166,44 +179,46 @@ public class CurveMeasureActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_return:
-                intent.setClass(this, CurveSelectActivity.class);
+//                intent.setClass(this, CurveSelectActivity.class);
                 intent.putExtra("type", Constants.strFormActivity);
-                startActivity(intent);
-                this.finish();
+//                startActivity(intent);
+//                this.finish();
+                jumpToActivity(CurveSelectActivity.class);
                 break;
             case R.id.tv_user:
                 break;
             case R.id.btn_calculate:
                 if (intSelectFun > 0) {
                     if (1 == intSelectFun) {
-                        intent.setClass(this, InputDataActivity.class);
+//                        intent.setClass(this, InputDataActivity.class);
                         intent.putExtra("type",Constants.strFormActivity);
                         intent.putExtra("from","InputDataActivity");
                         intent.putExtra("strInfo", strInfo);
                         intent.putExtra("wavelength", strTitle);
-                        startActivity(intent);
+//                        startActivity(intent);
+                        jumpToActivity(InputDataActivity.class);
                     } else if (2 == intSelectFun) {
                         if(booformula){
                             CustomToast.showToast(getApplicationContext(), "当前公式为空！");
-
                         }else{
-                            intent.setClass(this,ManualMeasureTipActivity.class);
+//                            intent.setClass(this,ManualMeasureTipActivity.class);
                             intent.putExtra("type",Constants.strFormActivity);
                             intent.putExtra("from", "InputDataActivity");
                             intent.putExtra("strInfo", strInfo);
                             intent.putExtra("wavelength", strInfo);
-                            startActivity(intent);
+//                            startActivity(intent);
+                            jumpToActivity(ManualMeasureTipActivity.class);
                         }
 
                     } else {
-                        intent.setClass(this, InputDataActivity.class);
+//                        intent.setClass(this, InputDataActivity.class);
                         intent.putExtra("type",Constants.strFormActivity);
                         intent.putExtra("from", "CMActivity_ssjz");
                         intent.putExtra("strInfo", strInfo);
                         intent.putExtra("wavelength", strTitle);
-                        startActivity(intent);
+//                        startActivity(intent);
+                        jumpToActivity(InputDataActivity.class);
                     }
-
                 } else {
                     CustomToast.showToast(CurveMeasureActivity.this, "请选择校准模式");
                 }
@@ -211,12 +226,20 @@ public class CurveMeasureActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        intent.setClass(this, CurveSelectActivity.class);
-        intent.putExtra("type", Constants.strFormActivity);
+    private void jumpToActivity(Class activity){
+        intent.setClass(this, activity);
         startActivity(intent);
         this.finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        intent.putExtra("type", Constants.strFormActivity);
+        jumpToActivity(CurveSelectActivity.class);
+//        intent.setClass(this, CurveSelectActivity.class);
+//        intent.putExtra("type", Constants.strFormActivity);
+//        startActivity(intent);
+//        this.finish();
     }
 
     @Override
@@ -227,7 +250,6 @@ public class CurveMeasureActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-
         super.onDestroy();
         this.finish();
     }

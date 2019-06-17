@@ -139,7 +139,6 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
         strInfo = intent.getStringExtra("strInfo");
         strfrom = intent.getStringExtra("from");
 
-
         tvUser.setText(Constants.strLoginName);
         tvCod.setText(strInfo);
         tvTimer.setText(DateUtil.getDate());
@@ -254,10 +253,7 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                             btnSave.setText(R.string.save);
                             break;
                     }
-
                 } else {
-
-
                     new AlertDialog.Builder(this)
                             .setTitle("保存")
                             .setMessage("保存吗？")
@@ -279,8 +275,6 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                             })
                             .show();
                 }
-
-
                 break;
             case R.id.btn_add:
                 if ("InputDataActivity".equals(strfrom)) {
