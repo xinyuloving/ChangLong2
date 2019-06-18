@@ -195,49 +195,6 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
 
                 tvShowData.setText("C=" + df_4.format(dou_k) + "A" + strSymbol + df_4.format(dou_b)
                         + "\n" + "R²=" + df_percentage.format(dou_r));
-
-
-//                Log.i(TAG, "Double[] x1 =" + Arrays.toString(x1));
-//                Log.i(TAG, "Double[] y1 =" + Arrays.toString(y1));
-//                Double a1 = LeastSquares.getA(x1, y1);
-//                Double b1 = LeastSquares.getB(x1, y1);
-//                tvShowData.setText("k值：" + df_4.format(a1) + "\t\tb值：" + df_4.format(b1));
-//                Log.i(TAG, "k1值：=" + a1);
-//                Log.i(TAG, "b1值：" + b1);
-//                Log.i(TAG, "格式化k1值：=" + df_4.format(a1));
-//                Log.i(TAG, "格式化b1值：" + df_4.format(b1));
-//
-//                Log.i(TAG, "Double[] x2 =" + Arrays.toString(x2));
-//                Log.i(TAG, "Double[] y2 =" + Arrays.toString(y2));
-//                Double a2 = LeastSquares.getA(x2, y2);
-//                Double b2 = LeastSquares.getB(x2, y2);
-//                tvShowData.setText("k值：" + df_4.format(a1) + "\t\tb值：" + df_4.format(b1));
-//                Log.i(TAG, "k2值：=" + a2);
-//                Log.i(TAG, "b2值：" + b2);
-//                Log.i(TAG, "格式化k2值：=" + df_4.format(a2));
-//                Log.i(TAG, "格式化b2值：" + df_4.format(b2));
-
-//                new AlertDialog.Builder(this)
-//                        .setTitle("保存")
-//                        .setMessage("保存吗？")
-//                        .setPositiveButton("是", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                intent.setClass(CurveMeasureInputActivity.this, ManualMeasureTipActivity.class);
-//                                intent.putExtra("from", "CurveMeasureInputActivity");
-//                                intent.putExtra("wavelength", strInfo);
-//                                intent.putExtra("type", Constants.strFormActivity);
-//                                intent.putExtra("strInfo", strInfo);
-//                                startActivity(intent);
-//                            }
-//                        })
-//                        .setNegativeButton("否", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//
-//                            }
-//                        })
-//                        .show();
                 break;
         }
     }
