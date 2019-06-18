@@ -55,6 +55,8 @@ import butterknife.OnClick;
 
 import static android.view.View.GONE;
 import static com.lkkdesign.changlong.config.Constants.df_4;
+import static com.lkkdesign.changlong.config.Constants.df_percentage;
+import static com.lkkdesign.changlong.utils.LeastSquaresMathUtil.lineFitting;
 import static com.lkkdesign.changlong.utils.MyFunc.calculateTransmittance;
 import static com.lkkdesign.changlong.utils.MyFunc.getAbsorbance;
 
@@ -99,6 +101,9 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
     private String strCValue = "";
     private String strType = "";
     private String strfrom = "";
+    private double dou_k = 0;
+    private double dou_b = 0;
+    private double dou_r = 0;
     private int intPosition = 0;
     private List<String> dataList = new ArrayList<>();
     private List<Double> ListAddAValue = new ArrayList<>();//添加值 光度计
@@ -166,10 +171,10 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
                 break;
             case R.id.btn_calculate:
 
-//                Double[] x = ListAddCValue.toArray(new Double[ListAddCValue.size()]);
-//                Double[] y = ListAddAValue.toArray(new Double[ListAddAValue.size()]);
-                Double[] x ={0.0904,0.166,0.2453,0.3327,0.3969,0.4987,0.7102,0.8803,1.2546};
-                Double[] y ={0d,0.2,0.4,0.6,0.8,1d,1.5,2d,3d};
+                Double[] x = ListAddCValue.toArray(new Double[ListAddCValue.size()]);
+                Double[] y = ListAddAValue.toArray(new Double[ListAddAValue.size()]);
+//                Double[] x = {0.0904, 0.166, 0.2453, 0.3327, 0.3969, 0.4987, 0.7102, 0.8803, 1.2546};
+//                Double[] y = {0d, 0.2, 0.4, 0.6, 0.8, 1d, 1.5, 2d, 3d};
 //                Double[] x1 ={0.01,0.049,0.11,0.21,0.5};//吸光度
 //                Double[] y1 ={1d,5d,10d,20d,50d};//浓度
 //
@@ -177,15 +182,20 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
 //                Double[] y2 ={1.0, 5.0, 10.0, 20.0, 50.0};//浓度
 
 
-                Log.i(TAG, "Double[] x =" + Arrays.toString(x));
-                Log.i(TAG, "Double[] y =" + Arrays.toString(y));
-                Double a = LeastSquares.getA(x, y);
-                Double b = LeastSquares.getB(x, y);
-                tvShowData.setText("C=" + df_4.format(a) + "A+" + df_4.format(b));
-                Log.i(TAG, "k值：=" + a);
-                Log.i(TAG, "b值：" + b);
-                Log.i(TAG, "格式化k值：=" + df_4.format(a));
-                Log.i(TAG, "格式化b值：" + df_4.format(b));
+                double[] dou = lineFitting(x, y);
+                dou_k = dou[1];
+                dou_b = dou[0];
+                dou_r = dou[3];
+
+                String strSymbol = (dou_b < 0) ? "" : "+";
+
+                Log.i(TAG, "一元线性拟合：" + Arrays.toString(dou));
+                Log.i(TAG, "相关系数 - >百分比：" + df_4.format(dou[2]));
+                Log.i(TAG, "决定系数 - >百分比：" + df_4.format(dou[3]));
+
+                tvShowData.setText("C=" + df_4.format(dou_k) + "A" + strSymbol + df_4.format(dou_b)
+                        + "\n" + "R²=" + df_percentage.format(dou_r));
+
 
 //                Log.i(TAG, "Double[] x1 =" + Arrays.toString(x1));
 //                Log.i(TAG, "Double[] y1 =" + Arrays.toString(y1));

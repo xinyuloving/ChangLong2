@@ -115,7 +115,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:singleLine="false"
-            android:text="C=kA+b\n R²=100099.99%"
+            android:text="C=kA+b\n R²=0.0%"
             android:textColor="@color/statusBarColor"
             android:textSize="@dimen/textsize_28"
             app:layout_constraintEnd_toEndOf="parent"
