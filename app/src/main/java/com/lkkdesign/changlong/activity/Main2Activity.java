@@ -76,10 +76,10 @@ public class Main2Activity extends AppCompatActivity implements OnItemClickListe
             R.drawable.icon_main_find,
             R.drawable.icon_main_yjbg,
             R.drawable.icon_main_set,
-            R.drawable.icon_main_dy
+//            R.drawable.icon_main_dy
     };
     private String[] iconName = {"自动测量", "手动测量", "定时测量", "光度计", "曲线校准", "历史数据", "应急报告",
-            "设置", "蓝牙打印"};
+            "设置"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,12 +177,12 @@ public class Main2Activity extends AppCompatActivity implements OnItemClickListe
 //                        startActivity(intent);
                         jumpToActivity(SettingsActivity.class);
                         break;
-                    case 8: //帮助说明
+                    /*case 8: //帮助说明
                         intent.setClass(Main2Activity.this, com.lkkdesign.changlong.printer.AppStart.class);
                         intent.putExtra("type","main");
                         startActivity(intent);
 //                        CustomToast.showToast(Main2Activity.this,"功能正在完善中，敬请期待……");
-                        break;
+                        break;*/
                     default:
                         break;
                 }

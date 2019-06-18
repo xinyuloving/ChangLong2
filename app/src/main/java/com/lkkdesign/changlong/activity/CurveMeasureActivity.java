@@ -151,9 +151,9 @@ public class CurveMeasureActivity extends AppCompatActivity {
         final TextView para2=dialogView.findViewById(R.id.dialog_pama2);
         final TextView title=dialogView.findViewById(R.id.dialog_title);
         final AlertDialog customAlert = setDeBugDialog.show();
-        title.setText("请输入公式:C=kA+b或A=Kc+b\n");
-        para1.setText("请输入K值：");
-        para2.setText("请输入b值：");
+        title.setText("请输入公式参数\n");
+        para1.setText("k=：");
+        para2.setText("b=：");
         dialogView.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

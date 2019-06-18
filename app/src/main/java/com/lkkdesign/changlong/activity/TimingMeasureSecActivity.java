@@ -133,7 +133,8 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
             case R.id.iv_return:
             case R.id.tv_return:
                 if ("time".equals(Constants.strFormActivity)) {
-                    intent.setClass(this, TimingSetupActivity.class);
+                    intent.setClass(this, CurveSelectActivity.class);
+                    intent.putExtra("from","time");
                     startActivity(intent);
                     this.finish();
                 } else if ("xiaozhun".equals(Constants.strFormActivity)) {
@@ -219,7 +220,8 @@ public class TimingMeasureSecActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if ("time".equals(Constants.strFormActivity)) {
-            intent.setClass(this, TimingSetupActivity.class);
+            intent.setClass(this, CurveSelectActivity.class);
+            intent.putExtra("from","time");
             startActivity(intent);
             this.finish();
         } else if ("xiaozhun".equals(Constants.strFormActivity)) {
