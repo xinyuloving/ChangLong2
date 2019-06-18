@@ -76,6 +76,7 @@ public final class Constants {
 
     public static DecimalFormat df = new DecimalFormat(".00");
     public static DecimalFormat df_4 = new DecimalFormat("#0.0000");//格式化设置，保留四个小数
+    public static DecimalFormat df_3 = new DecimalFormat("#0.000");//格式化设置，保留三个小数
 
 
     /**

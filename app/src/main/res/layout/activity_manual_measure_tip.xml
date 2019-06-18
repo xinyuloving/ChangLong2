@@ -184,7 +184,6 @@
             android:layout_margin="@dimen/dp_16"
             android:layout_weight="1"
             android:background="@drawable/btn_bg_blue"
-            android:text="@string/next"
             android:textColor="@color/white"
             android:textSize="@dimen/textsize_24" />
     </LinearLayout>

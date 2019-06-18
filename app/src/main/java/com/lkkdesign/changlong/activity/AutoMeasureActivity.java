@@ -133,6 +133,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
     private String strStyle = "";//测量类型？
     private String strSampler = "";//采样人
     private String strInspector = "";//检测人
+    private String strNote="";//备注
     private String strCODInfo = "";
 
     private String strStandardType = "";
@@ -185,6 +186,9 @@ public class AutoMeasureActivity extends AppCompatActivity {
 
             }
         });
+
+        timeCount.setVisibility(View.INVISIBLE);
+        strShow=tvCod.getText().toString();
 
     }
 
@@ -274,11 +278,13 @@ public class AutoMeasureActivity extends AppCompatActivity {
                     final Spinner classic = dialogView.findViewById(R.id.sp_classic);
                     final EditText sampler = dialogView.findViewById(R.id.et_sampler);
                     final EditText inspector = dialogView.findViewById(R.id.et_inspector);
+                    final EditText note= dialogView.findViewById(R.id.et_note);
                     samplingTime.setLeftString(DateUtil.getNowDateTime());
                     measureName.setHint("请输入测点名称");
                     entityName.setHint("请输入单位名称");
                     sampler.setText(Constants.strLoginName);
                     inspector.setText(Constants.strLoginName);
+                    note.setHint("请输入备注");
 
                     samplingTime.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -311,6 +317,8 @@ public class AutoMeasureActivity extends AppCompatActivity {
                             });
                             strSampler = sampler.getText().toString();
                             strInspector = inspector.getText().toString();
+                            strNote=note.getText().toString();
+
                             saveData();
                             customAlert.dismiss();
                         }
@@ -345,7 +353,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
                 intResult + ".000 mg/L",//测量结果
                 inttemp + "℃",//温度
                 DateUtil.getNowDateTime(),//时间
-                "备注",
+                strNote,
                 strMeasureName,
                 strEntityName,
                 strSamplingTime,
@@ -366,7 +374,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
                 + "\n测量结果：" + intResult + ".000 mg/L"
                 + "\n类型：" + strShow
                 + "\n时间：" + DateUtil.getNowDateTime()
-                + "\n备注：" + "备注"
+                + "\n备注：" + strNote
                 + "\n测点名称：" + strMeasureName
                 + "\n单位名称：" + strEntityName
                 + "\n取样时间：" + strSamplingTime
@@ -421,6 +429,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
 
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                        timeCount.setVisibility(View.VISIBLE);
                         String strInput = input.toString().replaceAll(" ", "");
                         if (strInput.length() == 0) {
                             CustomToast.showToast(AutoMeasureActivity.this, "没有输入倒计时");

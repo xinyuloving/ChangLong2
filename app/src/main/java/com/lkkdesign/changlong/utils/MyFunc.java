@@ -278,9 +278,9 @@ public class MyFunc {
      * @return
      */
     public static float getAbsorbance(float transmittance) {
-        double douResult = 0;
+        double douResult = 0.0;
         douResult = (-1) * Math.log10(transmittance);
 //        douResult = (-1) * Math.round(Math.log10(transmittance) * 100) / 100;
-        return Float.parseFloat(Constants.df.format(douResult));
+        return Float.parseFloat(Constants.df_3.format(douResult));
     }
 }

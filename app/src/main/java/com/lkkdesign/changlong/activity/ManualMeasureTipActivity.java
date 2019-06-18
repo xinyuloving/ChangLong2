@@ -14,12 +14,14 @@ import android.widget.TextView;
 import com.lkkdesign.changlong.R;
 import com.lkkdesign.changlong.config.Constants;
 import com.lkkdesign.changlong.utils.CustomToast;
+import com.lkkdesign.changlong.utils.RandomUntil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static android.view.View.GONE;
+import static com.lkkdesign.changlong.utils.MyFunc.getAbsorbance;
 
 public class ManualMeasureTipActivity extends AppCompatActivity {
 
@@ -61,6 +63,10 @@ public class ManualMeasureTipActivity extends AppCompatActivity {
     private int lineState = 1;//当前提示文字
     private String strFrom = "";
 
+    private boolean booEmptyTube = true;//是否放入空白比色管
+    private boolean booEmptyTubeOut = true;//是否取出空白比色管
+    private boolean booSampleTube = true;//是否放入样品
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +87,14 @@ public class ManualMeasureTipActivity extends AppCompatActivity {
         tvLine3.setVisibility(GONE);
         tvLine4.setVisibility(GONE);
         tvLine5.setVisibility(GONE);
+        if (booEmptyTube == true) {
+            tvLine1.setText("请按空白键");
+            btnEmpty.setVisibility(View.VISIBLE);
+            btnMeasure.setVisibility(View.GONE);
+        } else {
+            tvLine1.setText("请放入空白比色管");
+            btnMeasure.setVisibility(View.GONE);
+        }
         if ("ManualMeasureFristActivity".equals(Constants.strFormActivity)) {
             tvTitle.setText(R.string.tv_manual);
         } else if ("InputDataActivity_qxjz".equals(Constants.strFormActivity)) {
@@ -89,6 +103,7 @@ public class ManualMeasureTipActivity extends AppCompatActivity {
             tvLine4.setVisibility(View.VISIBLE);
         } else {
             tvTitle.setText(R.string.tv_cure_adjust);
+
         }
     }
 
@@ -98,56 +113,27 @@ public class ManualMeasureTipActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.iv_return:
             case R.id.tv_return:
-//                intent.setClass(this, Main2Activity.class);
-//                startActivity(intent);
-//                this.finish();
                 jumpToActivity(ManualMeasureFristActivity.class);
                 break;
             case R.id.btn_empty:
-                booIsEmpty = true;
+                booEmptyTube = false;
                 btnEmpty.setVisibility(View.GONE);
+                tvLine1.setText("请取出空白比色管");
+                if (booEmptyTubeOut == true) {
+                    tvLine1.setText("请放入样品");
+                    if (booSampleTube == true) {
+                        tvLine1.setText("请按确认");
+                        btnMeasure.setVisibility(View.VISIBLE);
+                        btnMeasure.setText("确定");
+                    }
+                }
                 break;
             case R.id.btn_measure:
-                switch (lineState) {
-                    case 1:
-                        tvLine2.setVisibility(View.VISIBLE);
-                        tvLine1.setVisibility(View.GONE);
-                        btnMeasure.setText("空 白");
-                        lineState++;
-                        break;
-                    case 2:
-                        /*if (booIsEmpty == false) {
-                            CustomToast.showToast(getApplicationContext(), "请按照步骤执行");
-                        } else {
-                            tvLine3.setVisibility(View.VISIBLE);
-                            tvLine2.setVisibility(View.GONE);
-                            btnEmpty.setVisibility(View.GONE);
-                            lineState++;
-                        }*/
-                        tvLine3.setVisibility(View.VISIBLE);
-                        tvLine2.setVisibility(View.GONE);
-                        btnMeasure.setText(R.string.next);
-                        lineState++;
-                        break;
-                    case 3:
-                        tvLine4.setVisibility(View.VISIBLE);
-                        tvLine3.setVisibility(View.GONE);
-                        lineState++;
-                        break;
-                    case 4:
-                        tvLine5.setVisibility(View.VISIBLE);
-                        tvLine4.setVisibility(View.GONE);
-                        btnMeasure.setText(R.string.confirm);
-                        lineState++;
-                        break;
-                    case 5:
-                        intent.setClass(this, ManualMeasureSecActivity.class);
-                        intent.putExtra("wavelength", strInfo);
-                        intent.putExtra("from", strFrom);
-                        startActivity(intent);
-                        this.finish();
-                        break;
-                }
+                intent.setClass(this, ManualMeasureSecActivity.class);
+                intent.putExtra("wavelength", strInfo);
+                intent.putExtra("from", strFrom);
+                startActivity(intent);
+                this.finish();
                 break;
         }
     }
