@@ -68,7 +68,9 @@
         app:layout_constraintEnd_toEndOf="@+id/toolbar"
         app:layout_constraintStart_toStartOf="@+id/toolbar"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        android:layout_margin="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
         app:cardCornerRadius="@dimen/dp_10">
 
         <TextView
@@ -99,7 +101,9 @@
         app:layout_constraintEnd_toEndOf="@+id/cardview1"
         app:layout_constraintStart_toStartOf="@+id/cardview1"
         app:layout_constraintTop_toBottomOf="@+id/cardview1"
-        android:layout_margin="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_8"
         app:cardCornerRadius="@dimen/dp_10">
         <TextView
             android:id="@+id/tv_show"
@@ -118,7 +122,9 @@
         app:layout_constraintEnd_toEndOf="@+id/cardview2"
         app:layout_constraintStart_toStartOf="@+id/cardview2"
         app:layout_constraintTop_toBottomOf="@+id/cardview2"
-        android:layout_margin="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_8"
         app:cardCornerRadius="@dimen/dp_10">
         <LinearLayout
             android:id="@+id/start_line"

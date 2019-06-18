@@ -34,7 +34,7 @@
     <com.bigkoo.convenientbanner.ConvenientBanner
         android:id="@+id/convenientBanner"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="191dp"
         app:autoTurningTime="3000"
         app:canLoop="true"
         app:layout_constraintEnd_toEndOf="@+id/show_main"
@@ -45,13 +45,14 @@
         android:id="@+id/showText"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="@string/tv_chonglong_desc"
-        android:textSize="@dimen/textsize_20"
-        android:textColor="@color/statusBarColor"
+        android:layout_marginTop="8dp"
         android:gravity="center"
+        android:text="@string/tv_chonglong_desc"
+        android:textColor="@color/statusBarColor"
+        android:textSize="@dimen/textsize_20"
         app:layout_constraintEnd_toEndOf="@+id/convenientBanner"
         app:layout_constraintStart_toStartOf="@+id/convenientBanner"
-        app:layout_constraintTop_toBottomOf="@+id/convenientBanner"/>
+        app:layout_constraintTop_toBottomOf="@+id/convenientBanner" />
 
     <GridView
         android:id="@+id/gridview"
@@ -72,10 +73,10 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="@dimen/dp_8"
-        android:layout_marginTop="@dimen/dp_16"
-        android:textColor="@color/statusBarColor"
         android:text="@string/nav_footer_phonenumber"
+        android:textColor="@color/statusBarColor"
         app:layout_constraintEnd_toEndOf="@+id/gridview"
         app:layout_constraintStart_toStartOf="@+id/gridview"
         app:layout_constraintTop_toBottomOf="@+id/gridview" />

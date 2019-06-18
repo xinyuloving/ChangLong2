@@ -220,6 +220,8 @@ public class PhotometerSecActivity extends AppCompatActivity {
         rvCurve.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged(mDataList);
 
+
+
     }
 
     @OnClick({R.id.tv_user, R.id.tv_return, R.id.tv_cod, R.id.tv_result, R.id.tv_timer, R.id.btn_add,
@@ -379,7 +381,7 @@ public class PhotometerSecActivity extends AppCompatActivity {
                 strCurrent,//电流
                 strVoltage,//电压
                 strTemperature,//温度
-                strTime//时间
+                DateUtil.getNowDateTime()//时间
         );
 
         strContent = DateUtil.getNowDateTime2() + "光度计" + Constants.strLoginName
@@ -389,7 +391,7 @@ public class PhotometerSecActivity extends AppCompatActivity {
                 + "\n电流：" + strCurrent + "μA"
                 + "\n电压：" + strVoltage + "mV"
                 + "\n温度：" + strTemperature + "℃"
-                + "\n时间：" + strTime
+                + "\n时间：" + DateUtil.getNowDateTime()
                 + "\n操作人：" + Constants.strLoginName;
 
         photometerDao.add(tb_photometer);

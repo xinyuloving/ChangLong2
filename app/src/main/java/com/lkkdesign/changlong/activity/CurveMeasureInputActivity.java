@@ -168,8 +168,8 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
 
 //                Double[] x = ListAddCValue.toArray(new Double[ListAddCValue.size()]);
 //                Double[] y = ListAddAValue.toArray(new Double[ListAddAValue.size()]);
-                Double[] x ={0.0904,0.166,0.2453,0.3327,0.3969,0.4987,0.7102,0.8803,1.2546};
-                Double[] y ={0d,0.2,0.4,0.6,0.8,1d,1.5,2d,3d};
+                Double[] x = {0.0904, 0.166, 0.2453, 0.3327, 0.3969, 0.4987, 0.7102, 0.8803, 1.2546};
+                Double[] y = {0d, 0.2, 0.4, 0.6, 0.8, 1d, 1.5, 2d, 3d};
 //                Double[] x1 ={0.01,0.049,0.11,0.21,0.5};//吸光度
 //                Double[] y1 ={1d,5d,10d,20d,50d};//浓度
 //
@@ -368,11 +368,40 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
                         //mAdapter.notifyDataSetChanged(mDataList);
                         ListAddAValue.add(Double.parseDouble(strAValue));
                         ListAddCValue.add(Double.parseDouble(strCValue));
+                        int length = ListAddAValue.size();
+                        Double[] x = new Double[length];
+                        Double[] y = new Double[length];
+                        for (int i = 0; i < length; i++) {
+                            x[i] = (Double) ListAddAValue.get(i);
+                            y[i]=(Double) ListAddCValue.get(i);
+                        }
+                        Double a = LeastSquares.getA(x, y);
+                        Double b = LeastSquares.getB(x, y);
+                        if(length<2){
+                            tvShowData.setText("C=kA+b");
+                        }else{
+                            tvShowData.setText("C=" + df_4.format(a) + "A+" + df_4.format(b));
+                        }
+
                     } else {//修改当前曲线
                         dataList.set(intPosition, "C=" + strCValue + "mg/L\nA=" + strAValue);
                         ListAddAValue.set(intPosition, Double.parseDouble(strAValue));
                         ListAddCValue.set(intPosition, Double.parseDouble(strCValue));
                         mAdapter.notifyDataSetChanged(mDataList);
+                        int length = ListAddAValue.size();
+                        Double[] x = new Double[length];
+                        Double[] y = new Double[length];
+                        for (int i = 0; i < length; i++) {
+                            x[i] = (Double) ListAddAValue.get(i);
+                            y[i]=(Double) ListAddCValue.get(i);
+                        }
+                        Double a = LeastSquares.getA(x, y);
+                        Double b = LeastSquares.getB(x, y);
+                        if(length<2){
+                            tvShowData.setText("C=kA+b");
+                        }else{
+                            tvShowData.setText("C=" + df_4.format(a) + "A+" + df_4.format(b));
+                        }
                     }
 
                 } else {

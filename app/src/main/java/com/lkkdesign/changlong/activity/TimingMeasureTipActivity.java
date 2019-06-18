@@ -61,7 +61,11 @@ public class TimingMeasureTipActivity extends AppCompatActivity {
     private String strInfo = "";
     private String strFrom = "";
     private boolean booIsEmpty = false;//是否已按“空白”键，默认没有
-    private int lineState=1;//当前提示文字
+    private int lineState = 1;//当前提示文字
+
+    private boolean booEmptyTube = true;//是否放入空白比色管
+    private boolean booEmptyTubeOut = true;//是否取出空白比色管
+    private boolean booSampleTube = true;//是否放入样品
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +86,16 @@ public class TimingMeasureTipActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if ("xiaozhun".equals(Constants.strFormActivity)) {
             tvTitle.setText(" 曲线校准");
-        }else if("time".equals(Constants.strFormActivity)){
+        } else if ("time".equals(Constants.strFormActivity)) {
             tvTitle.setText(" 定时测量");
+        }
+        if (booEmptyTube == true) {
+            tvLine1.setText("请按空白键");
+            btnEmpty.setVisibility(View.VISIBLE);
+            btnMeasure.setVisibility(View.GONE);
+        } else {
+            tvLine1.setText("请放入空白比色管");
+            btnMeasure.setVisibility(View.GONE);
         }
         tvLine2.setVisibility(GONE);
         tvLine3.setVisibility(GONE);
@@ -108,62 +120,39 @@ public class TimingMeasureTipActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.btn_empty:
-                booIsEmpty=true;
+                booEmptyTube = false;
                 btnEmpty.setVisibility(View.GONE);
+                tvLine1.setText("请取出空白比色管");
+                if (booEmptyTubeOut == true) {
+                    tvLine1.setText("请放入样品");
+                    if (booSampleTube == true) {
+                        tvLine1.setText("请按确认");
+                        btnMeasure.setVisibility(View.VISIBLE);
+                        btnMeasure.setText("确定");
+                    }
+                }
                 break;
             case R.id.btn_measure:
-                switch (lineState){
-                    case 1:
-                        tvLine2.setVisibility(View.VISIBLE);
-                        tvLine1.setVisibility(View.GONE);
-                        btnMeasure.setText("空 白");
-                        lineState++;
-                        break;
-                    case 2:
-                       /*if (booIsEmpty == false) {
-                            CustomToast.showToast(getApplicationContext(), "请按照步骤执行");
-                        } else {
-                            tvLine3.setVisibility(View.VISIBLE);
-                            tvLine2.setVisibility(View.GONE);
-                            btnEmpty.setVisibility(View.GONE);
-                            lineState++;
-                        }*/
-                        tvLine3.setVisibility(View.VISIBLE);
-                        tvLine2.setVisibility(View.GONE);
-                        btnMeasure.setText(R.string.next);
-                        lineState++;
-                        break;
-                    case 3:
-                        tvLine4.setVisibility(View.VISIBLE);
-                        tvLine3.setVisibility(View.GONE);
-                        lineState++;
-                        break;
-                    case 4:
-                        tvLine5.setVisibility(View.VISIBLE);
-                        tvLine4.setVisibility(View.GONE);
-                        btnMeasure.setText(R.string.confirm);
-                        lineState++;
-                        break;
-                    case 5:
-                        strStartTime = intent.getStringExtra("strStartTime");
-                        strEndTime = intent.getStringExtra("strEndTime");
-                        jiange = intent.getStringExtra("jiange");
-                        strInfo = intent.getStringExtra("strInfo");
-                        intent.setClass(this, TimingMeasureSecActivity.class);
-                        intent.putExtra("from",strFrom);
-                        intent.putExtra("strStartTime", strStartTime);
-                        intent.putExtra("strEndTime", strEndTime);
-                        intent.putExtra("jiange", jiange);
-                        intent.putExtra("wavelength", wavelength);
-                        intent.putExtra("strInfo", strInfo);
-                        startActivity(intent);
-                        this.finish();
-                        break;
-                }
-
+                strStartTime = intent.getStringExtra("strStartTime");
+                strEndTime = intent.getStringExtra("strEndTime");
+                jiange = intent.getStringExtra("jiange");
+                strInfo = intent.getStringExtra("strInfo");
+                intent.setClass(this, TimingMeasureSecActivity.class);
+                intent.putExtra("from", strFrom);
+                intent.putExtra("strStartTime", strStartTime);
+                intent.putExtra("strEndTime", strEndTime);
+                intent.putExtra("jiange", jiange);
+                intent.putExtra("wavelength", wavelength);
+                intent.putExtra("strInfo", strInfo);
+                startActivity(intent);
+                this.finish();
                 break;
         }
+
+
     }
+
+
 
     public void onBackPressed() {
         Intent intent = getIntent();
