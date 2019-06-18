@@ -342,7 +342,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
         Tb_measure tb_measure = new Tb_measure(measureDao.getMaxId() + 1,
                 strClassic,//测量类别
                 strStyle,
-                DateUtil.getNowDateTime2() + " "+strShow + " "+ Constants.strLoginName,
+                 DateUtil.getNowDateTime2() + " "+strShow + " "+ Constants.strLoginName,
                 "自动测量" + Constants.strLoginName + DateUtil.getNowDateTime2(),//曲线名称
                 intWavelength,//曲线波长
                 floDensity,//密度

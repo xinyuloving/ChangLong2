@@ -168,8 +168,8 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
 
 //                Double[] x = ListAddCValue.toArray(new Double[ListAddCValue.size()]);
 //                Double[] y = ListAddAValue.toArray(new Double[ListAddAValue.size()]);
-                Double[] x ={0.0904,0.166,0.2453,0.3327,0.3969,0.4987,0.7102,0.8803,1.2546};
-                Double[] y ={0d,0.2,0.4,0.6,0.8,1d,1.5,2d,3d};
+//                Double[] x = {0.0904, 0.166, 0.2453, 0.3327, 0.3969, 0.4987, 0.7102, 0.8803, 1.2546};
+//                Double[] y = {0d, 0.2, 0.4, 0.6, 0.8, 1d, 1.5, 2d, 3d};
 //                Double[] x1 ={0.01,0.049,0.11,0.21,0.5};//吸光度
 //                Double[] y1 ={1d,5d,10d,20d,50d};//浓度
 //
@@ -177,15 +177,15 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
 //                Double[] y2 ={1.0, 5.0, 10.0, 20.0, 50.0};//浓度
 
 
-                Log.i(TAG, "Double[] x =" + Arrays.toString(x));
-                Log.i(TAG, "Double[] y =" + Arrays.toString(y));
-                Double a = LeastSquares.getA(x, y);
-                Double b = LeastSquares.getB(x, y);
-                tvShowData.setText("C=" + df_4.format(a) + "A+" + df_4.format(b));
-                Log.i(TAG, "k值：=" + a);
-                Log.i(TAG, "b值：" + b);
-                Log.i(TAG, "格式化k值：=" + df_4.format(a));
-                Log.i(TAG, "格式化b值：" + df_4.format(b));
+//                Log.i(TAG, "Double[] x =" + Arrays.toString(x));
+//                Log.i(TAG, "Double[] y =" + Arrays.toString(y));
+//                Double a = LeastSquares.getA(x, y);
+//                Double b = LeastSquares.getB(x, y);
+//                tvShowData.setText("C=" + df_4.format(a) + "A+" + df_4.format(b));
+//                Log.i(TAG, "k值：=" + a);
+//                Log.i(TAG, "b值：" + b);
+//                Log.i(TAG, "格式化k值：=" + df_4.format(a));
+//                Log.i(TAG, "格式化b值：" + df_4.format(b));
 
 //                Log.i(TAG, "Double[] x1 =" + Arrays.toString(x1));
 //                Log.i(TAG, "Double[] y1 =" + Arrays.toString(y1));
@@ -207,27 +207,27 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
 //                Log.i(TAG, "格式化k2值：=" + df_4.format(a2));
 //                Log.i(TAG, "格式化b2值：" + df_4.format(b2));
 
-//                new AlertDialog.Builder(this)
-//                        .setTitle("保存")
-//                        .setMessage("保存吗？")
-//                        .setPositiveButton("是", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                intent.setClass(CurveMeasureInputActivity.this, ManualMeasureTipActivity.class);
-//                                intent.putExtra("from", "CurveMeasureInputActivity");
-//                                intent.putExtra("wavelength", strInfo);
-//                                intent.putExtra("type", Constants.strFormActivity);
-//                                intent.putExtra("strInfo", strInfo);
-//                                startActivity(intent);
-//                            }
-//                        })
-//                        .setNegativeButton("否", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//
-//                            }
-//                        })
-//                        .show();
+                new AlertDialog.Builder(this)
+                        .setTitle("保存")
+                        .setMessage("保存吗？")
+                        .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                intent.setClass(CurveMeasureInputActivity.this, ManualMeasureTipActivity.class);
+                                intent.putExtra("from", "CurveMeasureInputActivity");
+                                intent.putExtra("wavelength", strInfo);
+                                intent.putExtra("type", Constants.strFormActivity);
+                                intent.putExtra("strInfo", strInfo);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .show();
                 break;
         }
     }
@@ -388,6 +388,20 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
                         ListAddAValue.set(intPosition, Double.parseDouble(strAValue));
                         ListAddCValue.set(intPosition, Double.parseDouble(strCValue));
                         mAdapter.notifyDataSetChanged(mDataList);
+                        int length = ListAddAValue.size();
+                        Double[] x = new Double[length];
+                        Double[] y = new Double[length];
+                        for (int i = 0; i < length; i++) {
+                            x[i] = (Double) ListAddAValue.get(i);
+                            y[i]=(Double) ListAddCValue.get(i);
+                        }
+                        Double a = LeastSquares.getA(x, y);
+                        Double b = LeastSquares.getB(x, y);
+                        if(length<2){
+                            tvShowData.setText("C=kA+b");
+                        }else{
+                            tvShowData.setText("C=" + df_4.format(a) + "A+" + df_4.format(b));
+                        }
                     }
 
                 } else {

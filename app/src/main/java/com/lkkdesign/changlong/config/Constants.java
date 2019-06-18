@@ -46,6 +46,10 @@ public final class Constants {
     public static int intCountDwonTime = 120000;//默认120秒
     public static int intADTime = 60000;
 
+
+    public static final String DOMAIN = "http://182.92.219.36:8080";
+    public static final String APIURL = "http://182.92.219.36:8080";
+
     /**
      * 应用上下文名
      */
@@ -55,12 +59,24 @@ public final class Constants {
 
     //public static int machineId = 0;//设备编号
 
+    public static final String strKey = "192006250b4c09247ec02edce69f6a2d";
+
+    public static final int intBaudRate_115200 = 115200;//波特率 115200
+    public static final int intBaudRate_9600 = 9600;//波特率 9600
+    public static final int intBaudRate_4800 = 4800;//波特率 4800
+    public static final int intBaudRate_2400 = 2400;//波特率 2400
+    public static final String strDoorPort = "/dev/ttyS3";//扫码使用ttyS4
+
+    public static final String strOpenAllDooor = "F11F02000101131FF1";//柜门全开
+    public static final String strCloseAllDooor = "F11F03000101141FF1";//柜门全关
+    public static final String strOpenLED = "F11F04000101151FF1";//打开LED
+    public static final String strColseLED = "F11F05000101161FF1";//关闭LED
+
     public static Map serialMapData = new HashMap();
 
     public static DecimalFormat df = new DecimalFormat(".00");
     public static DecimalFormat df_4 = new DecimalFormat("#0.0000");//格式化设置，保留四个小数
     public static DecimalFormat df_3 = new DecimalFormat("#0.000");//格式化设置，保留三个小数
-    public static DecimalFormat df_percentage = new DecimalFormat("#0.00%");//格式化设置，百分比，保留两个个小数
 
 
     /**
