@@ -114,7 +114,7 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
     private String strAValue = "";
     private String strCValue = "";
     private String strType = "";
-    private String strfrom = "";
+    private String strFrom = "";
     private List<String> dataList = new ArrayList<>();
 
     private boolean booAddBtn = false;//默认添加按钮的状态为false，当false时，A/C的值默认为零
@@ -133,11 +133,11 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
 
     private void initView() {
         Intent intent = getIntent();
-        strType = intent.getStringExtra("type");
-        Constants.strFormActivity = strType;
+        strFrom = intent.getStringExtra("from");
+        Constants.strFormActivity = strFrom;
         strTitle = intent.getStringExtra("wavelength");
         strInfo = intent.getStringExtra("strInfo");
-        strfrom = intent.getStringExtra("from");
+//        strfrom = intent.getStringExtra("from");
 
         tvUser.setText(Constants.strLoginName);
         tvCod.setText(strInfo);
@@ -165,11 +165,11 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged(mDataList);
 
-        if ("InputDataActivity".equals(strfrom)) {
+        if ("InputDataActivity".equals(Constants.strFormActivity)) {
 
-        } else if ("CurveMeasureActivity".equals(strfrom)) {
+        } else if ("CurveMeasureActivity".equals(Constants.strFormActivity)) {
 
-        } else if ("CMActivity_ssjz".equals(strfrom)) {
+        } else if ("CMActivity_ssjz".equals(Constants.strFormActivity)) {
             tvCod.setText(strInfo);
             btnCalculate.setVisibility(GONE);
             lineXiaozhun.setVisibility(View.VISIBLE);
@@ -185,13 +185,13 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
         switch (view.getId()) {
             case R.id.tv_return:
                 intent.setClass(this, CurveSelectActivity.class);
-                intent.putExtra("type", Constants.strFormActivity);
+                intent.putExtra("from", Constants.strFormActivity);
                 intent.putExtra("strInfo", strInfo);
                 startActivity(intent);
                 this.finish();
                 break;
             case R.id.btn_blank:
-                if ("InputDataActivity".equals(strfrom) || "CurveMeasureActivity".equals(strfrom)) {
+                if ("InputDataActivity".equals(Constants.strFormActivity) || "CurveMeasureActivity".equals(Constants.strFormActivity)) {
                     tvShow1.setText("\n\n请取出空白比色管\n请放入样品\n请按确认键");
 //                tvShow2.setVisibility(View.INVISIBLE);
 //                    booIsPre = true;
@@ -277,7 +277,7 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                 }
                 break;
             case R.id.btn_add:
-                if ("InputDataActivity".equals(strfrom)) {
+                if ("InputDataActivity".equals(Constants.strFormActivity)) {
                     AlertDialog.Builder setDeBugDialog = new AlertDialog.Builder(this);
                     //获取界面
                     View dialogView = LayoutInflater.from(this).inflate(R.layout.inputdata_dialog_layout, null);
@@ -307,9 +307,9 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                             customAlert.dismiss();
                         }
                     });
-                } else if ("CurveMeasureActivity".equals(strfrom)) {
+                } else if ("CurveMeasureActivity".equals(Constants.strFormActivity)) {
 
-                } else if ("CMActivity_ssjz".equals(strfrom)) {
+                } else if ("CMActivity_ssjz".equals(Constants.strFormActivity)) {
 
                     final EditText inputServer = new EditText(this);
                     inputServer.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -346,7 +346,7 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
                 break;
 
             case R.id.btn_calculate:
-                if ("InputDataActivity".equals(strfrom) || "CurveMeasureActivity".equals(strfrom) ) {
+                if ("InputDataActivity".equals(Constants.strFormActivity) || "CurveMeasureActivity".equals(Constants.strFormActivity) ) {
                     new AlertDialog.Builder(this)
                             .setTitle("保存")
                             .setMessage("保存吗？")
@@ -537,7 +537,7 @@ public class InputDataActivity extends AppCompatActivity implements SwipeItemCli
     @Override
     public void onBackPressed() {
         intent.setClass(this, CurveSelectActivity.class);
-        intent.putExtra("type", Constants.strFormActivity);
+        intent.putExtra("from", Constants.strFormActivity);
         intent.putExtra("strInfo", strInfo);
         startActivity(intent);
         this.finish();

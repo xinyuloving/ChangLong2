@@ -158,7 +158,7 @@ public class Main2Activity extends AppCompatActivity implements OnItemClickListe
                         break;
                     case 4: //曲线校准
                         intent.setClass(Main2Activity.this, CurveSelectActivity.class);
-                        intent.putExtra("from", "xiaozhun");
+                        intent.putExtra("from", "jiaozhun");
                         startActivity(intent);
                         break;
                     case 5: //历史数据

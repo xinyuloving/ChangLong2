@@ -78,7 +78,9 @@
         android:id="@+id/cardview2"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_margin="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_8"
         app:cardCornerRadius="@dimen/padding_10"
         app:layout_constraintEnd_toEndOf="@+id/cardview1"
         app:layout_constraintStart_toStartOf="@+id/cardview1"
@@ -96,7 +98,8 @@
             android:layout_gravity="bottom|end"
             android:clickable="true"
             android:src="@mipmap/float_add"
-            app:fabSize="mini" />
+            app:fabSize="mini"
+            android:layout_margin="@dimen/dp_8"/>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -115,7 +118,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:singleLine="false"
-            android:text="C=kA+b\n R²=100099.99%"
+            android:text="C=kA+b\nR²=100.00%"
             android:textColor="@color/statusBarColor"
             android:textSize="@dimen/textsize_28"
             app:layout_constraintEnd_toEndOf="parent"

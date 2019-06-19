@@ -154,11 +154,12 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
         tvUser.setText(Constants.strLoginName);
         tvTimer.setText(DateUtil.getDate());
         strfrom = getIntent.getStringExtra("from");
-        if ("InputDataActivity".equals(strfrom)) {
+        Constants.strFormActivity=strfrom;
+        if ("CurveMeasureInputActivity".equals(strfrom)) {
             tvLlTitle.setText(R.string.tv_cure_adjust);
         } else if ("ManualMeasureFristActivity".equals(strfrom)) {
             tvLlTitle.setText(R.string.tv_manual);
-        }
+        }else if("gongsiceliang".equals(strfrom))
         timeCount.setVisibility(View.INVISIBLE);
 
     }
@@ -182,6 +183,7 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
                 break;
             case R.id.iv_return:
             case R.id.tv_return:
+                intent.putExtra("from",Constants.strFormActivity);
                 jumpToActivity(ManualMeasureFristActivity.class);
                 break;
             case R.id.fab_print:

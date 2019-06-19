@@ -66,7 +66,7 @@ public class CurveMeasureActivity extends AppCompatActivity {
     private String strTitle = "";
     private String strInfo = "";
     private int intSelectFun = 0;
-    private String strType="";
+    private String strFrom="";
     private Intent intent = new Intent();
 
     private Boolean booformula=false;
@@ -85,8 +85,8 @@ public class CurveMeasureActivity extends AppCompatActivity {
     private void initView() {
 
         Intent intent = getIntent();
-        strType = intent.getStringExtra("from");
-        Constants.strFormActivity = strType;
+        strFrom = intent.getStringExtra("from");
+        Constants.strFormActivity = strFrom;
         strTitle = intent.getStringExtra("wavelength");
         strInfo = intent.getStringExtra("strInfo");
         tvUser.setText(Constants.strLoginName);
@@ -106,7 +106,7 @@ public class CurveMeasureActivity extends AppCompatActivity {
                     case R.id.rb_shuju:
                         CustomToast.showToast(CurveMeasureActivity.this, "数据输入");
                         intSelectFun = 1;
-                        intent.putExtra("type",Constants.strFormActivity);
+//                        intent.putExtra("type",Constants.strFormActivity);
                         intent.putExtra("from","CurveMeasureInputActivity");
                         intent.putExtra("strInfo", strInfo);
                         intent.putExtra("wavelength", strTitle);
@@ -122,7 +122,7 @@ public class CurveMeasureActivity extends AppCompatActivity {
                     case R.id.rb_ssxz:
                         CustomToast.showToast(CurveMeasureActivity.this, "已选择：实时校准");
                         intSelectFun = 3;
-                        intent.putExtra("type",Constants.strFormActivity);
+//                        intent.putExtra("type",Constants.strFormActivity);
                         intent.putExtra("from", "CMActivity_ssjz");
                         intent.putExtra("strInfo", strInfo);
                         intent.putExtra("wavelength", strTitle);
@@ -162,6 +162,11 @@ public class CurveMeasureActivity extends AppCompatActivity {
                 }
                 if (cValue.getText().toString().length() > 0 && aValue.getText().toString().length() > 0) {
                     tvResult2.setText("输入公式为："+"C="+cValue.getText().toString()+"A+"+aValue.getText().toString());
+                    intent.setClass(CurveMeasureActivity.this, ManualMeasureTipActivity.class);
+                    intent.putExtra("from", "gongsiceliang");
+                    intent.putExtra("wavelength", strInfo);
+                    intent.putExtra("strInfo", strInfo);
+                    startActivity(intent);
                     customAlert.dismiss();
                 }
             }
@@ -180,14 +185,14 @@ public class CurveMeasureActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.tv_return:
 //                intent.setClass(this, CurveSelectActivity.class);
-                intent.putExtra("type", Constants.strFormActivity);
+                intent.putExtra("from", Constants.strFormActivity);
 //                startActivity(intent);
 //                this.finish();
                 jumpToActivity(CurveSelectActivity.class);
                 break;
             case R.id.tv_user:
                 break;
-            case R.id.btn_calculate:
+          /*  case R.id.btn_calculate:
                 if (intSelectFun > 0) {
                     if (1 == intSelectFun) {
 //                        intent.setClass(this, InputDataActivity.class);
@@ -222,19 +227,20 @@ public class CurveMeasureActivity extends AppCompatActivity {
                 } else {
                     CustomToast.showToast(CurveMeasureActivity.this, "请选择校准模式");
                 }
-                break;
+                break;*/
         }
     }
 
     private void jumpToActivity(Class activity){
         intent.setClass(this, activity);
+        intent.putExtra("from",Constants.strFormActivity);
         startActivity(intent);
         this.finish();
     }
 
     @Override
     public void onBackPressed() {
-        intent.putExtra("type", Constants.strFormActivity);
+        intent.putExtra("from", Constants.strFormActivity);
         jumpToActivity(CurveSelectActivity.class);
 //        intent.setClass(this, CurveSelectActivity.class);
 //        intent.putExtra("type", Constants.strFormActivity);

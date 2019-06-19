@@ -124,7 +124,7 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
         public void onItemLongClick(View view, int i) {
             intent.setClass(CurveSelectActivity.this, CurveManageActivity.class);
             intent.putExtra("curve", mDataList.get(i)); //将计算的值回传回去
-            intent.putExtra("type", Constants.strFormActivity);
+            intent.putExtra("from", Constants.strFormActivity);
             startActivity(intent);
             CurveSelectActivity.this.finish();
         }
@@ -258,7 +258,7 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
             CustomToast.showToast(this, "请选择对应的曲线！");
         } else {
 
-            if ("xiaozhun".equals(Constants.strFormActivity)) {
+            if ("jiaozhun".equals(Constants.strFormActivity)) {
                 intent.setClass(this, CurveMeasureActivity.class);
                 intent.putExtra("from", Constants.strFormActivity);
                 intent.putExtra("strInfo", strInfo);
@@ -317,7 +317,7 @@ public class CurveSelectActivity extends AppCompatActivity implements SwipeItemC
     private void jumpToFromActivity(String strFromActivity) {
 
         switch (strFromActivity) {
-            case "xiaozhun":
+            case "jiaozhun":
                 intent.setClass(this, CurveMeasureActivity.class);
                 intent.putExtra("from", Constants.strFormActivity);
                 intent.putExtra("strInfo", strInfo);
