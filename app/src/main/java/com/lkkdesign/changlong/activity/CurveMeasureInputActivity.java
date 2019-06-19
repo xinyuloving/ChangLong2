@@ -55,8 +55,6 @@ import butterknife.OnClick;
 
 import static android.view.View.GONE;
 import static com.lkkdesign.changlong.config.Constants.df_4;
-import static com.lkkdesign.changlong.config.Constants.df_percentage;
-import static com.lkkdesign.changlong.utils.LeastSquaresMathUtil.lineFitting;
 import static com.lkkdesign.changlong.utils.MyFunc.calculateTransmittance;
 import static com.lkkdesign.changlong.utils.MyFunc.getAbsorbance;
 
@@ -101,9 +99,6 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
     private String strCValue = "";
     private String strType = "";
     private String strfrom = "";
-    private double dou_k = 0;
-    private double dou_b = 0;
-    private double dou_r = 0;
     private int intPosition = 0;
     private List<String> dataList = new ArrayList<>();
     private List<Double> ListAddAValue = new ArrayList<>();//添加值 光度计
@@ -171,8 +166,8 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
                 break;
             case R.id.btn_calculate:
 
-                Double[] x = ListAddCValue.toArray(new Double[ListAddCValue.size()]);
-                Double[] y = ListAddAValue.toArray(new Double[ListAddAValue.size()]);
+//                Double[] x = ListAddCValue.toArray(new Double[ListAddCValue.size()]);
+//                Double[] y = ListAddAValue.toArray(new Double[ListAddAValue.size()]);
 //                Double[] x = {0.0904, 0.166, 0.2453, 0.3327, 0.3969, 0.4987, 0.7102, 0.8803, 1.2546};
 //                Double[] y = {0d, 0.2, 0.4, 0.6, 0.8, 1d, 1.5, 2d, 3d};
 //                Double[] x1 ={0.01,0.049,0.11,0.21,0.5};//吸光度
@@ -182,19 +177,57 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
 //                Double[] y2 ={1.0, 5.0, 10.0, 20.0, 50.0};//浓度
 
 
-                double[] dou = lineFitting(x, y);
-                dou_k = dou[1];
-                dou_b = dou[0];
-                dou_r = dou[3];
+//                Log.i(TAG, "Double[] x =" + Arrays.toString(x));
+//                Log.i(TAG, "Double[] y =" + Arrays.toString(y));
+//                Double a = LeastSquares.getA(x, y);
+//                Double b = LeastSquares.getB(x, y);
+//                tvShowData.setText("C=" + df_4.format(a) + "A+" + df_4.format(b));
+//                Log.i(TAG, "k值：=" + a);
+//                Log.i(TAG, "b值：" + b);
+//                Log.i(TAG, "格式化k值：=" + df_4.format(a));
+//                Log.i(TAG, "格式化b值：" + df_4.format(b));
 
-                String strSymbol = (dou_b < 0) ? "" : "+";
+//                Log.i(TAG, "Double[] x1 =" + Arrays.toString(x1));
+//                Log.i(TAG, "Double[] y1 =" + Arrays.toString(y1));
+//                Double a1 = LeastSquares.getA(x1, y1);
+//                Double b1 = LeastSquares.getB(x1, y1);
+//                tvShowData.setText("k值：" + df_4.format(a1) + "\t\tb值：" + df_4.format(b1));
+//                Log.i(TAG, "k1值：=" + a1);
+//                Log.i(TAG, "b1值：" + b1);
+//                Log.i(TAG, "格式化k1值：=" + df_4.format(a1));
+//                Log.i(TAG, "格式化b1值：" + df_4.format(b1));
+//
+//                Log.i(TAG, "Double[] x2 =" + Arrays.toString(x2));
+//                Log.i(TAG, "Double[] y2 =" + Arrays.toString(y2));
+//                Double a2 = LeastSquares.getA(x2, y2);
+//                Double b2 = LeastSquares.getB(x2, y2);
+//                tvShowData.setText("k值：" + df_4.format(a1) + "\t\tb值：" + df_4.format(b1));
+//                Log.i(TAG, "k2值：=" + a2);
+//                Log.i(TAG, "b2值：" + b2);
+//                Log.i(TAG, "格式化k2值：=" + df_4.format(a2));
+//                Log.i(TAG, "格式化b2值：" + df_4.format(b2));
 
-                Log.i(TAG, "一元线性拟合：" + Arrays.toString(dou));
-                Log.i(TAG, "相关系数 - >百分比：" + df_4.format(dou[2]));
-                Log.i(TAG, "决定系数 - >百分比：" + df_4.format(dou[3]));
+                new AlertDialog.Builder(this)
+                        .setTitle("保存")
+                        .setMessage("保存吗？")
+                        .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                intent.setClass(CurveMeasureInputActivity.this, ManualMeasureTipActivity.class);
+                                intent.putExtra("from", "CurveMeasureInputActivity");
+                                intent.putExtra("wavelength", strInfo);
+                                intent.putExtra("type", Constants.strFormActivity);
+                                intent.putExtra("strInfo", strInfo);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                tvShowData.setText("C=" + df_4.format(dou_k) + "A" + strSymbol + df_4.format(dou_b)
-                        + "\n" + "R²=" + df_percentage.format(dou_r));
+                            }
+                        })
+                        .show();
                 break;
         }
     }
@@ -335,11 +368,40 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
                         //mAdapter.notifyDataSetChanged(mDataList);
                         ListAddAValue.add(Double.parseDouble(strAValue));
                         ListAddCValue.add(Double.parseDouble(strCValue));
+                        int length = ListAddAValue.size();
+                        Double[] x = new Double[length];
+                        Double[] y = new Double[length];
+                        for (int i = 0; i < length; i++) {
+                            x[i] = (Double) ListAddAValue.get(i);
+                            y[i]=(Double) ListAddCValue.get(i);
+                        }
+                        Double a = LeastSquares.getA(x, y);
+                        Double b = LeastSquares.getB(x, y);
+                        if(length<2){
+                            tvShowData.setText("C=kA+b");
+                        }else{
+                            tvShowData.setText("C=" + df_4.format(a) + "A+" + df_4.format(b));
+                        }
+
                     } else {//修改当前曲线
                         dataList.set(intPosition, "C=" + strCValue + "mg/L\nA=" + strAValue);
                         ListAddAValue.set(intPosition, Double.parseDouble(strAValue));
                         ListAddCValue.set(intPosition, Double.parseDouble(strCValue));
                         mAdapter.notifyDataSetChanged(mDataList);
+                        int length = ListAddAValue.size();
+                        Double[] x = new Double[length];
+                        Double[] y = new Double[length];
+                        for (int i = 0; i < length; i++) {
+                            x[i] = (Double) ListAddAValue.get(i);
+                            y[i]=(Double) ListAddCValue.get(i);
+                        }
+                        Double a = LeastSquares.getA(x, y);
+                        Double b = LeastSquares.getB(x, y);
+                        if(length<2){
+                            tvShowData.setText("C=kA+b");
+                        }else{
+                            tvShowData.setText("C=" + df_4.format(a) + "A+" + df_4.format(b));
+                        }
                     }
 
                 } else {

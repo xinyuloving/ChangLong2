@@ -93,8 +93,8 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
     FloatingActionButton fabPrint;
     @BindView(R.id.fab_cdtime)
     FloatingActionButton fabCDTime;
-   /* @BindView(R.id.iv_return)
-    ImageView ivReturn;*/
+    /* @BindView(R.id.iv_return)
+     ImageView ivReturn;*/
     @BindView(R.id.tc_time)
     TextClock tcTime;
 
@@ -165,7 +165,7 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
 
     @OnClick({R.id.tv_user, R.id.tv_cod, R.id.tv_title, R.id.tv_timer,
             R.id.btn_measure, R.id.btn_save, R.id.iv_return, R.id.tv_return,
-            R.id.fab_print, R.id.fab_cdtime,R.id.tc_time})
+            R.id.fab_print, R.id.fab_cdtime, R.id.tc_time})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_user:
@@ -295,7 +295,7 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
         Tb_measure tb_measure = new Tb_measure(measureDao.getMaxId() + 1,
                 "手动测量",//测量类别
                 strStyle,//测量类别
-                DateUtil.getNowDateTime2() + " "+tvCod.getText().toString() + " "+ Constants.strLoginName,
+                DateUtil.getNowDateTime2() + " " + tvCod.getText().toString() + " " + Constants.strLoginName,
                 "手动测量" + Constants.strLoginName + DateUtil.getNowDateTime2(),//曲线名称
                 intWavelength,//曲线波长
                 floDensity,//密度
@@ -314,25 +314,32 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
                 strInspector
         );
         Log.i(TAG, "保存数据=" + tb_measure.toString());
-        strContent = "\n分类：" + "手动测量"
-                + "\n测量类别：" + strStyle
-                + "\n条目：" + Constants.strLoginName + DateUtil.getNowDateTime2() + "手动测量"
-                + "\n名称：" + "手动测量" + Constants.strLoginName + DateUtil.getNowDateTime2()
-                + "\n波长：" + intWavelength
-                + "\n浓度：" + floDensity
+        strContent = "\n检测项目：" + tvCod.getText().toString()
+                + "\n测量结果：" + intResult + ".000 mg/L"
+                + "\n监测人：" + strInspector
+                + "\n波长：" + intWavelength+"nm"
                 + "\n透过率：" + floTranrate
                 + "\n吸光度：" + floAbsorbance
-                + "\n操作员：" + Constants.strLoginName
                 + "\n温度：" + inttemp + "℃"
-                + "\n测量结果：" + intResult + ".000 mg/L"
-                + "\n类型：" + strWavelength
-                + "\n时间：" + DateUtil.getNowDateTime()
-                + "\n备注：" + strNote
+                + "\n检测时间：" + DateUtil.getNowDateTime()
+                + "\n分类：" + "手动测量"
+                + "\n测量类别：" + strStyle
+                + "\n取样时间：" + strSamplingTime
                 + "\n测点名称：" + strMeasureName
                 + "\n单位名称：" + strEntityName
-                + "\n取样时间：" + strSamplingTime
                 + "\n采样人：" + strSampler
-                + "\n监测人：" + strInspector;
+                + "\n备注：" + strNote;
+
+               /* + "\n条目：" + DateUtil.getNowDateTime2() + " " + tvCod.getText().toString() + " " + Constants.strLoginName
+                + "\n浓度：" + floDensity
+                + "\n操作员：" + Constants.strLoginName
+                + "\n类型：" + strWavelength*/
+
+
+
+
+
+
         measureDao.add(tb_measure);
         // 信息提示
         CustomToast.showToast(getApplicationContext(), "数据保存成功");
@@ -345,7 +352,7 @@ public class ManualMeasureSecActivity extends AppCompatActivity {
     private void printData(String strContent) {
         new MaterialDialog.Builder(ManualMeasureSecActivity.this)// 初始化建造者
 //                        .icon(R.mipmap.icon_exit)
-                .title("打印内容：")// 标题
+                .title( DateUtil.getNowDateTime2() + " " + tvCod.getText().toString() + " " + Constants.strLoginName)// 标题
                 .content(strContent)// 内容
                 .negativeText(R.string.cancel)
                 .neutralText(R.string.print)

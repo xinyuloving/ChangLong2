@@ -23,17 +23,17 @@
     <dimen name="dp_8">8dp</dimen>
     <dimen name="dp_2">2dp</dimen>
     <dimen name="card_margin">0dp</dimen>
-    <dimen name="card_marginLeft_60">60dp</dimen>
+    <dimen name="card_marginLeft_60">55dp</dimen>
     <dimen name="card_marginLeft_200">200dp</dimen>
     <dimen name="card_marginLeft_210">210dp</dimen>
-    <dimen name="card_marginLeft_240">240dp</dimen>
+    <dimen name="card_marginLeft_240">210dp</dimen>
     <dimen name="card_marginTop_8">8dp</dimen>
     <dimen name="card_marginTop_20">20dp</dimen>
-    <dimen name="card_marginTop_25">25dp</dimen>
+    <dimen name="card_marginTop_25">18dp</dimen>
     <dimen name="card_marginTop_38">38dp</dimen>
-    <dimen name="card_marginTop_40">40dp</dimen>
-    <dimen name="card_marginTop_90">90dp</dimen>
-    <dimen name="card_marginTop_105">105dp</dimen>
+    <dimen name="card_marginTop_40">35dp</dimen>
+    <dimen name="card_marginTop_90">80dp</dimen>
+    <dimen name="card_marginTop_105">100dp</dimen>
     <dimen name="card_marginLeft_15">15dp</dimen>
     <dimen name="card_marginRight_15">15dp</dimen>
 

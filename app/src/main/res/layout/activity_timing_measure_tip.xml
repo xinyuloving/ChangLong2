@@ -88,70 +88,71 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cardview1"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="322dp"
         android:layout_margin="@dimen/dp_16"
         android:orientation="vertical"
+        app:cardCornerRadius="@dimen/dp_10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardview0"
-        app:cardCornerRadius="@dimen/dp_10">
+        app:layout_constraintTop_toBottomOf="@+id/cardview0">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_margin="@dimen/dp_16"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_line1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="请放入空白比色管"
                 android:textColor="@color/statusBarColor"
                 android:textSize="@dimen/textsize_38"
-                android:textStyle="bold"
-                android:gravity="center"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_line2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="请按空白键"
                 android:textColor="@color/statusBarColor"
                 android:textSize="@dimen/textsize_38"
-                android:textStyle="bold"
-                android:gravity="center"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_line3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="请取出空白比色管"
                 android:textColor="@color/statusBarColor"
                 android:textSize="@dimen/textsize_38"
-                android:textStyle="bold"
-                android:gravity="center"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_line4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="请放入样品"
                 android:textColor="@color/statusBarColor"
                 android:textSize="@dimen/textsize_38"
-                android:textStyle="bold"
-                android:gravity="center"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_line5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="请按确认键"
                 android:textColor="@color/statusBarColor"
                 android:textSize="@dimen/textsize_38"
-                android:textStyle="bold"
-                android:gravity="center"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
@@ -169,7 +170,6 @@
             android:id="@+id/btn_empty"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp_16"
             android:layout_weight="1"
             android:background="@drawable/btn_bg_yellow"
             android:text="空白"
@@ -181,7 +181,6 @@
             android:id="@+id/btn_measure"
             android:layout_width="0dp"
             android:layout_height="@dimen/dp_48"
-            android:layout_margin="@dimen/dp_16"
             android:layout_weight="1"
             android:background="@drawable/btn_bg_blue"
             android:text="@string/next"

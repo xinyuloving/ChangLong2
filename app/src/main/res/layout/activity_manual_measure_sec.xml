@@ -62,7 +62,7 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cardview1"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="210dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="@dimen/dp_12"
         android:layout_marginEnd="15dp"
@@ -123,14 +123,17 @@
             android:layout_height="40dp"
             android:layout_gravity="end|bottom"
             android:src="@mipmap/icon_timing_24"
-            app:fabSize="mini"/>
+            app:fabSize="mini"
+            android:layout_margin="@dimen/dp_8"/>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardview2"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_margin="@dimen/dp_16"
+        android:layout_height="65dp"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardview1"
@@ -189,7 +192,7 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cardview3"
         android:layout_width="match_parent"
-        android:layout_height="156dp"
+        android:layout_height="130dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="@dimen/dp_8"
         android:layout_marginEnd="15dp"
@@ -283,7 +286,8 @@
             android:layout_height="40dp"
             android:layout_gravity="end|bottom"
             android:src="@mipmap/print"
-            app:fabSize="mini"/>
+            app:fabSize="mini"
+            android:layout_margin="@dimen/dp_8"/>
 
     </android.support.v7.widget.CardView>
 
@@ -305,7 +309,7 @@
         android:id="@+id/tc_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="@dimen/sp_16"
         android:textColor="#6E6F6F"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
@@ -323,7 +327,9 @@
             android:text="@string/celiang"
             android:textColor="@color/white"
             android:textSize="@dimen/textsize_24"
-            android:layout_margin="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_16"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/tc_time"
             app:layout_constraintHorizontal_bias="0.5"
@@ -342,7 +348,9 @@
             android:text="@string/save"
             android:textColor="@color/white"
             android:textSize="@dimen/textsize_24"
-            android:layout_margin="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_16"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/tc_time"
             app:layout_constraintHorizontal_bias="0.5"

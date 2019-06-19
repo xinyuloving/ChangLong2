@@ -342,7 +342,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
         Tb_measure tb_measure = new Tb_measure(measureDao.getMaxId() + 1,
                 strClassic,//测量类别
                 strStyle,
-                DateUtil.getNowDateTime2() + " "+strShow + " "+ Constants.strLoginName,
+                 DateUtil.getNowDateTime2() + " "+strShow + " "+ Constants.strLoginName,
                 "自动测量" + Constants.strLoginName + DateUtil.getNowDateTime2(),//曲线名称
                 intWavelength,//曲线波长
                 floDensity,//密度
@@ -360,26 +360,22 @@ public class AutoMeasureActivity extends AppCompatActivity {
                 strSampler,
                 strInspector
         );
-
-        strContent = "\n分类：" + strClassic
-                + "\n测量类别：" + strStyle
-                + "\n条目：" + Constants.strLoginName + DateUtil.getNowDateTime2() + "自动测量"
-                + "\n名称：" + "自动测量" + Constants.strLoginName + DateUtil.getNowDateTime2()
-                + "\n波长：" + intWavelength
-                + "\n浓度：" + floDensity
+        strContent = "\n检测项目：" + tvCod.getText().toString()
+                + "\n测量结果：" + intResult + ".000 mg/L"
+                + "\n监测人：" + strInspector
+                + "\n波长：" + intWavelength+"nm"
                 + "\n透过率：" + floTranrate
                 + "\n吸光度：" + floAbsorbance
-                + "\n操作员：" + Constants.strLoginName
                 + "\n温度：" + inttemp + "℃"
-                + "\n测量结果：" + intResult + ".000 mg/L"
-                + "\n类型：" + strShow
-                + "\n时间：" + DateUtil.getNowDateTime()
-                + "\n备注：" + strNote
+                + "\n检测时间：" + DateUtil.getNowDateTime()
+                + "\n分类：" + "手动测量"
+                + "\n测量类别：" + strStyle
+                + "\n取样时间：" + strSamplingTime
                 + "\n测点名称：" + strMeasureName
                 + "\n单位名称：" + strEntityName
-                + "\n取样时间：" + strSamplingTime
                 + "\n采样人：" + strSampler
-                + "\n监测人：" + strInspector;
+                + "\n备注：" + strNote;
+
         Log.i(TAG, "保存数据=" + tb_measure.toString());
         measureDao.add(tb_measure);
         // 信息提示
@@ -393,7 +389,7 @@ public class AutoMeasureActivity extends AppCompatActivity {
     private void printData(String strContent) {
         new MaterialDialog.Builder(AutoMeasureActivity.this)// 初始化建造者
 //                        .icon(R.mipmap.icon_exit)
-                .title("打印内容：")// 标题
+                .title(DateUtil.getNowDateTime2() + " " + tvCod.getText().toString() + " " + Constants.strLoginName)// 标题
                 .content(strContent)// 内容
                 .negativeText(R.string.cancel)
                 .neutralText(R.string.print)
