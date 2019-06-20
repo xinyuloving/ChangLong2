@@ -160,6 +160,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".activity.AccountActivity" />
         <activity android:name=".activity.CurveMeasureInputActivity"></activity>
+        <activity android:name=".activity.CamearImageActivity"></activity>
     </application>
 
 </manifest>
