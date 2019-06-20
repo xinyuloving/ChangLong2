@@ -80,6 +80,7 @@
                 android:inputType="numberDecimal"
                 android:textSize="18sp" />
 
+
         </LinearLayout>
 
         <LinearLayout
@@ -110,7 +111,10 @@
                 android:layout_weight="1"
                 android:background="@drawable/btn_bg_blue"
                 android:text="保存" />
+
         </LinearLayout>
+
+
     </LinearLayout>
 
     <ImageView

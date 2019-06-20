@@ -1,6 +1,5 @@
 package com.lkkdesign.changlong.activity;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,12 +14,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -38,7 +34,6 @@ import com.lkkdesign.changlong.config.Constants;
 import com.lkkdesign.changlong.utils.CustomToast;
 import com.lkkdesign.changlong.utils.DateUtil;
 import com.lkkdesign.changlong.utils.LeastSquares;
-import com.lkkdesign.changlong.utils.LeastSquaresMathUtil;
 import com.lkkdesign.changlong.utils.RandomUntil;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemLongClickListener;
@@ -50,7 +45,6 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -104,17 +98,11 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
     private String strAValue = "";
     private String strCValue = "";
     private String strType = "";
-    private String strFrom = "";
+    private String strfrom = "";
     private int intPosition = 0;
     private List<String> dataList = new ArrayList<>();
     private List<Double> ListAddAValue = new ArrayList<>();//添加值 光度计
     private List<Double> ListAddCValue = new ArrayList<>();//添加值 浓度
-
-
-    private AlertDialog.Builder builder;
-    private Dialog dialog;
-
-    private int intReturn = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,10 +115,11 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
 
     private void initView() {
         Intent intent = getIntent();
-        strFrom = intent.getStringExtra("from");
-        Constants.strFormActivity = strFrom;
+        strType = intent.getStringExtra("type");
+        Constants.strFormActivity = strType;
         strTitle = intent.getStringExtra("wavelength");
         strInfo = intent.getStringExtra("strInfo");
+        strfrom = intent.getStringExtra("from");
 
         tvUser.setText(Constants.strLoginName);
         tvCod.setText(strInfo);
@@ -163,22 +152,11 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_return:
-                if (ListAddAValue.size() == 0) {
-                    intent.setClass(this, CurveMeasureActivity.class);
-                    intent.putExtra("from", Constants.strFormActivity);
-                    intent.putExtra("strInfo", strInfo);
-                    startActivity(intent);
-                    CustomToast.showToast(getApplicationContext(), "返回");
-                } else {
-
-                    CustomToast.showToast(getApplicationContext(), "清空");
-                    ListAddAValue.clear();
-                    ListAddCValue.clear();
-                    mDataList.clear();
-                    mAdapter.notifyDataSetChanged(mDataList);
-                    mRecyclerView.setAdapter(mAdapter);
-                    tvShowData.setText("C=kA+b\nR²=100.00%");
-                }
+                intent.setClass(this, CurveSelectActivity.class);
+                intent.putExtra("type", Constants.strFormActivity);
+                intent.putExtra("strInfo", strInfo);
+                startActivity(intent);
+                this.finish();
                 break;
             case R.id.btn_add:
                 alertDialog("add");//弹出窗口，添加曲线
@@ -187,45 +165,71 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
                 showData();
                 break;
             case R.id.btn_calculate:
-                if (ListAddAValue.size() > 0) {
-                    new AlertDialog.Builder(this)
-                            .setTitle("保存")
-                            .setMessage("保存吗？")
-                            .setPositiveButton("是", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    intent.setClass(CurveMeasureInputActivity.this, ManualMeasureTipActivity.class);
-                                    intent.putExtra("from", Constants.strFormActivity);
-                                    intent.putExtra("wavelength", strInfo);
-                                    intent.putExtra("strInfo", strInfo);
-                                    startActivity(intent);
-                                }
-                            })
-                            .setNegativeButton("否", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
 
-                                }
-                            })
-                            .show();
-                } else {
-                    CustomToast.showToast(getApplicationContext(), "请输入浓度C和吸光度A");
-                }
+//                Double[] x = ListAddCValue.toArray(new Double[ListAddCValue.size()]);
+//                Double[] y = ListAddAValue.toArray(new Double[ListAddAValue.size()]);
+//                Double[] x = {0.0904, 0.166, 0.2453, 0.3327, 0.3969, 0.4987, 0.7102, 0.8803, 1.2546};
+//                Double[] y = {0d, 0.2, 0.4, 0.6, 0.8, 1d, 1.5, 2d, 3d};
+//                Double[] x1 ={0.01,0.049,0.11,0.21,0.5};//吸光度
+//                Double[] y1 ={1d,5d,10d,20d,50d};//浓度
+//
+//                Double[] x2 ={0.01, 0.049, 0.11, 0.21, 0.5};//吸光度
+//                Double[] y2 ={1.0, 5.0, 10.0, 20.0, 50.0};//浓度
 
+
+//                Log.i(TAG, "Double[] x =" + Arrays.toString(x));
+//                Log.i(TAG, "Double[] y =" + Arrays.toString(y));
+//                Double a = LeastSquares.getA(x, y);
+//                Double b = LeastSquares.getB(x, y);
+//                tvShowData.setText("C=" + df_4.format(a) + "A+" + df_4.format(b));
+//                Log.i(TAG, "k值：=" + a);
+//                Log.i(TAG, "b值：" + b);
+//                Log.i(TAG, "格式化k值：=" + df_4.format(a));
+//                Log.i(TAG, "格式化b值：" + df_4.format(b));
+
+//                Log.i(TAG, "Double[] x1 =" + Arrays.toString(x1));
+//                Log.i(TAG, "Double[] y1 =" + Arrays.toString(y1));
+//                Double a1 = LeastSquares.getA(x1, y1);
+//                Double b1 = LeastSquares.getB(x1, y1);
+//                tvShowData.setText("k值：" + df_4.format(a1) + "\t\tb值：" + df_4.format(b1));
+//                Log.i(TAG, "k1值：=" + a1);
+//                Log.i(TAG, "b1值：" + b1);
+//                Log.i(TAG, "格式化k1值：=" + df_4.format(a1));
+//                Log.i(TAG, "格式化b1值：" + df_4.format(b1));
+//
+//                Log.i(TAG, "Double[] x2 =" + Arrays.toString(x2));
+//                Log.i(TAG, "Double[] y2 =" + Arrays.toString(y2));
+//                Double a2 = LeastSquares.getA(x2, y2);
+//                Double b2 = LeastSquares.getB(x2, y2);
+//                tvShowData.setText("k值：" + df_4.format(a1) + "\t\tb值：" + df_4.format(b1));
+//                Log.i(TAG, "k2值：=" + a2);
+//                Log.i(TAG, "b2值：" + b2);
+//                Log.i(TAG, "格式化k2值：=" + df_4.format(a2));
+//                Log.i(TAG, "格式化b2值：" + df_4.format(b2));
+
+                new AlertDialog.Builder(this)
+                        .setTitle("保存")
+                        .setMessage("保存吗？")
+                        .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                intent.setClass(CurveMeasureInputActivity.this, ManualMeasureTipActivity.class);
+                                intent.putExtra("from", "CurveMeasureInputActivity");
+                                intent.putExtra("wavelength", strInfo);
+                                intent.putExtra("type", Constants.strFormActivity);
+                                intent.putExtra("strInfo", strInfo);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .show();
                 break;
         }
-    }
-
-    @Override
-    public void onItemClick(View itemView, int position) {
-//        Constants.strWavelength = mDataList.get(position);
-//
-//        mAdapter.setThisPosition(position);
-//        //嫑忘记刷新适配器
-//        mAdapter.notifyDataSetChanged();
-//        CustomToast.showToast(this, mDataList.get(position));
-        intPosition = position;
-        alertDialog("modify");
     }
 
     /**
@@ -318,6 +322,17 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
         return new MainAdapter(this);
     }
 
+    @Override
+    public void onItemClick(View itemView, int position) {
+//        Constants.strWavelength = mDataList.get(position);
+//
+//        mAdapter.setThisPosition(position);
+//        //嫑忘记刷新适配器
+//        mAdapter.notifyDataSetChanged();
+//        CustomToast.showToast(this, mDataList.get(position));
+        intPosition = position;
+        alertDialog("modify");
+    }
 
     protected List<String> createDataList() {
         String[] listItem = getResources().getStringArray(R.array.list_shuju);//曲线列表
@@ -329,37 +344,20 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
 
     private void alertDialog(String strType) {
 
-        builder = new AlertDialog.Builder(this, R.style.TipDialog);
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.inputdata_dialog_layout, null);
-        Display display = this.getWindowManager().getDefaultDisplay();
-        int width = display.getWidth();
-        int height = display.getHeight();
-        //设置dialog的宽高为屏幕的宽高
-        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(width - 100, height / 2 + 200);
-//        final Dialog dialog = builder.create();
-        dialog = builder.create();
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show();
-        // 接着清除flags
-        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        // 然后弹出输入法
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        // 接着添加view
-        dialog.getWindow().setContentView(view, layoutParams);//自定义布局应该在这里添加，要在dialog.show()的后面
-        dialog.getWindow().setGravity(Gravity.CENTER);//可以设置显示的位置
-        final EditText et_aValue = view.findViewById(R.id.et_aValue);
-        final EditText et_cValue = view.findViewById(R.id.et_cValue);
-        final Button btn_cancel = view.findViewById(R.id.btn_cancel);
-        final ImageView iv_cancel = view.findViewById(R.id.iv_cancle);
+        AlertDialog.Builder setDeBugDialog = new AlertDialog.Builder(this);
+        //获取界面
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.inputdata_dialog_layout, null);
+        //将界面填充到AlertDiaLog容器
+        setDeBugDialog.setView(dialogView);
+        setDeBugDialog.create();
+        final EditText et_aValue = dialogView.findViewById(R.id.et_aValue);
+        final EditText et_cValue = dialogView.findViewById(R.id.et_cValue);
         if ("modify".equals(strType)) {//判断添加与修改
             et_cValue.setText("" + ListAddCValue.get(intPosition));
             et_aValue.setText("" + ListAddAValue.get(intPosition));
-            btn_cancel.setText("删除");
-            btn_cancel.setBackgroundResource(R.drawable.btn_bg_red_dialog);
-            iv_cancel.setVisibility(View.VISIBLE);
         }
-        view.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
+        final AlertDialog customAlert = setDeBugDialog.show();
+        dialogView.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 strCValue = et_cValue.getText().toString();
@@ -375,22 +373,17 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
                         Double[] y = new Double[length];
                         for (int i = 0; i < length; i++) {
                             x[i] = (Double) ListAddAValue.get(i);
-                            y[i] = (Double) ListAddCValue.get(i);
+                            y[i]=(Double) ListAddCValue.get(i);
                         }
                         Double a = LeastSquares.getA(x, y);
                         Double b = LeastSquares.getB(x, y);
-                        double[] dou = LeastSquaresMathUtil.lineFitting(x, y);
-                        DecimalFormat df = new DecimalFormat("0.00%");
-                        if (length < 2) {
-                            tvShowData.setText("C=kA+b\nR²=100.00%");
-                        } else {
-                            String strSignl = (b > 0) ? "+" : "";
-                            tvShowData.setText("C=" + df_4.format(dou[1]) + "A" + strSignl + df_4.format(dou[0]) + "\nR²=" + df.format(dou[3]));
+                        if(length<2){
+                            tvShowData.setText("C=kA+b");
+                        }else{
+                            tvShowData.setText("C=" + df_4.format(a) + "A+" + df_4.format(b));
                         }
 
                     } else {//修改当前曲线
-
-
                         dataList.set(intPosition, "C=" + strCValue + "mg/L\nA=" + strAValue);
                         ListAddAValue.set(intPosition, Double.parseDouble(strAValue));
                         ListAddCValue.set(intPosition, Double.parseDouble(strCValue));
@@ -400,13 +393,13 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
                         Double[] y = new Double[length];
                         for (int i = 0; i < length; i++) {
                             x[i] = (Double) ListAddAValue.get(i);
-                            y[i] = (Double) ListAddCValue.get(i);
+                            y[i]=(Double) ListAddCValue.get(i);
                         }
                         Double a = LeastSquares.getA(x, y);
                         Double b = LeastSquares.getB(x, y);
-                        if (length < 2) {
+                        if(length<2){
                             tvShowData.setText("C=kA+b");
-                        } else {
+                        }else{
                             tvShowData.setText("C=" + df_4.format(a) + "A+" + df_4.format(b));
                         }
                     }
@@ -414,51 +407,16 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
                 } else {
                     CustomToast.showToast(getApplicationContext(), "没有输入数值");
                 }
-                dialog.dismiss();
+                customAlert.dismiss();
             }
         });
-        view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+        dialogView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ("modify".equals(strType)) {//判断添加与修改
-                    mDataList.remove(intPosition);
-                    ListAddAValue.remove(intPosition);
-                    ListAddCValue.remove(intPosition);
-                    mAdapter.notifyDataSetChanged(mDataList);
-                    mRecyclerView.setAdapter(mAdapter);
-                    int length = ListAddAValue.size();
-                    Double[] x = new Double[length];
-                    Double[] y = new Double[length];
-                    for (int i = 0; i < length; i++) {
-                        x[i] = (Double) ListAddAValue.get(i);
-                        y[i] = (Double) ListAddCValue.get(i);
-                    }
-                    Double a = LeastSquares.getA(x, y);
-                    Double b = LeastSquares.getB(x, y);
-                    double[] dou = LeastSquaresMathUtil.lineFitting(x, y);
-                    DecimalFormat df = new DecimalFormat("0.00%");
-                    if (length < 2) {
-                        tvShowData.setText("C=kA+b\nR²=100.00%");
-                    } else {
-                        String strSignl = (b > 0) ? "+" : "";
-                        tvShowData.setText("C=" + df_4.format(dou[1]) + "A" + strSignl + df_4.format(dou[0]) + "\nR²=" + df.format(dou[3]));
-                    }
-                    dialog.dismiss();
-                } else {
-                    dialog.dismiss();
-                }
-
-            }
-        });
-
-        view.findViewById(R.id.iv_cancle).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
+                customAlert.dismiss();
             }
         });
     }
-
 
     private void showData() {
 //        strInfo = edInput.getText().toString();
@@ -484,25 +442,13 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
                 .show();// 显示对话框
     }
 
-
     @Override
     public void onBackPressed() {
-        if (ListAddAValue.size() == 0) {
-            intent.setClass(this, CurveMeasureActivity.class);
-            intent.putExtra("from", Constants.strFormActivity);
-            intent.putExtra("strInfo", strInfo);
-            startActivity(intent);
-            CustomToast.showToast(getApplicationContext(), "返回");
-        } else {
-
-            CustomToast.showToast(getApplicationContext(), "清空");
-            ListAddAValue.clear();
-            ListAddCValue.clear();
-            mDataList.clear();
-            mAdapter.notifyDataSetChanged(mDataList);
-            mRecyclerView.setAdapter(mAdapter);
-            tvShowData.setText("C=kA+b\nR²=100.00%");
-        }
+        intent.setClass(this, CurveSelectActivity.class);
+        intent.putExtra("type", Constants.strFormActivity);
+        intent.putExtra("strInfo", strInfo);
+        startActivity(intent);
+        this.finish();
     }
 
     @Override
@@ -516,6 +462,5 @@ public class CurveMeasureInputActivity extends AppCompatActivity implements Swip
         super.onDestroy();
         this.finish();
     }
-
 
 }
