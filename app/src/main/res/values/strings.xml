@@ -8,6 +8,8 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">设置</string>
     <string name="theme">主题</string>
+    <string name="notes">便笺</string>
+    <string name="calculator">计算器</string>
     <string name="cancel">取消</string>
     <string name="select">选择</string>
     <string name="print">打印</string>

@@ -1,5 +1,6 @@
 package com.lkkdesign.changlong.activity;
 
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
@@ -75,11 +76,11 @@ public class Main2Activity extends AppCompatActivity implements OnItemClickListe
             R.drawable.icon_main_jz,
             R.drawable.icon_main_find,
             R.drawable.icon_main_yjbg,
-            R.drawable.icon_main_set,
+            R.drawable.icon_main_xj,
 //            R.drawable.icon_main_dy
     };
     private String[] iconName = {"自动测量", "手动测量", "定时测量", "光度计", "曲线校准", "历史数据", "应急报告",
-            "设置"};
+            "相机"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,7 +176,7 @@ public class Main2Activity extends AppCompatActivity implements OnItemClickListe
                     case 7: //设置
 //                        intent.setClass(Main2Activity.this, SettingsActivity.class);
 //                        startActivity(intent);
-                        jumpToActivity(SettingsActivity.class);
+                        jumpToActivity(CamearImageActivity.class);
                         break;
                     /*case 8: //帮助说明
                         intent.setClass(Main2Activity.this, com.lkkdesign.changlong.printer.AppStart.class);
@@ -198,45 +199,114 @@ public class Main2Activity extends AppCompatActivity implements OnItemClickListe
         mNormalToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-
                 int menuItemId = item.getItemId();
-                if (menuItemId == R.id.action_about) {
-//                    Toast.makeText(Main2Activity.this, "action_about", Toast.LENGTH_SHORT).show();
-                    intent.setClass(Main2Activity.this,AboutActivity.class);
-                    startActivity(intent);
-
-                } else if (menuItemId == R.id.action_exit) {
-//                    Toast.makeText(Main2Activity.this, "action_exit", Toast.LENGTH_SHORT).show();
-                    final AlertDialog.Builder normalDialog =
-                            new AlertDialog.Builder(Main2Activity.this);
-                    normalDialog.setIcon(R.mipmap.icon_app);
-                    normalDialog.setTitle(R.string.dialog_title);
-                    normalDialog.setMessage(R.string.dialog_content_exit);
-                    normalDialog.setPositiveButton(R.string.confirm,
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    android.os.Process.killProcess(android.os.Process.myPid());
-                                    System.exit(0);
-                                }
-                            });
-                    normalDialog.setNegativeButton(R.string.cancel,
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    //...To-do
-                                }
-                            });
-                    // 显示
-                    normalDialog.show();
-                }else{
-                    CustomToast.showToast(Main2Activity.this,"功能正在完善中，敬请期待……");
+                switch (menuItemId) {
+                    case R.id.action_set:
+                        jumpToActivity(SettingsActivity.class);
+                        break; //可选
+                    case R.id.action_note:
+                        try {
+                            ComponentName componentName = new ComponentName("com.lkkdesgin.note", "com.lkkdesgin.note.ui.NotesListActivity");
+                            intent.setComponent(componentName);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("from", "changlong");
+                            intent.putExtras(bundle);
+                            startActivityForResult(intent, 1);
+                        } catch (Exception e) {
+                            CustomToast.showToast(Main2Activity.this, "没有便笺");
+                        }
+                        break; //可选
+                    case R.id.action_calculator:
+                        try {
+                            ComponentName cn = new ComponentName("com.sonymobile.exactcalculator",
+                                    "com.sonymobile.exactcalculator.Calculator");
+                            intent.setComponent(cn);
+                            intent.setAction("android.intent.action.MAIN");
+                            startActivityForResult(intent, RESULT_OK);
+                        } catch (Exception e) {
+                            CustomToast.showToast(Main2Activity.this, "没有计算器");
+                        }
+                        break;
+                    case R.id.action_exit:
+                        final AlertDialog.Builder normalDialog =
+                                new AlertDialog.Builder(Main2Activity.this);
+                        normalDialog.setIcon(R.mipmap.icon_app);
+                        normalDialog.setTitle(R.string.dialog_title);
+                        normalDialog.setMessage(R.string.dialog_content_exit);
+                        normalDialog.setPositiveButton(R.string.confirm,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        android.os.Process.killProcess(android.os.Process.myPid());
+                                        System.exit(0);
+                                    }
+                                });
+                        normalDialog.setNegativeButton(R.string.cancel,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        //...To-do
+                                    }
+                                });
+                        // 显示
+                        normalDialog.show();
+                        break; //可选
+                    //你可以有任意数量的case语句
+                    default: //可选
+                        CustomToast.showToast(Main2Activity.this, "功能正在完善中，敬请期待……");
                 }
+
+//            int menuItemId = item.getItemId();
+//                if(menuItemId ==R.id.action_set)
+//
+//            {
+//                jumpToActivity(SettingsActivity.class);
+//            } else if(menuItemId ==R.id.action_about)
+//
+//            {
+////                    Toast.makeText(Main2Activity.this, "action_about", Toast.LENGTH_SHORT).show();
+////                    intent.setClass(Main2Activity.this,AboutActivity.class);
+////                    startActivity(intent);
+//                jumpToActivity(AboutActivity.class);
+//
+//            } else if(menuItemId ==R.id.action_exit)
+//
+//            {
+////                    Toast.makeText(Main2Activity.this, "action_exit", Toast.LENGTH_SHORT).show();
+//                final AlertDialog.Builder normalDialog =
+//                        new AlertDialog.Builder(Main2Activity.this);
+//                normalDialog.setIcon(R.mipmap.icon_app);
+//                normalDialog.setTitle(R.string.dialog_title);
+//                normalDialog.setMessage(R.string.dialog_content_exit);
+//                normalDialog.setPositiveButton(R.string.confirm,
+//                        new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                android.os.Process.killProcess(android.os.Process.myPid());
+//                                System.exit(0);
+//                            }
+//                        });
+//                normalDialog.setNegativeButton(R.string.cancel,
+//                        new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                //...To-do
+//                            }
+//                        });
+//                // 显示
+//                normalDialog.show();
+//            } else
+//
+//            {
+//                CustomToast.showToast(Main2Activity.this, "功能正在完善中，敬请期待……");
+//            }
                 return true;
             }
         });
         //设置左侧NavigationIcon点击事件
-        mNormalToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        mNormalToolbar.setNavigationOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View v) {
                 Toast.makeText(Main2Activity.this, "点击了左侧按钮", Toast.LENGTH_SHORT).show();
