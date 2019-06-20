@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:text="C=15.000mg/L"
             android:layout_gravity="center"
-            android:textSize="38dp"
+            android:textSize="42dp"
             android:textStyle="bold"
             android:textColor="@color/statusBarColor"/>
         <TextView
@@ -273,6 +273,15 @@
             android:layout_marginTop="@dimen/card_marginTop_105"
             android:textColor="@color/statusBarColor"
             android:textSize="20dp" />
+       <android.support.design.widget.FloatingActionButton
+           android:id="@+id/fab_camera"
+           android:layout_width="40dp"
+           android:layout_height="40dp"
+           android:layout_gravity="end"
+           android:layout_marginRight="@dimen/dp_8"
+           android:layout_marginTop="@dimen/dp_32"
+           android:src="@mipmap/icon_camera"
+           app:fabSize="mini"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_print"

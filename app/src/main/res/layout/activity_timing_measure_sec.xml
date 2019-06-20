@@ -80,7 +80,7 @@
             android:text="C=1.000mg/L"
             android:gravity="center_horizontal"
             android:textColor="@color/statusBarColor"
-            android:textSize="@dimen/textsize_38"
+            android:textSize="42dp"
             android:textStyle="bold"
             android:paddingTop="@dimen/dp_60"/>
         <TextView

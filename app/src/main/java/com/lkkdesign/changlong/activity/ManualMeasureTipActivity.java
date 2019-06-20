@@ -97,7 +97,9 @@ public class ManualMeasureTipActivity extends AppCompatActivity {
         }
         if ("ManualMeasureFristActivity".equals(Constants.strFormActivity)) {
             tvTitle.setText(R.string.tv_manual);
-        } else if ("InputDataActivity_qxjz".equals(Constants.strFormActivity)) {
+        }else if("gongsiceliang".equals(Constants.strFormActivity)){
+            tvTitle.setText(R.string.tv_cure_adjust);
+        } else if ("CurveMeasureInputActivity".equals(Constants.strFormActivity)) {
             lineState = 4;
             tvLine1.setVisibility(GONE);
             tvLine4.setVisibility(View.VISIBLE);
@@ -113,6 +115,7 @@ public class ManualMeasureTipActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.iv_return:
             case R.id.tv_return:
+                intent.putExtra("from",Constants.strFormActivity);
                 jumpToActivity(ManualMeasureFristActivity.class);
                 break;
             case R.id.btn_empty:
@@ -131,7 +134,7 @@ public class ManualMeasureTipActivity extends AppCompatActivity {
             case R.id.btn_measure:
                 intent.setClass(this, ManualMeasureSecActivity.class);
                 intent.putExtra("wavelength", strInfo);
-                intent.putExtra("from", strFrom);
+                intent.putExtra("from", Constants.strFormActivity);
                 startActivity(intent);
                 this.finish();
                 break;
@@ -141,6 +144,7 @@ public class ManualMeasureTipActivity extends AppCompatActivity {
     private void jumpToActivity(Class activity) {
 //        if("ManualMeasureFristActivity".equals(activity))
         intent.setClass(this, activity);
+        intent.putExtra("from",Constants.strFormActivity);
         startActivity(intent);
         this.finish();
     }

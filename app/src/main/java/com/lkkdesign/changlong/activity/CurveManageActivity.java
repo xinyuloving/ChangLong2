@@ -55,7 +55,7 @@ public class CurveManageActivity extends AppCompatActivity {
     LinearLayout initem;
 
     private Intent intent = new Intent();
-    private String strType="";
+    private String strFrom="";
     private String strCurve="";
 
     @Override
@@ -69,9 +69,9 @@ public class CurveManageActivity extends AppCompatActivity {
 
     private void initView(){
         Intent intent = getIntent();
-        strType = intent.getStringExtra("type");
+        strFrom = intent.getStringExtra("from");
         strCurve=intent.getStringExtra("curve");
-        Constants.strFormActivity = strType;
+        Constants.strFormActivity = strFrom;
         String[] strName = getResources().getStringArray(R.array.resolution_ratio);
         final List<String> dataset = new LinkedList<>(Arrays.asList(strName));
         nsFbl.attachDataSource(dataset);
@@ -102,7 +102,7 @@ public class CurveManageActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.iv_return:
                 intent.setClass(this, CurveSelectActivity.class);
-                intent.putExtra("type", Constants.strFormActivity);
+                intent.putExtra("from", Constants.strFormActivity);
                 startActivity(intent);
                 this.finish();
                 break;
@@ -126,7 +126,7 @@ public class CurveManageActivity extends AppCompatActivity {
                 break;
             case R.id.cancelbtn:
                 intent.setClass(this, CurveSelectActivity.class);
-                intent.putExtra("type", Constants.strFormActivity);
+                intent.putExtra("from", Constants.strFormActivity);
                 startActivity(intent);
                 this.finish();
                 break;
@@ -143,7 +143,7 @@ public class CurveManageActivity extends AppCompatActivity {
 
     public void onBackPressed() {
         intent.setClass(this, CurveSelectActivity.class);
-        intent.putExtra("type", Constants.strFormActivity);
+        intent.putExtra("from", Constants.strFormActivity);
         startActivity(intent);
         this.finish();
 

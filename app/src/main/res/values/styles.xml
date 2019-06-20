@@ -87,6 +87,12 @@
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">15sp</item>
     </style>
+    <!--透明dialog-->
+    <style name="TipDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
 
     <!-- 弹窗样式 -->
     <style name="dialogTransparent" parent="@android:style/Theme.Dialog">
