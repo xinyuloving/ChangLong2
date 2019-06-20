@@ -175,7 +175,8 @@ public class Main2Activity extends AppCompatActivity implements OnItemClickListe
                     case 7: //设置
 //                        intent.setClass(Main2Activity.this, SettingsActivity.class);
 //                        startActivity(intent);
-                        jumpToActivity(SettingsActivity.class);
+//                        jumpToActivity(SettingsActivity.class);
+                        jumpToActivity(CamearImageActivity.class);
                         break;
                     /*case 8: //帮助说明
                         intent.setClass(Main2Activity.this, com.lkkdesign.changlong.printer.AppStart.class);
